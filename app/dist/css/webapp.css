@@ -1,0 +1,25 @@
+header {
+  height: 50px;
+}
+.container-title {
+  background-color: #3498db;
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+  height: 50px;
+  line-height: 50px;
+  position: relative;
+}
+.back-icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 50px;
+  width: 50px;
+  color: #fff;
+  background-color: #3498db;
+  z-index: 9999;
+  text-align: center;
+  line-height: 50px;
+  font-size: 25px;
+}
