@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <title>环境监测移动应用系统</title>
 
@@ -15,8 +15,9 @@
     <script src="lib/jquery-1.11.1.min.js"></script>
     <script src="lib/bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>
     <script type="text/javascript">
-      var platformServer = 'http://back.call798.com';
+      var platformServer = '';
     </script>
+    <script src="lib/echarts-2.0.2/doc/example/www/js/esl.js"></script>
   </head>
   <body>
     <div ng-view></div>
@@ -25,10 +26,28 @@
     <script src="lib/angular-1.2.22/angular-route.min.js"></script>
     <script src="lib/angular-1.2.22/angular-resource.min.js"></script>
     <script src="lib/angular-1.2.22/angular-cookies.min.js"></script>
+    <script src="lib/angular-local-storage/angular-local-storage.min.js"></script>
 
     <script src="../src/js/app.js"></script>
+    <script src="../src/js/region/RegionService.js"></script>
+    <script src="../src/js/region/SelectRegionController.js"></script>
     <script src="../src/js/home/HomeController.js"></script>
-    <script src="../src/js/CategoryService.js"></script>
     <script src="../src/js/common/Common.js"></script>
+
+    <script type="text/javascript">
+    // Step:3 conifg ECharts's path, link to echarts.js from current page.
+    // Step:3 为模块加载器配置echarts的路径，从当前页面链接到echarts.js，定义所需图表路径
+    require.config({
+        paths:{ 
+            echarts:'lib/echarts-2.0.2/doc/example/www/js/echarts',
+            'echarts/chart/bar' : 'lib/echarts-2.0.2/doc/example/www/js/echarts-map',
+            'echarts/chart/pie': 'lib/echarts-2.0.2/doc/example/www/js/echarts-map'
+        }
+    });
+    
+    // Step:4 require echarts and use it in the callback.
+    // Step:4 动态加载echarts然后在回调函数中开始使用，注意保持按需加载结构定义图表路径
+    
+    </script>
   </body>
 </html>

@@ -1,9 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-  </head>
-  <body>
+<!-- 
     <div>{{name}}</div>
-    <div>{{categories}}</div>
-  </body>
-</html>
+ <!--    <div>{{categories}}</div>
+ 	<div id="main" style="height:400px;border:1px solid #ccc;padding:10px;"></div> -->
+<div class="fpiwebapp-content">
+	<div class="fpiwebapp-header">
+		<a href="javascirpt:;" class="menu-control"><img src="images/menu.png" width="20" height="20" border="none"></a>
+		<a href="#/selectRegion" class="name">{{regionName || '杭州'}}</a>
+		<a href="#/selectRegion" class="xl"><img src="images/xl.png" width="11" height="11" border="none"></a>
+
+		<a href="javascirpt:;" class="refresh"><img src="images/resh.png" width="17" height="17" border="none"></a>
+		<a href="javascirpt:;" class="search"><img src="images/search.png" width="17" height="17" border="none"></a>
+	</div>
+	<div class="realtime-status">
+		<div class="bg"><img src="images/homebg.png" width="auto" height="125" border="0"></div>
+		<div class="bottom-bg"></div>
+		<h1 class="title">监测点实时状态</h1>
+		<div class="data-show">
+			<table class="fpiwebapp-table">
+				<tr class="num">
+					<td>2</td>
+					<td>2</td>
+					<td>0</td>
+					<td>2</td>
+					<td>260</td>
+				</tr>
+				<tr>
+					<td>超标</td>
+					<td>断线</td>
+					<td>异常</td>
+					<td>预警</td>
+					<td>正常</td>
+				</tr>
+			</table>
+		</div>
+		<div class="b-info">133家企业，266个监测点，联网率96%</div>
+	</div>
+	<div class="fpiwebapp-home-panel">
+		<div class="fpiwebapp-home-panel-title">数据传输有效率（2014-08-06）</div>
+		<div class="fpiwebapp-home-panel-body" style="height: 110px;">
+			<div id="main" style="height:110px;"></div>
+		</div>
+	</div>
+	<div class="fpiwebapp-home-panel">
+		<div class="fpiwebapp-home-panel-title border-top-line">超标排行榜（2014-08-07）</div>
+		<div class="fpiwebapp-home-panel-body bg-color">
+			<ul class="fpiwebapp-ul-list">
+				<li class="border-image-1px">
+					<div class="company-name">
+						<div class="company-name-fir">马龙供排水出水口</div>
+						<div class="company-name-sec">马龙供排水有限公司</div>
+					</div>
+					<div class="company-data">
+						<div class="company-data-1"><label>超标因子：</label>COD</div>
+						<div class="company-data-3"><label>时长：</label>20h</div>
+						<div class="company-data-2"><label>超标倍数：</label>0.24～2.13</div>
+					</div>
+				</li>
+				<li class="border-image-1px">
+					<div class="company-name">
+						<div class="company-name-fir">马龙供排水出水口</div>
+						<div class="company-name-sec">马龙供排水有限公司</div>
+					</div>
+					<div class="company-data">
+						<div class="company-data-1"><label>超标因子：</label>COD</div>
+						<div class="company-data-3"><label>时长：</label>20h</div>
+						<div class="company-data-2"><label>超标倍数：</label>0.24～2.13</div>
+					</div>
+				</li>
+				<li class="border-image-1px">
+					<div class="company-name">
+						<div class="company-name-fir">马龙供排水出水口</div>
+						<div class="company-name-sec">马龙供排水有限公司</div>
+					</div>
+					<div class="company-data">
+						<div class="company-data-1"><label>超标因子：</label>COD</div>
+						<div class="company-data-3"><label>时长：</label>20h</div>
+						<div class="company-data-2"><label>超标倍数：</label>0.24～2.13</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>

@@ -1,6 +1,8 @@
 
 angular.module('fpiwebapp', [
   'ngRoute', 
+  'fpiwebapp.region.service',
+  'fpiwebapp.region.ctrl',
   'fpiwebapp.home.ctrl',
   'fpiwebapp.common'
   ])
@@ -10,6 +12,10 @@ angular.module('fpiwebapp', [
     .when('/', {
       controller:'HomeController',
       templateUrl:'/app/partials/home/home.html'
+    })
+    .when('/selectRegion', {
+      controller: 'SelectRegionController',
+      templateUrl: '/app/partials/region/region.html'
     })
     // .when('/edit/:projectId', {
     //   controller:'EditCtrl',
@@ -22,29 +28,132 @@ angular.module('fpiwebapp', [
     .otherwise({
       redirectTo:'/'
     });
+})
+
+.run(function($http, $rootScope,$window,$location){
+ 
+  /** history 返回 **/
+  $rootScope.back = function(){
+    $window.history.back();
+  };
+  
+  
 });
  
 
 
-angular.module('fpiwebapp.home.ctrl', ['fpiwebapp.category.service'])
+angular.module('fpiwebapp.home.ctrl', [ 'LocalStorageModule'])
  
-.controller('HomeController', function($scope, CategoryService) {
-  $scope.name = 'fpi';
-	var aaa = CategoryService.query(function(){
-			$scope.categories = aaa.aaa;
+.controller('HomeController', function($scope, $location, localStorageService) {
+	// //init 地区
+	// $scope.regions = ['滨江', '江干', '西湖'];
+	// //从服务端获取地区数据
+	// //
+	// if ($scope.regions.length > 0) {
+	// 	$scope.regionName = $scope.regions[0];
+	// };
+	$scope.regionName = localStorageService.get('currentRegion');
 
-			// if($scope.categories.length > 0){
-			// 	$scope.selectCategory($scope.categories[0]);
-			// }
-		});
+	//var mapData = ['蒸发量','降水量'];
+	var labelTop = {
+	    normal : {
+	        label : {
+	            show : false,
+	            position : 'top',
+	            textStyle: {
+	                baseline : 'center'
+	            }
+	        },
+	        labelLine : {
+	            show : false
+	        }
+	    }
+	};
+	var labelBottom = {
+	    normal : {
+	        color: '#ccc',
+	        label : {
+	            show : true,
+	            position : 'center',
+	            formatter : function (a,b,c){return 100 - c + '%'},
+	            textStyle: {
+	                baseline : 'center'
+	            }
+	        },
+	        labelLine : {
+	            show : false
+	        }
+	    },
+	    emphasis: {
+	        color: 'rgba(0,0,0,0)'
+	    }
+	};
+	var radius = [30, 20];
+	require(
+        [
+            'echarts',
+            'echarts/chart/bar',
+            'echarts/chart/pie'
+        ],
+        function (ec) {
+            //--- 折柱 ---
+            var myChart = ec.init(document.getElementById('main'));
+            myChart.setOption({
+			    legend: {
+			        x : 'center',
+			        y : 'bottom',
+			        itemGap: 30,
+			        selectedMode: true,
+			        textStyle: {color: 'auto', fontSize: '14px'},
+			        data:[
+			            '传输率','有效率','传输有效率'
+			        ]
+			    },
+			    // title : {
+			    //     text: 'The App World',
+			    //     subtext: 'from global web index',
+			    //     x: 'center'
+			    // },
+			    toolbox: {
+			        show : false,
+			        feature : {
+			            dataView : {show: true, readOnly: false},
+			            restore : {show: true},
+			            saveAsImage : {show: true}
+			        }
+			    },
+			    series : [
+			        {
+			            type : 'pie',
+			            center : ['20%', '40%'],
+			            radius : radius,
+			            data : [
+			                {name:'other', value:46, itemStyle : labelBottom},
+			                {name:'GoogleMaps', value:54,itemStyle : labelTop}
+			            ]
+			        },
+			        {
+			            type : 'pie',
+			            center : ['50%', '40%'],
+			            radius : radius,
+			            data : [
+			                {name:'other', value:56, itemStyle : labelBottom},
+			                {name:'Facebook', value:44,itemStyle : labelTop}
+			            ]
+			        },
+			        {
+			            type : 'pie',
+			            center : ['80%', '40%'],
+			            radius : radius,
+			            data : [
+			                {name:'other', value:65, itemStyle : labelBottom},
+			                {name:'Youtube', value:35,itemStyle : labelTop}
+			            ]
+			        }
+			    ]
+            });
+            
+        }
+    );
 });
  
-
-
-
-angular.module('fpiwebapp.category.service', ['ngResource']).
-	factory('CategoryService', ['$resource', function($resource) {
-		return $resource('http://172.19.4.88:8090/demo/image/load/list.do', {callback: 'JSON_CALLBACK'}, {
-			query: {method: 'JSONP'},
-		});
-	}]);
