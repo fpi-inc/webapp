@@ -1,6 +1,10 @@
 <div class="fpiwebapp-content">
 	<div class="fpiwebapp-header-sub">
-		fdsaff
+		<a href="" class="search-btn" ng-click="back();">取消</a>
+		<div class="search-input">
+			<input type="text" ng-model="name" class="search-query" placeholder="请输入企业名称">
+			<img src="images/search1.png" ng-click="searchCompany();" class="search-icon" width="20" height="20" border="0">
+		</div>
 	</div>
-	fdsafsaf
+	<div style="color: red;">{{name}}</div>
 </div>

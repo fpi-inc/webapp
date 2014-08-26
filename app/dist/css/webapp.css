@@ -38,6 +38,7 @@ a:hover {
 }
 .fpiwebapp-header .menu-control {
   float: left;
+  display: inline-block;
   margin: 11px 0 0 14px;
 }
 .fpiwebapp-header .name {
@@ -57,6 +58,16 @@ a:hover {
 .fpiwebapp-header .refresh {
   float: right;
   margin: 10px 10px 0 0;
+}
+.fpiwebapp-header p.titleitem {
+  position: absolute;
+  top: 0;
+  color: #fff;
+  font-size: 16px;
+  line-height: 45px;
+  margin: 0;
+  left: 50%;
+  margin-left: -32px;
 }
 .fpiwebapp-header-sub {
   height: 45px;
@@ -231,4 +242,56 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
 .region-title label {
   color: #14b1e4;
   font-size: 20px;
+}
+.search-input {
+  margin-right: 48px;
+  padding-left: 10px;
+  position: relative;
+}
+.search-input input.search-query {
+  width: 100%;
+  border: 1px solid #c7c9cb;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  height: 28px;
+  line-height: 28px;
+  padding: 3px;
+}
+.search-input .search-icon {
+  position: absolute;
+  right: 10px;
+  top: 12px;
+}
+.search-btn {
+  float: right;
+  margin-right: 10px;
+  font-size: 14px;
+  color: #14b1e4;
+}
+.coverCls {
+  width: 100%;
+  background-color: #000;
+  position: absolute;
+  z-index: 9999;
+  opacity: 0.7;
+  filter: alpha(opacity=70);
+  left: 0;
+  top: 45px;
+}
+.menuItemCls {
+  position: absolute;
+  z-index: 99999;
+  left: 0;
+  color: #fff;
+}
+.menuItemCls a {
+  display: inline-block;
+  color: #fff;
+  padding: 5px 10px;
+  font-size: 14px;
+}
+.menuItemCls a img {
+  display: inline-block;
+  margin-right: 10px;
 }
