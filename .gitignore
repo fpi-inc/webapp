@@ -4,9 +4,9 @@ ehthumbs.db
 Desktop.ini
 
 /node_modules
-/src
 /material
 /app/lib
+/psd
 *.log
 *~
 *.diff

@@ -1,0 +1,47 @@
+/**
+ * 圆角
+ */
+.border-radius (@radius) {
+    border-radius: @radius;
+    -moz-border-radius: @radius;
+    -webkit-border-radius: @radius;
+}
+
+
+/**
+ * 阴影
+ */
+.box-shadow (@x: 0px, @y: 3px, @blur: 5px, @alpha: 0.5) {
+	-webkit-box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
+	-moz-box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
+	box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
+}
+ 
+/* Implementation
+#somediv {
+	.box-shadow(5px, 5px, 6px, 0.3);
+}
+*/
+
+
+/**
+ * 省略号
+ */
+
+.text-ellipsis{
+    overflow: hidden;
+    white-space: nowrap;
+    -webkit-text-overflow: ellipsis;
+    -khtml-text-overflow: ellipsis; 
+    -icab-text-overflow: ellipsis; 
+    -moz-text-overflow: ellipsis; 
+    -o-text-overflow: ellipsis; 
+    text-overflow: ellipsis; 
+}
+
+
+// Opacity
+.opacity(@opacity) {
+  opacity: @opacity / 100;
+  filter: ~"alpha(opacity=@{opacity})";
+}
