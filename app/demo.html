@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="expanderModule">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>环境监测移动应用系统</title>
+
+    <!-- bootstrap-3.2.0-dist -->
+    <link rel="stylesheet" href="lib/bootstrap-3.2.0-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/bootstrap-3.2.0-dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="dist/css/webapp.css">
+    <script src="lib/jquery-1.11.1.min.js"></script>
+    <script src="lib/bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+      var platformServer = '';
+    </script>
+    <script src="lib/echarts-2.0.2/doc/example/www/js/esl.js"></script>
+    <style>
+   .expander {
+    border: 1px solid black;
+    width: 250px;
+}
+
+.expander>.title {
+    background-color: black;
+    color: white;
+    padding: .1em .3em;
+    cursor: pointer;
+}
+
+.expander>.body {
+    padding: .1em .3em;
+}    </style>
+  </head>
+<body ng-controller='SomeController' >
+        <accordion>
+            <expander class='expander' ng-repeat='expander in expanders' expander-title='expander.title'>
+                {{expander.text}}
+            </expander>
+        </accordion>
+    </body>
+    <script src="lib/angular-1.2.22/angular.min.js"></script>
+    <script>
+        var expModule=angular.module('expanderModule',[])
+expModule.directive('accordion', function() {
+    return {
+        restrict : 'EA',
+        replace : true,
+        transclude : true,
+        template : '<div ng-transclude></div>',
+        controller : function() {
+            var expanders = [];
+            this.gotOpened = function(selectedExpander) {
+                angular.forEach(expanders, function(expander) {
+                    if (selectedExpander != expander) {
+                        expander.showMe = false;
+                    }
+                });
+            }
+            this.addExpander = function(expander) {
+                expanders.push(expander);
+            }
+        }
+    }
+});
+
+expModule.directive('expander', function() {
+    return {
+        restrict : 'EA',
+        replace : true,
+        transclude : true,
+        require : '^?accordion',
+        scope : {
+            title : '=expanderTitle'
+        },
+        template : '<div>'
+                   + '<div class="title" ng-click="toggle()">{{title}}</div>'
+                   + '<div class="body" ng-show="showMe" ng-transclude></div>'
+                   + '</div>',
+        link : function(scope, element, attrs, accordionController) {
+            scope.showMe = false;
+            accordionController.addExpander(scope);
+            scope.toggle = function toggle() {
+                scope.showMe = !scope.showMe;
+                accordionController.gotOpened(scope);
+            }
+        }
+    }
+});
+
+expModule.controller("SomeController",function($scope) {
+    $scope.expanders = [{
+        title : 'Click me to expand',
+        text : 'Hi there folks, I am the content that was hidden but is now shown.'
+    }, {
+        title : 'Click this',
+        text : 'I am even better text than you have seen previously'
+    }, {
+        title : 'Test',
+        text : 'test'
+    }];
+});    </script>
+</html>

@@ -8,18 +8,20 @@ angular.module('fpiwebapp.home.ctrl', [ 'LocalStorageModule'])
 	// if ($scope.regions.length > 0) {
 	// 	$scope.regionName = $scope.regions[0];
 	// };
+    $scope.imgWidth = $(document).width();
+
 	$scope.regionName = localStorageService.get('currentRegion');
 	
+    $scope.showCompanyDetail = function(){
+        var id = 5;
+        $location.path('/companyDetail/:id');
+    }
 
 	//var mapData = ['蒸发量','降水量'];
 	var labelTop = {
 	    normal : {
 	        label : {
-	            show : false,
-	            position : 'top',
-	            textStyle: {
-	                baseline : 'center'
-	            }
+	            show : false
 	        },
 	        labelLine : {
 	            show : false
@@ -28,7 +30,7 @@ angular.module('fpiwebapp.home.ctrl', [ 'LocalStorageModule'])
 	};
 	var labelBottom = {
 	    normal : {
-	        color: '#ccc',
+	        color: '#f5f5f5',
 	        label : {
 	            show : true,
 	            position : 'center',
@@ -45,7 +47,7 @@ angular.module('fpiwebapp.home.ctrl', [ 'LocalStorageModule'])
 	        color: 'rgba(0,0,0,0)'
 	    }
 	};
-	var radius = [30, 20];
+	var radius = [40, 30];
 	require(
         [
             'echarts',
@@ -60,11 +62,19 @@ angular.module('fpiwebapp.home.ctrl', [ 'LocalStorageModule'])
 			        x : 'center',
 			        y : 'bottom',
 			        itemGap: 30,
-			        selectedMode: true,
-			        textStyle: {color: 'auto', fontSize: '14px'},
-			        data:[
-			            '传输率','有效率','传输有效率'
-			        ]
+			        //selectedMode: 'single',
+			        //textStyle: {color: '#000', fontSize: '14px'},
+                    padding: [0, 0, 5, 0],
+			        data:[{
+                        name: '传输率',
+                        icon: "images/legend.png"
+                    },{
+                        name: '有效率',
+                        icon: "images/legend.png"
+                    },{
+                        name: '传输有效率',
+                        icon: "images/legend.png"
+                    }]
 			    },
 			    // title : {
 			    //     text: 'The App World',
@@ -86,7 +96,7 @@ angular.module('fpiwebapp.home.ctrl', [ 'LocalStorageModule'])
 			            radius : radius,
 			            data : [
 			                {name:'other', value:46, itemStyle : labelBottom},
-			                {name:'GoogleMaps', value:54,itemStyle : labelTop}
+			                {name:'传输率', value:54,itemStyle : labelTop}
 			            ]
 			        },
 			        {
@@ -95,7 +105,7 @@ angular.module('fpiwebapp.home.ctrl', [ 'LocalStorageModule'])
 			            radius : radius,
 			            data : [
 			                {name:'other', value:56, itemStyle : labelBottom},
-			                {name:'Facebook', value:44,itemStyle : labelTop}
+			                {name:'有效率', value:44,itemStyle : labelTop}
 			            ]
 			        },
 			        {
@@ -104,7 +114,7 @@ angular.module('fpiwebapp.home.ctrl', [ 'LocalStorageModule'])
 			            radius : radius,
 			            data : [
 			                {name:'other', value:65, itemStyle : labelBottom},
-			                {name:'Youtube', value:35,itemStyle : labelTop}
+			                {name:'传输有效率', value:35,itemStyle : labelTop}
 			            ]
 			        }
 			    ]
@@ -112,5 +122,6 @@ angular.module('fpiwebapp.home.ctrl', [ 'LocalStorageModule'])
             
         }
     );
+
 });
  

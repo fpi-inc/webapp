@@ -2,9 +2,7 @@ angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule'])
  
 .controller('SearchController', function($rootScope, $scope, $location, $routeParams, localStorageService) {
 	
-	$(".coverCls").remove();
-	$(".menuItemCls").remove();
-	$rootScope.isChoice = false;
+	$rootScope.menu.hideItems();
 	//查询
 	$scope.searchCompanyName = [];
 	$scope.name = $routeParams.name;

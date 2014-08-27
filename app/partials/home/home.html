@@ -4,15 +4,15 @@
  	<div id="main" style="height:400px;border:1px solid #ccc;padding:10px;"></div> -->
 <div class="fpiwebapp-content">
 	<div class="fpiwebapp-header">
-		<a class="menu-control"><img src="images/menu.png" ng-click="choiceMenu();" width="20" height="20" border="none"></a>
+		<a class="menu-control" ng-click="choiceMenu();"><img src="images/menu.png" width="20" height="20" border="none"></a>
 		<a href="#/selectRegion" class="name">{{regionName || '杭州'}}</a>
 		<a href="#/selectRegion" class="xl"><img src="images/xl.png" width="11" height="11" border="none"></a>
 
-		<a href="javascirpt:;" class="refresh"><img src="images/resh.png" width="17" height="17" border="none"></a>
+		<a href="#" class="refresh"><img src="images/resh.png" width="17" height="17" border="none"></a>
 		<a href="#/search" class="search"><img src="images/search.png" width="17" height="17" border="none"></a>
 	</div>
 	<div class="realtime-status">
-		<div class="bg"><img src="images/homebg.png" width="100%" height="125" border="0"></div>
+        <div class="bg"><img src="images/homebg.png" width="{{imgWidth}}" height="125" border="0"></div>
 		<div class="bottom-bg"></div>
 		<h1 class="title">监测点实时状态</h1>
 		<div class="data-show">
@@ -45,7 +45,7 @@
 		<div class="fpiwebapp-home-panel-title border-top-line">超标排行榜（2014-08-07）</div>
 		<div class="fpiwebapp-home-panel-body bg-color">
 			<ul class="fpiwebapp-ul-list">
-				<li class="border-image-1px">
+				<li class="border-image-1px" ng-click="showCompanyDetail();">
 					<div class="company-name">
 						<div class="company-name-fir">马龙供排水出水口</div>
 						<div class="company-name-sec">马龙供排水有限公司</div>

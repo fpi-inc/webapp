@@ -2,9 +2,11 @@ angular.module('fpiwebapp.region.ctrl', ['LocalStorageModule'])
  
 .controller('SelectRegionController', function($scope, $location, $rootScope, localStorageService) {
 
-	$(".coverCls").remove();
-	$(".menuItemCls").remove();
-	$rootScope.isChoice = false;
+	//$(".coverCls").remove();
+	//$(".menuItemCls").remove();
+	//$rootScope.isChoice = false;
+    $rootScope.menu.hideItems();
+
 	//init 地区
 	var regions = ['滨江', '江干', '西湖', '上城', '拱墅', '萧山', '下城', '余杭', '杭州'];
 	//从服务端获取地区数据

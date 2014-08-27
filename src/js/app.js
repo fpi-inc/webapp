@@ -8,6 +8,7 @@ angular.module('fpiwebapp', [
   'fpiwebapp.exceed.ctrl',
   'fpiwebapp.transport.ctrl',
   'fpiwebapp.personal.ctrl',
+  'fpiwebapp.companyDetail.ctrl',
   'fpiwebapp.common'
   ])
  
@@ -37,6 +38,10 @@ angular.module('fpiwebapp', [
       controller:'PersonalController',
       templateUrl:'/app/partials/personal/personal.html'
     })
+    .when('/companyDetail/:id', {
+      controller:'CompanyDetailController',
+      templateUrl:'/app/partials/company/companyDetail.html'
+    })
     // .when('/edit/:projectId', {
     //   controller:'EditCtrl',
     //   templateUrl:'detail.html'
@@ -54,15 +59,16 @@ angular.module('fpiwebapp', [
   };
   
   //menu
-  $rootScope.isChoice = false;
-  var menu = new MenuServer();
+  //$rootScope.isChoice = false;
+  $rootScope.menu = new MenuServer();
+  $rootScope.menu.init();
   //系统菜单
   $rootScope.choiceMenu = function(){
-    if($rootScope.isChoice){
-      return;
-    }
-    menu.init();
-    $rootScope.isChoice = true;
+    //if($rootScope.isChoice){
+    //  return;
+    //}
+    $rootScope.menu.showItems();
+    //$rootScope.isChoice = true;
   }
 
 });

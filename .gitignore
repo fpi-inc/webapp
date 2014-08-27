@@ -8,6 +8,7 @@ Desktop.ini
 /app/lib
 /psd
 *.log
+*.swp
 *~
 *.diff
 *.patch

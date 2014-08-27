@@ -13,6 +13,7 @@ angular.module('fpiwebapp.common', [])
 		init: function(){
 			this.createMenu();
 			this.createBgDom();
+            this.hideItems();
 		},
 		// remove: function(){
 		// 	if (this.cover) {
@@ -22,6 +23,25 @@ angular.module('fpiwebapp.common', [])
 		// 		}
 		// 	};
 		// },
+        showItems: function(){
+            var self = this;
+            for(var i = 0; i < self.menuArray.length; i++){
+                $(self.menuArray[i]).show();
+				(function(item){
+					setTimeout(function(){
+						$(self.menuArray[item]).animate({left: '20px'});
+					}, ((item + 1) * 100));
+				})(i);
+            }
+            $(self.cover).show();
+        },
+        hideItems: function(){
+            var self = this;
+            for(var i = 0; i < self.menuArray.length; i++){
+                $(self.menuArray[i]).hide().css('left', '0');
+            }
+            $(self.cover).hide();
+        },
 		createBgDom: function(){
 			var self = this;
 			this.cover = document.createElement('div');
@@ -30,8 +50,8 @@ angular.module('fpiwebapp.common', [])
 			$("body").append(this.cover);
 			
 			this.cover.addEventListener('click', function(){
-				this.remove();
-				self.removeMenuItem();
+				//this.remove();
+				self.hideItems();
 			});
 		},
 		removeCoverItem: function(){
@@ -76,14 +96,8 @@ angular.module('fpiwebapp.common', [])
 				pmenu.push(menuItem);
 				menuItem.addEventListener('click', function(){
 					//this.remove();
-					self.removeCoverItem();
-					self.removeMenuItem();
+					self.hideItems();
 				});
-				(function(item){
-					setTimeout(function(){
-						$(pmenu[item]).animate({left: '20px'});
-					}, ((item + 1) * 100));
-				})(i);
 			}
 		}
 	};

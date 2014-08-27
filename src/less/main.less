@@ -11,6 +11,25 @@ a:hover{
 	text-decoration: none;
 }
 
+.fpiwebapp-detail-header{
+	height: 45px;
+	background-color: #14b1e4;
+	border-top: 1px solid #0080a9;
+    position: relative;
+    color: #fff;
+    text-align: center;
+    line-height: 45px;
+    font-size: 16px;
+    & a.menu-control{
+        position: absolute;
+        top: 0;
+        width: 45px;
+        height: 45px;
+        text-align: center;
+        left: 0;
+    }
+}
+
 .fpiwebapp-header{
 	height: 45px;
 	background-color: #14b1e4;
@@ -18,25 +37,41 @@ a:hover{
 	.menu-control{
 		float: left;
 		display: inline-block;
-		margin: 11px 0 0 14px;
+        width: 45px;
+        height: 34px;
+        padding-top: 11px;
+        text-align: center;
 	}
 	.name{
 		float: left;
 		color: #fff;
 		font-size: 14px;
-		margin: 13px 0 0 10px;
+        height: 45px;
+        line-height: 45px;
+        width: 45px;
+        text-align: center;
+        display: inline-block;
 	}
 	.xl{
 		float: left;
-		margin: 11px 0 0 5px;
+        height: 34px;
+        padding-top: 11px;
+        display: inline-block;
 	}
 	.search{
 		float: right;
-		margin: 11px 20px 0 0;
+        display: inline-block;
+        padding-top: 11px;
+        height: 34px;
+        width: 35px;
+        text-align: center;
 	}
 	.refresh{
 		float: right;
-		margin: 10px 10px 0 0;
+        padding-top: 10px;
+        height: 35px;
+        width: 45px;
+        text-align: center;
 	}
 	& p.titleitem{
 		position: absolute;
@@ -112,7 +147,9 @@ a:hover{
 
 //fpiwebapp-home-panel
 .fpiwebapp-home-panel{
-
+    .border-line{
+        border-bottom: 1px solid #dbdbdb;
+    }
 	.fpiwebapp-home-panel-title{
 		height: 30px;
 		background-color: #f5f5f5;
@@ -131,7 +168,31 @@ a:hover{
 		font-weight: 700;
 	}
 	.fpiwebapp-home-panel-body{
+        .tab{
+            height: 30px;
+            line-height: 30px;
+            -webkit-box-shadow:0px 2px 2px #f4f4f4;
+            -moz-box-shadow:0px 2px 2px #f4f4f4;
+            position: relative;
+            text-align: center;
+            & a{
+                display: inline-block;
+                color: #333;
+                font-size: 12px;
+                width: 30%;
+
+            }
+            & i.c-line{
+                height: 3px;
+                background-color: #14b1e4;
+                width: 30%;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+            }
+        }
 	}
+
 }
 
 ul, li, h1{
@@ -277,6 +338,11 @@ ul.fpiwebapp-ul-list{
 	margin-right: 10px;
 	font-size: 14px;
 	color: #14b1e4;
+    display: inline-block;
+    height: 45px;
+    width: 35px;
+    text-align: center;
+    line-height: 45px;
 }
 
 //coverCls
