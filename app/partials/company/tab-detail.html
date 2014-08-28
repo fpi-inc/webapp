@@ -1,11 +1,106 @@
-<div>
+<div ng-controller="CompanyDetailTabController">
     <div class="tab">
         <a href="javascript:;">实时数据</a>
         <a href="javascript:;">历史数据</a>
         <a href="javascript:;">超标数据</a>
         <i class="c-line"></i>
     </div>
-    <div class="tab-content">实时数据</div>
-    <div class="tab-content">历史数据</div>
-    <div class="tab-content">超标数据</div>
+    <div class="tab-content">
+        <div class="p-title">24小时数据</div>
+        <div style="height: 150px; background-color: #f4f4f4;" id="linemain"></div>
+        <div class="p-point">
+            <a href="javascript:;" class="cur"></a>
+            <a href="javascript:;"></a>
+        </div>
+        <table class="fpiwebapp-detail-table">
+            <tr class="num">
+                <th><p class="border-image-bottom-1px">因子</p></th>
+                <th><p class="border-image-bottom-1px">值</p></th>
+                <th><p class="border-image-bottom-1px">单位</p></th>
+                <th><p class="border-image-bottom-1px">标准</p></th>
+            </tr>
+            <tr>
+                <td><p class="border-image-bottom-1px">COD</p></td>
+                <td><p class="border-image-bottom-1px">16.27</p></td>
+                <td><p class="border-image-bottom-1px">mg/l</p></td>
+                <td><p class="border-image-bottom-1px">50</p></td>
+            </tr>
+            <tr>
+                <td><p class="border-image-bottom-1px">COD</p></td>
+                <td><p class="border-image-bottom-1px">16.27</p></td>
+                <td><p class="border-image-bottom-1px">mg/l</p></td>
+                <td><p class="border-image-bottom-1px">50</p></td>
+            </tr>
+            <tr>
+                <td><p class="border-image-bottom-1px">COD</p></td>
+                <td><p class="border-image-bottom-1px">16.27</p></td>
+                <td><p class="border-image-bottom-1px">mg/l</p></td>
+                <td><p class="border-image-bottom-1px">50</p></td>
+            </tr>
+        </table>
+    </div>
+    <div class="tab-content">
+        <table class="fpiwebapp-detail-table">
+            <tr class="num">
+                <th><p class="border-image-bottom-1px">时间</p></th>
+                <th><p class="border-image-bottom-1px">因子</p></th>
+                <th><p class="border-image-bottom-1px">值</p></th>
+                <th><p class="border-image-bottom-1px">单位</p></th>
+                <th><p class="border-image-bottom-1px">标准</p></th>
+            </tr>
+            <tr>
+                <td><p class="border-image-bottom-1px">08.06 12</p></td>
+                <td><p class="border-image-bottom-1px">COD</p></td>
+                <td><p class="border-image-bottom-1px">16.27</p></td>
+                <td><p class="border-image-bottom-1px">mg/l</p></td>
+                <td><p class="border-image-bottom-1px">50</p></td>
+            </tr>
+            <tr>
+                <td><p class="border-image-bottom-1px">08.06 12</p></td>
+                <td><p class="border-image-bottom-1px">COD</p></td>
+                <td><p class="border-image-bottom-1px">16.27</p></td>
+                <td><p class="border-image-bottom-1px">mg/l</p></td>
+                <td><p class="border-image-bottom-1px">50</p></td>
+            </tr>
+            <tr>
+                <td><p class="border-image-bottom-1px">08.06 12</p></td>
+                <td><p class="border-image-bottom-1px">COD</p></td>
+                <td><p class="border-image-bottom-1px">16.27</p></td>
+                <td><p class="border-image-bottom-1px">mg/l</p></td>
+                <td><p class="border-image-bottom-1px">50</p></td>
+            </tr>
+        </table>
+    </div>
+    <div class="tab-content">
+        <table class="fpiwebapp-detail-table">
+            <tr class="num">
+                <th><p class="border-image-bottom-1px">因子</p></th>
+                <th><p class="border-image-bottom-1px">标准值</p></th>
+                <th><p class="border-image-bottom-1px">超标区间</p></th>
+                <th><p class="border-image-bottom-1px">超标倍数</p></th>
+                <th><p class="border-image-bottom-1px">时长</p></th>
+            </tr>
+            <tr>
+                <td><p class="border-image-bottom-1px">COD</p></td>
+                <td><p class="border-image-bottom-1px">200</p></td>
+                <td><p class="border-image-bottom-1px">248.54~626.14</p></td>
+                <td><p class="border-image-bottom-1px">0.24~2.13</p></td>
+                <td><p class="border-image-bottom-1px">10h</p></td>
+            </tr>
+            <tr>
+                <td><p class="border-image-bottom-1px">COD</p></td>
+                <td><p class="border-image-bottom-1px">200</p></td>
+                <td><p class="border-image-bottom-1px">248.54~626.14</p></td>
+                <td><p class="border-image-bottom-1px">0.24~2.13</p></td>
+                <td><p class="border-image-bottom-1px">10h</p></td>
+            </tr>
+            <tr>
+                <td><p class="border-image-bottom-1px">COD</p></td>
+                <td><p class="border-image-bottom-1px">200</p></td>
+                <td><p class="border-image-bottom-1px">248.54~626.14</p></td>
+                <td><p class="border-image-bottom-1px">0.24~2.13</p></td>
+                <td><p class="border-image-bottom-1px">10h</p></td>
+            </tr>
+        </table>
+    </div>
 </div>

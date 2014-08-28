@@ -9,6 +9,7 @@ angular.module('fpiwebapp', [
   'fpiwebapp.transport.ctrl',
   'fpiwebapp.personal.ctrl',
   'fpiwebapp.companyDetail.ctrl',
+  'fpiwebapp.companyDetailTab.ctrl',
   'fpiwebapp.common'
   ])
  

@@ -9,6 +9,7 @@ Desktop.ini
 /psd
 *.log
 *.swp
+*.swo
 *~
 *.diff
 *.patch

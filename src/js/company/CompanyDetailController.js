@@ -1,10 +1,5 @@
 angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule'])
  
-.controller('CompanyDetailController', function($scope, $location, $window, $routeParams, localStorageService, MenuServer) {
-	console.log($routeParams);
-
-    
-})
 
 .directive('tabDetail', function(){
     return{
@@ -37,5 +32,9 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule'])
             }
         }
     }
+})
+.controller('CompanyDetailController', function($scope, $location, $window, $routeParams, localStorageService, MenuServer) {
+	console.log($routeParams);
+       
 });
- 
+
