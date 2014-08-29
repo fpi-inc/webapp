@@ -4,18 +4,31 @@ angular.module('fpiwebapp', [
   'fpiwebapp.region.service',
   'fpiwebapp.region.ctrl',
   'fpiwebapp.search.ctrl',
+  'fpiwebapp.category.ctrl',
+  'fpiwebapp.login.ctrl',
   'fpiwebapp.home.ctrl',
   'fpiwebapp.exceed.ctrl',
   'fpiwebapp.transport.ctrl',
   'fpiwebapp.personal.ctrl',
   'fpiwebapp.companyDetail.ctrl',
   'fpiwebapp.companyDetailTab.ctrl',
-  'fpiwebapp.common'
+  'fpiwebapp.common',
+  'fpiwebapp.login.service',
+  'fpiwebapp.directives',
+  'angular-md5'
   ])
  
 .config(function($routeProvider) {
   $routeProvider
     .when('/', {
+      controller:'LoginController',
+      templateUrl:'/app/partials/login/login.html'
+    })
+    .when('/category', {
+      controller:'CategoryController',
+      templateUrl:'/app/partials/category/category.html'
+    })
+    .when('/main', {
       controller:'HomeController',
       templateUrl:'/app/partials/home/home.html'
     })
@@ -54,23 +67,28 @@ angular.module('fpiwebapp', [
 
 .run(function($http, $rootScope, $window, $location, MenuServer){
  
-  //history 返回
-  $rootScope.back = function(){
-    $window.history.back();
-  };
-  
-  //menu
-  //$rootScope.isChoice = false;
-  $rootScope.menu = new MenuServer();
-  $rootScope.menu.init();
-  //系统菜单
-  $rootScope.choiceMenu = function(){
-    //if($rootScope.isChoice){
-    //  return;
-    //}
-    $rootScope.menu.showItems();
-    //$rootScope.isChoice = true;
-  }
+    //history 返回
+    $rootScope.back = function(){
+        $window.history.back();
+    };
+
+    //menu
+    //$rootScope.isChoice = false;
+    $rootScope.menu = new MenuServer();
+    $rootScope.menu.init();
+    //系统菜单
+    $rootScope.choiceMenu = function(){
+        //if($rootScope.isChoice){
+        //  return;
+        //}
+        $rootScope.menu.showItems();
+        //$rootScope.isChoice = true;
+    }
+
+
+    //height
+    $rootScope.contentHeight = $(window).innerHeight();
+    //console.log($scope.contentHeight);
 
 });
  

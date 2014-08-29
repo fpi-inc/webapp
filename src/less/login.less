@@ -1,0 +1,67 @@
+//login
+
+.login-content{
+    height: 100%;
+    width: 100%;
+    background-color: #14b1e4;
+    .logo{
+        width: 131px;
+        margin: 0 auto;
+        padding-top: 60px;
+    }
+    .text-area{
+        margin: 20px;
+        background-color: #fff;
+        .border-radius(5px);
+        & p{
+            margin: 0;
+            padding: 10px;
+            & input{
+                border: none;
+                background-color: #fff;
+            }
+            &.line{
+                border-width: 0px 0px 1px 0px;
+                -webkit-border-image: url("../../images/border.png") 2 0 stretch;
+                border-image: url("../../images/border.png") 2 0 stretch;
+            }
+        }
+    }
+    .sub-controller{
+        margin: 20px;
+        height: 44px;
+        & input{
+            height: 44px;
+            background-color: #5bc9ec;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            line-height: 44px;
+            font-size: 14px;
+            color: #fff;
+            width: 100%;
+            .border-radius(5px);
+        }
+    }
+}
+
+
+//category
+.category{
+    width: 100%;
+    background-color: #e3e3ea;
+    .title{
+        margin-bottom: 40px;
+        height: 45px;
+        line-height: 45px;
+        text-align: center;
+        color: #fff;
+        font-size: 18px;
+        background-color: #14b1e4;
+    }
+    & table tr td{
+        padding: 4px;
+        text-align: center;
+        color: #333;
+    }
+}

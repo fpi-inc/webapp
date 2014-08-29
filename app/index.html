@@ -22,6 +22,10 @@
       var platformServer = '';
     </script>
     <script src="lib/echarts-2.0.2/doc/example/www/js/esl.js"></script>
+
+      <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
   </head>
   <body>
     <div ng-view></div>
@@ -30,12 +34,16 @@
     <script src="lib/angular-1.2.22/angular-route.min.js"></script>
     <script src="lib/angular-1.2.22/angular-resource.min.js"></script>
     <script src="lib/angular-1.2.22/angular-cookies.min.js"></script>
+    <script src="lib/angular-1.2.22/angular-md5.min.js"></script>
     <script src="lib/angular-local-storage/angular-local-storage.min.js"></script>
 
     <script src="../src/js/app.js"></script>
     <script src="../src/js/region/RegionService.js"></script>
     <script src="../src/js/region/SelectRegionController.js"></script>
     <script src="../src/js/search/SearchController.js"></script>
+    <script src="../src/js/category/CategoryController.js"></script>
+    <script src="../src/js/login/LoginController.js"></script>
+    <script src="../src/js/login/LoginService.js"></script>
     <script src="../src/js/home/HomeController.js"></script>
     <script src="../src/js/exceed/ExceedController.js"></script>
     <script src="../src/js/transport/TransportController.js"></script>
@@ -43,6 +51,7 @@
     <script src="../src/js/company/CompanyDetailController.js"></script>
     <script src="../src/js/company/CompanyDetailTabController.js"></script>
     <script src="../src/js/common/Common.js"></script>
+    <script src="../src/js/directive/datepicker.js"></script>
 
     <script type="text/javascript">
     // Step:3 conifg ECharts's path, link to echarts.js from current page.
@@ -63,22 +72,22 @@
     <div id="demo"></div>
     <script>
 function localSearch(){
-                 $("#demo").html('<b class="znm_cuticon">&#xe626;</b>正在获取您的当前城市');
-                 navigator.geolocation.getCurrentPosition(function(position){
-                     var y = position.coords.longitude,
-                     x = position.coords.latitude,
-                     //url = "http://maps.google.com/maps/api/geocode/json?latlng=" + x + "," + y + "&language=zh-CN&sensor=true";
-                 url = "http://api.map.baidu.com/geocoder/v2/?ak=E4805d16520de693a3fe707cdc962045&callback=renderReverse&location=" + x + "," + y + "&output=json&pois=1";
-                 $.getJSON(url,function(d){
-                     var mapCity = d.results.length - 3;
-                     $("#demo").html('<b class="znm_cuticon">&#xe626;</b>' + d.results[mapCity].address_components[0].long_name);
-                 });
-                 },function(){
-                     $("#demo").html('<b class="znm_cuticon">&#xe626;</b>获取当前位置失败，请重试');
-                 });
-             }
+    $("#demo").html('正在获取您的当前城市');
+    navigator.geolocation.getCurrentPosition(function(position){
+        var y = position.coords.longitude,
+        x = position.coords.latitude,
+        //url = "http://maps.google.com/maps/api/geocode/json?latlng=" + x + "," + y + "&language=zh-CN&sensor=true";
+        url = "http://api.map.baidu.com/geocoder/v2/?ak=E4805d16520de693a3fe707cdc962045&callback=renderReverse&location=" + x + "," + y + "&output=json&pois=1";
+    $.getJSON(url,function(d){
+        var mapCity = d.results.length - 3;
+        $("#demo").html('<b class="znm_cuticon">&#xe626;</b>' + d.results[mapCity].address_components[0].long_name);
+    });
+    },function(){
+        $("#demo").html('<b class="znm_cuticon">&#xe626;</b>获取当前位置失败，请重试');
+    });
+}
 
-localSearch();
+//localSearch();
     </script>
   </body>
 </html>

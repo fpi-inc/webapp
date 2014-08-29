@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="expanderModule">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -35,72 +35,28 @@
     padding: .1em .3em;
 }    </style>
   </head>
-<body ng-controller='SomeController' >
-        <accordion>
-            <expander class='expander' ng-repeat='expander in expanders' expander-title='expander.title'>
-                {{expander.text}}
-            </expander>
-        </accordion>
-    </body>
-    <script src="lib/angular-1.2.22/angular.min.js"></script>
-    <script>
-        var expModule=angular.module('expanderModule',[])
-expModule.directive('accordion', function() {
-    return {
-        restrict : 'EA',
-        replace : true,
-        transclude : true,
-        template : '<div ng-transclude></div>',
-        controller : function() {
-            var expanders = [];
-            this.gotOpened = function(selectedExpander) {
-                angular.forEach(expanders, function(expander) {
-                    if (selectedExpander != expander) {
-                        expander.showMe = false;
-                    }
-                });
-            }
-            this.addExpander = function(expander) {
-                expanders.push(expander);
-            }
-        }
-    }
-});
 
-expModule.directive('expander', function() {
-    return {
-        restrict : 'EA',
-        replace : true,
-        transclude : true,
-        require : '^?accordion',
-        scope : {
-            title : '=expanderTitle'
-        },
-        template : '<div>'
-                   + '<div class="title" ng-click="toggle()">{{title}}</div>'
-                   + '<div class="body" ng-show="showMe" ng-transclude></div>'
-                   + '</div>',
-        link : function(scope, element, attrs, accordionController) {
-            scope.showMe = false;
-            accordionController.addExpander(scope);
-            scope.toggle = function toggle() {
-                scope.showMe = !scope.showMe;
-                accordionController.gotOpened(scope);
-            }
-        }
-    }
-});
+<body ng-app="YOUR_APP" ng-controller="MainCtrl">
+  <img src="http://www.gravatar.com/avatar/{{ email | gravatar }}">
+  <input type="email" ng-model="email" placeholder="Email Address">
+  {{ message }}
+</body>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
+<script src="angular-md5.js"></script>
+<script>
+  angular.module('YOUR_APP', [
+    'angular-md5', // you may also use 'ngMd5' or 'gdi2290.md5'
+    'controllers'
+  ]);
+  angular.module('controllers', [])
+    .controller('MainCtrl', ['$scope', 'md5', function($scope, md5) {
 
-expModule.controller("SomeController",function($scope) {
-    $scope.expanders = [{
-        title : 'Click me to expand',
-        text : 'Hi there folks, I am the content that was hidden but is now shown.'
-    }, {
-        title : 'Click this',
-        text : 'I am even better text than you have seen previously'
-    }, {
-        title : 'Test',
-        text : 'test'
-    }];
-});    </script>
+      $scope.$watch('email' ,function() {
+        $scope.message = 'Your email Hash is: ' + md5.createHash($scope.email || '');
+      });
+
+    }]);
+</script>
+
+
 </html>

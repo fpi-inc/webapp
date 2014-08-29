@@ -404,3 +404,69 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   text-align: center;
   line-height: 30px;
 }
+.login-content {
+  height: 100%;
+  width: 100%;
+  background-color: #14b1e4;
+}
+.login-content .logo {
+  width: 131px;
+  margin: 0 auto;
+  padding-top: 60px;
+}
+.login-content .text-area {
+  margin: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+.login-content .text-area p {
+  margin: 0;
+  padding: 10px;
+}
+.login-content .text-area p input {
+  border: none;
+  background-color: #fff;
+}
+.login-content .text-area p.line {
+  border-width: 0px 0px 1px 0px;
+  -webkit-border-image: url("../../images/border.png") 2 0 stretch;
+  border-image: url("../../images/border.png") 2 0 stretch;
+}
+.login-content .sub-controller {
+  margin: 20px;
+  height: 44px;
+}
+.login-content .sub-controller input {
+  height: 44px;
+  background-color: #5bc9ec;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  line-height: 44px;
+  font-size: 14px;
+  color: #fff;
+  width: 100%;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+.category {
+  width: 100%;
+  background-color: #e3e3ea;
+}
+.category .title {
+  margin-bottom: 40px;
+  height: 45px;
+  line-height: 45px;
+  text-align: center;
+  color: #fff;
+  font-size: 18px;
+  background-color: #14b1e4;
+}
+.category table tr td {
+  padding: 4px;
+  text-align: center;
+  color: #333;
+}

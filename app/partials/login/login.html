@@ -1,0 +1,17 @@
+<div class="login-content" style="height: {{contentHeight}}px">
+    <div class="logo"><img src="images/logo.png" width="131" height="114"></div>
+    <form ng-submit="submit();">
+        <div class="text-area">
+            <p class="line"><input type="text" ng-model="user" name="username" placeholder="用户名" /></p>
+            <p><input type="password" ng-model="passw" name="password" placeholder="密码" /></p>
+        </div>
+        <div class="sub-controller"><input type="submit" id="submit" value="登录" /></div>
+    </form>
+</div>
+<!-- <form ng-submit="submit()">
+    <div style="padding: 10px;">输入用户名和密码</div>
+    <div style="padding: 10px;"><input type="text" ng-model="user" name="username" /></div>
+    <div style="padding: 10px;"><input type="password" ng-model="passw" name="password" /></div>
+    <div style="padding: 10px;"><input type="submit" id="submit" value="登录" /></div>
+    <pre>{{list}}</pre>
+</form> -->

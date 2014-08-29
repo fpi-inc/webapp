@@ -1,8 +1,13 @@
-angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule'])
+angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwebapp.directives'])
  
 
 .controller('CompanyDetailTabController', function($scope, $location, $window, $routeParams, localStorageService, MenuServer) {
 	console.log($routeParams);
+    $scope.myText = 'Not Selected';
+    $scope.currentDate = '';
+    $scope.updateMyText = function(date) {
+        $scope.myText = 'Selected';
+    };
     require(
         [
         'echarts',

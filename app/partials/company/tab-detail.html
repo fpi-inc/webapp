@@ -40,6 +40,10 @@
         </table>
     </div>
     <div class="tab-content">
+        <div style="padding: 10px;">
+            <input id="dateField" datepicker ng-model="currentDate" readonly="true" select="updateMyText(date)">
+        </div>
+        <div>{{myText}} - {{currentDate}}</div>
         <table class="fpiwebapp-detail-table">
             <tr class="num">
                 <th><p class="border-image-bottom-1px">时间</p></th>
