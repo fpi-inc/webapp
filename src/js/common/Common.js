@@ -71,7 +71,7 @@ angular.module('fpiwebapp.common', [])
 			var pmenu = [];
 			var menus = [{
 				name: '首页',
-				href: '#/',
+				href: '#/main',
 				url: 'images/home.png'
 			},{
 				name: '超标统计',

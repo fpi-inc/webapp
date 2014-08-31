@@ -104,7 +104,11 @@ angular.module('fpiwebapp.home.ctrl', [ 'LocalStorageModule'])
 	// if ($scope.regions.length > 0) {
 	// 	$scope.regionName = $scope.regions[0];
 	// };
+    
     $scope.imgWidth = $(document).width();
+    //window.onorientationchange = function(){
+    //    $scope.imgWidth = $(document).width();
+    //}
 
 	$scope.regionName = localStorageService.get('currentRegion');
 	

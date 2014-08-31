@@ -30,7 +30,7 @@ angular.module('fpiwebapp.region.ctrl', ['LocalStorageModule'])
   		localStorageService.clearAll();
   		// Set a key
     	localStorageService.set('currentRegion', name);
-  		$location.path("#/");
+  		$location.path("/main");
   	}
 	
 });
