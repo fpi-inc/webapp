@@ -5,7 +5,7 @@ angular.module('fpiwebapp', [
   'fpiwebapp.region.ctrl',
   'fpiwebapp.search.ctrl',
   'fpiwebapp.category.ctrl',
-  'fpiwebapp.login.ctrl',
+  //'fpiwebapp.login.ctrl',
   'fpiwebapp.home.ctrl',
   'fpiwebapp.exceed.ctrl',
   'fpiwebapp.transport.ctrl',
@@ -13,22 +13,23 @@ angular.module('fpiwebapp', [
   'fpiwebapp.companyDetail.ctrl',
   'fpiwebapp.companyDetailTab.ctrl',
   'fpiwebapp.common',
-  'fpiwebapp.login.service',
+  'fpiwebapp.home.service',
   'fpiwebapp.directives',
-  'angular-md5'
+  'angular-md5',
+  'LocalStorageModule'
   ])
  
 .config(function($routeProvider) {
   $routeProvider
+    //.when('/', {
+    //  controller:'LoginController',
+    //  templateUrl:'/app/partials/login/login.html'
+    //})
+    //.when('/category', {
+    //  controller:'CategoryController',
+    //  templateUrl:'/app/partials/category/category.html'
+    //})
     .when('/', {
-      controller:'LoginController',
-      templateUrl:'/app/partials/login/login.html'
-    })
-    .when('/category', {
-      controller:'CategoryController',
-      templateUrl:'/app/partials/category/category.html'
-    })
-    .when('/main', {
       controller:'HomeController',
       templateUrl:'/app/partials/home/home.html'
     })
@@ -65,7 +66,7 @@ angular.module('fpiwebapp', [
     });
 })
 
-.run(function($http, $rootScope, $window, $location, MenuServer){
+.run(function($http, $rootScope, $window, $location, MenuServer, localStorageService){
  
     //history 返回
     $rootScope.back = function(){
@@ -74,8 +75,8 @@ angular.module('fpiwebapp', [
 
     //menu
     //$rootScope.isChoice = false;
-    $rootScope.menu = new MenuServer();
-    $rootScope.menu.init();
+    //$rootScope.menu = new MenuServer();
+    //$rootScope.menu.init();
     //系统菜单
     $rootScope.choiceMenu = function(){
         //if($rootScope.isChoice){
@@ -85,32 +86,50 @@ angular.module('fpiwebapp', [
         //$rootScope.isChoice = true;
     }
 
-
     //height
     $rootScope.contentHeight = $(window).innerHeight();
     //console.log($scope.contentHeight);
+
+    //检查登录帐号
+    $rootScope.checkUser = function(){
+        $rootScope.user = localStorageService.get('currentUser'); 
+        if(!$rootScope.user){
+            $window.location.href = "/";
+        }
+        else{
+            return $rootScope.user;
+        }
+    };
 
 });
  
 
 
-angular.module('fpiwebapp.home.ctrl', [ 'LocalStorageModule'])
+angular.module('fpiwebapp.home.ctrl', [ 'LocalStorageModule', 'fpiwebapp.home.service'])
  
-.controller('HomeController', function($scope, $location, $window, localStorageService, MenuServer) {
-	// //init 地区
-	// $scope.regions = ['滨江', '江干', '西湖'];
-	// //从服务端获取地区数据
-	// //
-	// if ($scope.regions.length > 0) {
-	// 	$scope.regionName = $scope.regions[0];
-	// };
+.controller('HomeController', function($scope, $rootScope, $location, $window, localStorageService, MenuServer, RegionService, HomeService) {
     
-    $scope.imgWidth = $(document).width();
-    //window.onorientationchange = function(){
-    //    $scope.imgWidth = $(document).width();
-    //}
+    $scope.currentRegion = localStorageService.get('currentRegions');
 
-	$scope.regionName = localStorageService.get('currentRegion');
+    HomeService.getState({
+        monitorTypeCode: 'WW',
+        regionCode: '33010400',
+        userName: 'root'
+    }, function(result){
+        console.log(result);
+    });
+
+    console.log($rootScope.checkUser());
+
+    $scope.imgWidth = $(document).width();
+    RegionService.query(function(result){
+        var data = result.region;
+        if(data){
+            $scope.regionName = localStorageService.get('currentRegion') || data[0].regionName;
+            //localStorageService.set('currentRegion', $scope.regionName);
+        }
+    });
+	//$scope.regionName = localStorageService.get('currentRegion');
 	
     $scope.showCompanyDetail = function(){
         var id = 5;
@@ -118,7 +137,7 @@ angular.module('fpiwebapp.home.ctrl', [ 'LocalStorageModule'])
     }
 
 	//var mapData = ['蒸发量','降水量'];
-	var labelTop = {
+	/* var labelTop = {
 	    normal : {
 	        label : {
 	            show : false
@@ -221,7 +240,43 @@ angular.module('fpiwebapp.home.ctrl', [ 'LocalStorageModule'])
             });
             
         }
-    );
+    );*/
+
+
+    //var supportOrientation=(typeof window.orientation == "number" && typeof window.onorientationchange == "object");  
+
+    //var updateOrientation=function(){  
+    //    if(supportOrientation){  
+    //        updateOrientation=function(){  
+    //            var orientation=window.orientation;  
+    //            switch(orientation){  
+    //            case 90:  
+    //            case -90:  
+    //                orientation="landscape";  
+    //                break;  
+    //            default:  
+    //                orientation="portrait";  
+    //            }  
+    //            document.body.parentNode.setAttribute("class",orientation);  
+    //        };  
+    //    }else{  
+    //        updateOrientation=function(){  
+    //            var orientation=(window.innerWidth > window.innerHeight)? "landscape":"portrait";  
+    //            document.body.parentNode.setAttribute("class",orientation);  
+    //        };  
+    //    }  
+    //    updateOrientation();  
+    //};  
+
+    //var init=function(){  
+    //    updateOrientation();  
+    //    if(supportOrientation){  
+    //        window.addEventListener("orientationchange",updateOrientation,false);  
+    //    }else{      
+    //        window.setInterval(updateOrientation,500);  
+    //    }  
+    //};
+    //init();
 
 });
  

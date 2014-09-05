@@ -1,7 +1,16 @@
 angular.module('fpiwebapp.common', [])
- 
+  
 .factory('platformServer', function() {
   return platformServer;
+})
+
+.factory('LoadingServer', function() {
+  var LoadingServer = function(){
+  };
+  LoadingServer.prototype = {
+  
+  };
+  return LoadingServer;
 })
 
 .factory('MenuServer', function($rootScope) {

@@ -1,4 +1,5 @@
 
+@import "base.less";
 @import "mixin.less";
 
 a:link{
@@ -24,9 +25,10 @@ a:hover{
         position: absolute;
         top: 0;
         width: 45px;
-        height: 45px;
+        height: 40px;
         text-align: center;
         left: 0;
+        padding-top: 5px;
     }
 }
 
@@ -38,8 +40,8 @@ a:hover{
 		float: left;
 		display: inline-block;
         width: 45px;
-        height: 34px;
-        padding-top: 11px;
+        height: 32px;
+        padding-top: 13px;
         text-align: center;
 	}
 	.name{
@@ -48,28 +50,28 @@ a:hover{
 		font-size: 14px;
         height: 45px;
         line-height: 45px;
-        width: 45px;
+        //width: 45px;
         text-align: center;
         display: inline-block;
 	}
 	.xl{
 		float: left;
-        height: 34px;
-        padding-top: 11px;
+        height: 30px;
+        padding-top: 15px;
         display: inline-block;
 	}
 	.search{
 		float: right;
         display: inline-block;
-        padding-top: 11px;
-        height: 34px;
+        padding-top: 13px;
+        height: 32px;
         width: 35px;
         text-align: center;
 	}
 	.refresh{
 		float: right;
-        padding-top: 10px;
-        height: 35px;
+        padding-top: 12px;
+        height: 33px;
         width: 45px;
         text-align: center;
 	}
@@ -416,6 +418,7 @@ ul.fpiwebapp-ul-list{
 		padding: 5px 10px;
 		font-size: 14px;
 		& img{
+            vertical-align: middle;
 			display: inline-block;
 			margin-right: 10px;
 		}
@@ -433,3 +436,9 @@ ul.fpiwebapp-ul-list{
 
 
 @import "login.less";
+@import "layout.less";
+@import "home.less";
+
+
+
+//我的关注

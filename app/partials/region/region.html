@@ -3,11 +3,12 @@
 		选择区域
 		<a href="javascript:;" ng-click="back();" class="fpiwebapp-btn">取消</a>
 	</div>
-	<div class="region-title">当前选择区域：<label>{{currentName || '杭州'}}</label></div>
+	<div class="region-title">当前选择区域：<label>{{currentName}}</label></div>
 
 	<div class="fpiwebapp-home-panel">
 		<div class="fpiwebapp-home-panel-title bold-title">区域列表</div>
 		<div class="fpiwebapp-home-panel-body">
+            <div ng-hide="isLoading" style="padding-top: 30px; text-align: center;"><img src="images/loading.gif" width="30" height="12" border="0"></div>
 			<table class="fpiwebapp-table-sec border-line">
 				<tr ng-repeat="area in areas">
 					<td ng-repeat="region in area" ng-click="selectFunc(region); $event.stopPropagation();">{{region}}</td>

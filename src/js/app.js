@@ -5,7 +5,7 @@ angular.module('fpiwebapp', [
   'fpiwebapp.region.ctrl',
   'fpiwebapp.search.ctrl',
   'fpiwebapp.category.ctrl',
-  'fpiwebapp.login.ctrl',
+  //'fpiwebapp.login.ctrl',
   'fpiwebapp.home.ctrl',
   'fpiwebapp.exceed.ctrl',
   'fpiwebapp.transport.ctrl',
@@ -13,22 +13,23 @@ angular.module('fpiwebapp', [
   'fpiwebapp.companyDetail.ctrl',
   'fpiwebapp.companyDetailTab.ctrl',
   'fpiwebapp.common',
-  'fpiwebapp.login.service',
+  'fpiwebapp.home.service',
   'fpiwebapp.directives',
-  'angular-md5'
+  'angular-md5',
+  'LocalStorageModule'
   ])
  
 .config(function($routeProvider) {
   $routeProvider
+    //.when('/', {
+    //  controller:'LoginController',
+    //  templateUrl:'/app/partials/login/login.html'
+    //})
+    //.when('/category', {
+    //  controller:'CategoryController',
+    //  templateUrl:'/app/partials/category/category.html'
+    //})
     .when('/', {
-      controller:'LoginController',
-      templateUrl:'/app/partials/login/login.html'
-    })
-    .when('/category', {
-      controller:'CategoryController',
-      templateUrl:'/app/partials/category/category.html'
-    })
-    .when('/main', {
       controller:'HomeController',
       templateUrl:'/app/partials/home/home.html'
     })
@@ -65,7 +66,7 @@ angular.module('fpiwebapp', [
     });
 })
 
-.run(function($http, $rootScope, $window, $location, MenuServer){
+.run(function($http, $rootScope, $window, $location, MenuServer, localStorageService){
  
     //history 返回
     $rootScope.back = function(){
@@ -74,8 +75,8 @@ angular.module('fpiwebapp', [
 
     //menu
     //$rootScope.isChoice = false;
-    $rootScope.menu = new MenuServer();
-    $rootScope.menu.init();
+    //$rootScope.menu = new MenuServer();
+    //$rootScope.menu.init();
     //系统菜单
     $rootScope.choiceMenu = function(){
         //if($rootScope.isChoice){
@@ -85,10 +86,20 @@ angular.module('fpiwebapp', [
         //$rootScope.isChoice = true;
     }
 
-
     //height
     $rootScope.contentHeight = $(window).innerHeight();
     //console.log($scope.contentHeight);
+
+    //检查登录帐号
+    $rootScope.checkUser = function(){
+        $rootScope.user = localStorageService.get('currentUser'); 
+        if(!$rootScope.user){
+            $window.location.href = "/";
+        }
+        else{
+            return $rootScope.user;
+        }
+    };
 
 });
  

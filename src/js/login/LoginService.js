@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('fpiwebapp.login.service', ['ngResource']).
-	factory('LoginService', ['$resource', 'platformServer', function($resource, platformServer) {
-		return $resource(platformServer + '', {callback: 'JSON_CALLBACK'}, {
+	factory('LoginService', ['$resource', function($resource) {
+		return $resource('http://122.224.196.67:10001/mobile/mobile/load/login.do', {callback: 'JSON_CALLBACK'}, {
 			query: {method: 'JSONP'}
 		});
 	}]);

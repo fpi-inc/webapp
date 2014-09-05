@@ -1,20 +1,28 @@
-angular.module('fpiwebapp.home.ctrl', [ 'LocalStorageModule'])
+angular.module('fpiwebapp.home.ctrl', [ 'LocalStorageModule', 'fpiwebapp.home.service'])
  
-.controller('HomeController', function($scope, $location, $window, localStorageService, MenuServer) {
-	// //init 地区
-	// $scope.regions = ['滨江', '江干', '西湖'];
-	// //从服务端获取地区数据
-	// //
-	// if ($scope.regions.length > 0) {
-	// 	$scope.regionName = $scope.regions[0];
-	// };
+.controller('HomeController', function($scope, $rootScope, $location, $window, localStorageService, MenuServer, RegionService, HomeService) {
     
-    $scope.imgWidth = $(document).width();
-    //window.onorientationchange = function(){
-    //    $scope.imgWidth = $(document).width();
-    //}
+    $scope.currentRegion = localStorageService.get('currentRegions');
 
-	$scope.regionName = localStorageService.get('currentRegion');
+    HomeService.getState({
+        monitorTypeCode: 'WW',
+        regionCode: '33010400',
+        userName: 'root'
+    }, function(result){
+        console.log(result);
+    });
+
+    console.log($rootScope.checkUser());
+
+    $scope.imgWidth = $(document).width();
+    RegionService.query(function(result){
+        var data = result.region;
+        if(data){
+            $scope.regionName = localStorageService.get('currentRegion') || data[0].regionName;
+            //localStorageService.set('currentRegion', $scope.regionName);
+        }
+    });
+	//$scope.regionName = localStorageService.get('currentRegion');
 	
     $scope.showCompanyDetail = function(){
         var id = 5;
@@ -22,7 +30,7 @@ angular.module('fpiwebapp.home.ctrl', [ 'LocalStorageModule'])
     }
 
 	//var mapData = ['蒸发量','降水量'];
-	var labelTop = {
+	/* var labelTop = {
 	    normal : {
 	        label : {
 	            show : false
@@ -125,7 +133,43 @@ angular.module('fpiwebapp.home.ctrl', [ 'LocalStorageModule'])
             });
             
         }
-    );
+    );*/
+
+
+    //var supportOrientation=(typeof window.orientation == "number" && typeof window.onorientationchange == "object");  
+
+    //var updateOrientation=function(){  
+    //    if(supportOrientation){  
+    //        updateOrientation=function(){  
+    //            var orientation=window.orientation;  
+    //            switch(orientation){  
+    //            case 90:  
+    //            case -90:  
+    //                orientation="landscape";  
+    //                break;  
+    //            default:  
+    //                orientation="portrait";  
+    //            }  
+    //            document.body.parentNode.setAttribute("class",orientation);  
+    //        };  
+    //    }else{  
+    //        updateOrientation=function(){  
+    //            var orientation=(window.innerWidth > window.innerHeight)? "landscape":"portrait";  
+    //            document.body.parentNode.setAttribute("class",orientation);  
+    //        };  
+    //    }  
+    //    updateOrientation();  
+    //};  
+
+    //var init=function(){  
+    //    updateOrientation();  
+    //    if(supportOrientation){  
+    //        window.addEventListener("orientationchange",updateOrientation,false);  
+    //    }else{      
+    //        window.setInterval(updateOrientation,500);  
+    //    }  
+    //};
+    //init();
 
 });
  

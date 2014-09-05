@@ -1,6 +1,8 @@
 angular.module('fpiwebapp.category.ctrl', [ 'LocalStorageModule'])
  
-.controller('CategoryController', function($scope, $location, $window, localStorageService, MenuServer) {
+.controller('CategoryController', function($scope, $rootScope, $location, $window, localStorageService, MenuServer) {
+    $rootScope.checkUser();
+    $('.category').css('height', $rootScope.contentHeight + 'px');
     $scope.list = [];
     $scope.user = '';
     $scope.passw = '';

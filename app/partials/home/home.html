@@ -1,106 +1,112 @@
-<!-- 
-    <div>{{name}}</div>
- <!--    <div>{{categories}}</div>
- 	<div id="main" style="height:400px;border:1px solid #ccc;padding:10px;"></div> -->
-<div class="fpiwebapp-content">
-	<div class="fpiwebapp-header">
-		<a class="menu-control" ng-click="choiceMenu();"><img src="images/menu.png" width="20" height="20" border="none"></a>
-		<a href="#/selectRegion" class="name">{{regionName || '杭州'}}</a>
-		<a href="#/selectRegion" class="xl"><img src="images/xl.png" width="11" height="11" border="none"></a>
-
-		<a href="#/main" class="refresh"><img src="images/resh.png" width="17" height="17" border="none"></a>
-		<a href="#/search" class="search"><img src="images/search.png" width="17" height="17" border="none"></a>
-	</div>
-	<div class="realtime-status">
-        <div class="bg"><img src="images/homebg.png" width="{{imgWidth}}" height="125" border="0"></div>
-		<div class="bottom-bg"></div>
-		<h1 class="title">监测点实时状态</h1>
-		<div class="data-show">
-			<table class="fpiwebapp-table">
-				<tr class="num">
-					<td>2</td>
-					<td>2</td>
-					<td>0</td>
-					<td>2</td>
-					<td>260</td>
-				</tr>
-				<tr>
-					<td>超标</td>
-					<td>断线</td>
-					<td>异常</td>
-					<td>预警</td>
-					<td>正常</td>
-				</tr>
-			</table>
-		</div>
-		<div class="b-info">133家企业，266个监测点，联网率96%</div>
-	</div>
-	<div class="fpiwebapp-home-panel">
-		<div class="fpiwebapp-home-panel-title">数据传输有效率（2014-08-06）</div>
-		<div class="fpiwebapp-home-panel-body" style="height: 110px;">
-			<div id="main" style="height:110px;"></div>
-		</div>
-	</div>
-	<div class="fpiwebapp-home-panel">
-		<div class="fpiwebapp-home-panel-title border-top-line">超标排行榜（2014-08-07）</div>
-		<div class="fpiwebapp-home-panel-body bg-color">
-			<ul class="fpiwebapp-ul-list">
-				<li class="border-image-1px" ng-click="showCompanyDetail();">
-					<div class="company-name">
-						<div class="company-name-fir">马龙供排水出水口</div>
-						<div class="company-name-sec">马龙供排水有限公司</div>
-					</div>
-					<div class="company-data">
-						<div class="company-data-1"><label>超标因子：</label>COD</div>
-						<div class="company-data-3"><label>时长：</label>20h</div>
-						<div class="company-data-2"><label>超标倍数：</label>0.24～2.13</div>
-					</div>
-				</li>
-				<li class="border-image-1px">
-					<div class="company-name">
-						<div class="company-name-fir">马龙供排水出水口</div>
-						<div class="company-name-sec">马龙供排水有限公司</div>
-					</div>
-					<div class="company-data">
-						<div class="company-data-1"><label>超标因子：</label>COD</div>
-						<div class="company-data-3"><label>时长：</label>20h</div>
-						<div class="company-data-2"><label>超标倍数：</label>0.24～2.13</div>
-					</div>
-				</li>
-				<li class="border-image-1px">
-					<div class="company-name">
-						<div class="company-name-fir">马龙供排水出水口</div>
-						<div class="company-name-sec">马龙供排水有限公司</div>
-					</div>
-					<div class="company-data">
-						<div class="company-data-1"><label>超标因子：</label>COD</div>
-						<div class="company-data-3"><label>时长：</label>20h</div>
-						<div class="company-data-2"><label>超标倍数：</label>0.24～2.13</div>
-					</div>
-				</li>
-				<li class="border-image-1px">
-					<div class="company-name">
-						<div class="company-name-fir">马龙供排水出水口</div>
-						<div class="company-name-sec">马龙供排水有限公司</div>
-					</div>
-					<div class="company-data">
-						<div class="company-data-1"><label>超标因子：</label>COD</div>
-						<div class="company-data-3"><label>时长：</label>20h</div>
-						<div class="company-data-2"><label>超标倍数：</label>0.24～2.13</div>
-					</div>
-				</li>
-				<li class="border-image-1px">
-					<div class="company-name">
-						<div class="company-name-fir">马龙供排水出水口</div>
-						<div class="company-name-sec">马龙供排水有限公司</div>
-					</div>
-					<div class="company-data">
-						<div class="company-data-1"><label>超标因子：</label>COD</div>
-						<div class="company-data-3"><label>时长：</label>20h</div>
-						<div class="company-data-2"><label>超标倍数：</label>0.24～2.13</div>
-					</div>
-				</li>
-			</ul>
-		</div>
-	</div>
+<div class="fpi-webapp-header">
+    <div class="fpi-webapp-header-category">
+        <span class="water cur">废水</span>
+        <span class="air">废气</span>
+    </div>
+    <div class="fpi-webapp-header-area">
+        <img src="images/area.png" width="14" height="20" border="0">
+        <span>{{currentRegion}}</span>
+    </div>
+    <div class="fpi-webapp-header-user">
+        <img src="images/user.png" width="19" height="19" border="0">
+    </div>
+    <div class="fpi-webapp-header-refresh">
+        <img src="images/refresh.png" width="17" height="17" border="0">
+    </div>
+</div>
+<div class="fpi-webapp-home-search">
+    <input type="text" name="search" id="search" value="" readonly="true" />
+    <div class="text">请输入企业名称</div>
+    <div class="icon"><img src="images/search1.png" width="20" height="20"></div>
+</div>
+<div class="fpi-webapp-home-menu">
+    <ul>
+        <li>
+            <div class="border-image-right-1px line">
+                <div class="icon"><img src="images/icon1.png" width="23" height="18" border="0"></div>
+                <p class="txt">首页</p>
+            </div>
+        </li>
+        <li>
+            <div class="border-image-right-1px line">
+                <div class="icon"><img src="images/icon2.png" width="20" height="20" border="0"></div>
+                <p class="txt">超标统计</p>
+            </div>
+        </li>
+        <li>
+            <div class="border-image-right-1px line">
+                <div class="icon"><img src="images/icon3.png" width="21" height="21" border="0"></div>
+                <p class="txt">传输有效率</p>
+            </div>
+        </li>
+        <li>
+            <div>
+                <div class="icon"><img src="images/icon4.png" width="20" height="20" border="0"></div>
+                <p class="txt">我的关注</p>
+            </div>
+        </li>
+    </ul>
+    <div class="menu-bottom"></div>
+</div>
+<div class="fpi-webapp-home-panel">
+    <h1>监测点实时状态</h1>
+    <ul class="zt">
+        <li><div class="status" style="background-color: #6bd4a7;"><span>260</span><p>正常</p></div></li>
+        <li><div class="status" style="background-color: #ff6363;"><span>6</span><p>超标</p></div></li>
+        <li><div class="status" style="background-color: #cf88df;"><span>2</span><p>异常</p></div></li>
+        <li><div class="status" style="background-color: #bebebe;"><span>0</span><p>断线</p></div></li>
+        <li><div class="status" style="background-color: #ffb848;"><span>1</span><p>预警</p></div></li>
+    </ul>
+    <p class="txt"><span>133</span>家企业,<span>266</span>个监测点，联网率<span>96%</span></p>
+    <div class="menu-bottom"></div>
+</div>
+<div class="fpi-webapp-home-panel">
+    <h1>数据传输有效率(2014-09-01)</h1>
+    <ul class="yxl">
+        <li>1</li>
+        <li>1</li>
+        <li>1</li>
+    </ul>
+    <div class="menu-bottom"></div>
+</div>
+<div class="fpi-webapp-home-panel">
+    <h1>超标排行(2014-09-01)</h1>
+    <div class="home-exceed">
+        <div class="h-e-content">
+            <div class="left"><span>超</span></div>
+            <div class="right">
+                <table class="info">
+                    <tr>
+                        <td class="title">排水进水口</td>
+                        <td class="align-r">长兴污染处理厂</td>
+                    </tr>
+                </table>
+                <table class="info">
+                    <tr>
+                        <td>超标因子:COD</td>
+                        <td class="align-c">超标倍数:0.24~2.13</td>
+                        <td class="align-r">时长:20h</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="h-e-content">
+            <div class="left"><span>超</span></div>
+            <div class="right">
+                <table class="info">
+                    <tr>
+                        <td class="title">排水进水口</td>
+                        <td class="align-r">长兴污染处理厂</td>
+                    </tr>
+                </table>
+                <table class="info">
+                    <tr>
+                        <td>超标因子:COD</td>
+                        <td class="align-c">超标倍数:0.24~2.13</td>
+                        <td class="align-r">时长:20h</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>

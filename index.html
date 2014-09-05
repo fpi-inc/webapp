@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="login">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta content="black-translucent"name="apple-mobile-web-app-status-bar-style"/>
+<meta content="telephone=no"name="format-detection"/>
+<title>环境监测移动应用系统</title>
+
+<!-- bootstrap-3.2.0-dist -->
+<!-- <link rel="stylesheet" href="lib/bootstrap-3.2.0-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/bootstrap-3.2.0-dist/css/bootstrap-theme.min.css"> -->
+<link rel="stylesheet" href="app/dist/css/webapp.css">
+<!-- 设置Icon -->
+<link rel="apple-touch-icon-precomposed" href="app/images/appico120.png" />
+<!-- 启动画面 -->
+<link rel="apple-touch-startup-image" href="app/images/start.png" />
+</head>
+<body>
+<div class="webapp-logo"><img src="app/images/newlogo.png" width="197" height="102" border="0"></div>  
+<div class="webapp-logo-area" ng-controller="LoginController">
+    <form id="target" ng-submit="login();">
+        <p><input type="text" ng-model="userName" placeholder="用户名" value="" /></p>
+        <div class="line border-image-left-right-1px-login"><div class="line2 border-image-bottom-1px-login"></div></div>
+        <p><input type="password" ng-model="passWord" name="passWord" id="passWord" placeholder="密码" value="" /></p>
+        <div class="line border-image-left-right-1px-login"><div class="line2 border-image-bottom-1px-login"></div></div>
+        <p><input class="inputCls" type="submit" id="submit" value="登录"></p>
+    </form>
+</div>
+<script src="app/lib/jquery-1.11.1.min.js"></script>
+<!-- angular-1.2.22 -->
+<script src="app/lib/angular-1.2.22/angular.min.js"></script>
+<script src="app/lib/angular-1.2.22/angular-resource.min.js"></script>
+<script src="app/lib/angular-1.2.22/angular-cookies.min.js"></script>
+<script src="app/lib/angular-1.2.22/angular-md5.min.js"></script>
+<script src="app/lib/angular-local-storage/angular-local-storage.min.js"></script>
+
+<script src="src/js/login/LoginApp.js"></script>
+<script src="src/js/login/LoginService.js"></script>
+</body>
+</html>

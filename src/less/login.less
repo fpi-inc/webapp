@@ -1,67 +1,95 @@
 //login
 
-.login-content{
-    height: 100%;
-    width: 100%;
-    background-color: #14b1e4;
-    .logo{
-        width: 131px;
-        margin: 0 auto;
-        padding-top: 60px;
+.webapp-logo{
+    width: 197px;
+    margin: 88px auto 0;
+}
+.border-image-bottom-1px-login {
+    border-width: 0px 0px 1px;
+    -webkit-border-image: url("../../images/border-login-bottom.png") 2 0 stretch;
+    border-image: url("../../images/border-login-bottom.png") 2 0 stretch;
+}
+.border-image-left-right-1px-login {
+    border-width: 0px 1px;
+    -webkit-border-image: url("../../images/border-login-left-right.png") 0 2 stretch;
+    border-image: url("../../images/border-login-left-right.png") 0 2 stretch;
+}
+.border-image-right-1px{
+    border-width: 0px 1px;
+    -webkit-border-image: url("../../images/border-login-right.png") 0 2 stretch;
+    border-image: url("../../images/border-login-right.png") 0 2 stretch;
+}
+.border-image-bottom-1px-login-current {
+    border-width: 0px 0px 1px;
+    -webkit-border-image: url("../../images/border-login-bottom-current.png") 2 0 stretch;
+    border-image: url("../../images/border-login-bottom-current.png") 2 0 stretch;
+}
+.border-image-left-right-1px-login-current {
+    border-width: 0px 1px;
+    -webkit-border-image: url("../../images/border-login-left-right-current.png") 0 2 stretch;
+    border-image: url("../../images/border-login-left-right-current.png") 0 2 stretch;
+}
+.webapp-logo-area{
+    width: 254px;
+    margin: 35px auto 0;
+    .line{
+        height: 4px;
+        width: 100%;
+        margin-bottom: 12px;
+        //box-shadow:1px 1px rgba(0,0,0,.6); 
     }
-    .text-area{
-        margin: 20px;
-        background-color: #fff;
-        .border-radius(5px);
-        & p{
-            margin: 0;
-            padding: 10px;
-            & input{
-                border: none;
-                background-color: #fff;
-            }
-            &.line{
-                border-width: 0px 0px 1px 0px;
-                -webkit-border-image: url("../../images/border.png") 2 0 stretch;
-                border-image: url("../../images/border.png") 2 0 stretch;
-            }
-        }
+    .line2{
+        height: 3px;
+        width: 100%;
+        margin-bottom: 12px;
+        //box-shadow:1px 1px rgba(0,0,0,.6); 
     }
-    .sub-controller{
-        margin: 20px;
-        height: 44px;
+    & p{
         & input{
-            height: 44px;
-            background-color: #5bc9ec;
-            border: none;
-            cursor: pointer;
-            text-align: center;
-            line-height: 44px;
-            font-size: 14px;
-            color: #fff;
             width: 100%;
-            .border-radius(5px);
+            height: 36px;
+            line-height: 36px;
+            border: none;
+            color: #333;
+            font-size: 18px;
+            &.inputCls{
+                margin-top: 18px;
+                height: 48px;
+                line-height: 48px;
+                background-color: #14b1e4;
+                //background-color: #71ccea;
+                .border-radius(3px);
+                text-align: center;
+                color: #fff;
+                font-size: 18px;
+                -webkit-appearance: none;
+            }
         }
     }
 }
 
-
-//category
-.category{
-    width: 100%;
-    background-color: #e3e3ea;
-    .title{
-        margin-bottom: 40px;
-        height: 45px;
-        line-height: 45px;
-        text-align: center;
-        color: #fff;
-        font-size: 18px;
-        background-color: #14b1e4;
+//tips
+.tipsCls{
+    display: none;
+    width: 230px;
+    height: 35px;
+    border: 1px solid #ebebeb;
+    background-color: #f0f0f0;
+    line-height: 35px;
+    text-align: center;
+    position: absolute;
+    font-size: 15px;
+    color: #666666;
+    top: 15px;
+    left: 50%;
+    margin-left: -115px;
+    & img{
+        vertical-align: middle;
+        float: left;
+        margin: 10px 5px 0 10px;
     }
-    & table tr td{
-        padding: 4px;
-        text-align: center;
-        color: #333;
+    & span{
+        display: inline-block;
+        float: left;
     }
 }

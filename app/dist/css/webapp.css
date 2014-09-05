@@ -1,3 +1,223 @@
+/** 
+ * @名称: base
+ * @说明: 重设浏览器默认样式
+ */
+/* 初始化背景色，自定义字体 */
+html {
+  color: #333;
+  background: #fff;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  cursor: default;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+/* 初始化内外边距 */
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+textarea,
+p,
+blockquote,
+th,
+td,
+hr,
+button,
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  margin: 0;
+  padding: 0;
+  /* cursor: text; */
+}
+/* 重设 HTML5 标签 */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+/* HTML5 媒体文件跟 img 保持一致 */
+audio,
+canvas,
+video {
+  display: inline-block;
+}
+/* 要注意表单元素并不继承父级 font 的问题 */
+body,
+button,
+input,
+select,
+textarea {
+  font-family: "微软雅黑", "宋体", FreeSans, Arimo, "Droid Sans", Helvetica, Arial, sans-serif !important;
+  font: 12px/1.5 "微软雅黑", "宋体", tahoma, arial;
+}
+input,
+select,
+textarea {
+  font-size: 100%;
+}
+/* 去掉各Table  cell 的边距并让其边重合 */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+/* IE bug fixed: th 不继承 text-align */
+th {
+  text-align: inherit;
+}
+/* 去除默认边框 */
+fieldset,
+img {
+  border: 0;
+}
+/* ie6 7 8(q) bug 显示为行内表现 */
+iframe {
+  display: block;
+}
+/* 去掉 firefox 下此元素的边框 */
+abbr,
+acronym {
+  border: 0;
+  font-variant: normal;
+}
+/* 一致的 del 样式 */
+del {
+  text-decoration: line-through;
+}
+address,
+caption,
+cite,
+code,
+dfn,
+em,
+th,
+var {
+  font-style: normal;
+  font-weight: 500;
+}
+/* 去掉列表前的标识, li 会继承 */
+ol,
+ul {
+  list-style: none;
+}
+/* 默认居左 */
+caption,
+th {
+  text-align: left;
+}
+/* 让标题都自定义, 适应多个系统应用 */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  font-weight: 500;
+}
+q:before,
+q:after {
+  content: '';
+}
+/* 统一上标和下标 */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
+a:link {
+  color: #0072c6;
+}
+a:visited {
+  color: #0072c6;
+}
+/* 让链接在 hover 状态下不显示下划线 */
+a:hover {
+  color: #0072c6;
+  text-decoration: underline;
+}
+a:link,
+a:visited,
+a:hover,
+a:active {
+  cursor: pointer;
+}
+/* 默认不显示下划线，保持页面简洁 */
+ins,
+a {
+  text-decoration: none;
+}
+/* 清理浮动 */
+.fn-clear:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+.fn-clear {
+  zoom: 1;
+  /* for IE6 IE7 */
+}
+/* 隐藏, 通常用来与 jQuery 配合 */
+body .fn-hide {
+  display: none;
+}
+/* 设置内联, 减少浮动带来的bug */
+.fn-left,
+.fn-right {
+  display: inline;
+}
+.fn-left {
+  float: left;
+}
+.fn-right {
+  float: right;
+}
+.fn-center {
+  text-align: center;
+}
 /**
  * 圆角
  */
@@ -45,9 +265,10 @@ a:hover {
   position: absolute;
   top: 0;
   width: 45px;
-  height: 45px;
+  height: 40px;
   text-align: center;
   left: 0;
+  padding-top: 5px;
 }
 .fpiwebapp-header {
   height: 45px;
@@ -58,8 +279,8 @@ a:hover {
   float: left;
   display: inline-block;
   width: 45px;
-  height: 34px;
-  padding-top: 11px;
+  height: 32px;
+  padding-top: 13px;
   text-align: center;
 }
 .fpiwebapp-header .name {
@@ -68,28 +289,27 @@ a:hover {
   font-size: 14px;
   height: 45px;
   line-height: 45px;
-  width: 45px;
   text-align: center;
   display: inline-block;
 }
 .fpiwebapp-header .xl {
   float: left;
-  height: 34px;
-  padding-top: 11px;
+  height: 30px;
+  padding-top: 15px;
   display: inline-block;
 }
 .fpiwebapp-header .search {
   float: right;
   display: inline-block;
-  padding-top: 11px;
-  height: 34px;
+  padding-top: 13px;
+  height: 32px;
   width: 35px;
   text-align: center;
 }
 .fpiwebapp-header .refresh {
   float: right;
-  padding-top: 10px;
-  height: 35px;
+  padding-top: 12px;
+  height: 33px;
   width: 45px;
   text-align: center;
 }
@@ -396,6 +616,7 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   font-size: 14px;
 }
 .menuItemCls a img {
+  vertical-align: middle;
   display: inline-block;
   margin-right: 10px;
 }
@@ -404,69 +625,358 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   text-align: center;
   line-height: 30px;
 }
-.login-content {
-  height: 100%;
+.webapp-logo {
+  width: 197px;
+  margin: 88px auto 0;
+}
+.border-image-bottom-1px-login {
+  border-width: 0px 0px 1px;
+  -webkit-border-image: url("../../images/border-login-bottom.png") 2 0 stretch;
+  border-image: url("../../images/border-login-bottom.png") 2 0 stretch;
+}
+.border-image-left-right-1px-login {
+  border-width: 0px 1px;
+  -webkit-border-image: url("../../images/border-login-left-right.png") 0 2 stretch;
+  border-image: url("../../images/border-login-left-right.png") 0 2 stretch;
+}
+.border-image-right-1px {
+  border-width: 0px 1px;
+  -webkit-border-image: url("../../images/border-login-right.png") 0 2 stretch;
+  border-image: url("../../images/border-login-right.png") 0 2 stretch;
+}
+.border-image-bottom-1px-login-current {
+  border-width: 0px 0px 1px;
+  -webkit-border-image: url("../../images/border-login-bottom-current.png") 2 0 stretch;
+  border-image: url("../../images/border-login-bottom-current.png") 2 0 stretch;
+}
+.border-image-left-right-1px-login-current {
+  border-width: 0px 1px;
+  -webkit-border-image: url("../../images/border-login-left-right-current.png") 0 2 stretch;
+  border-image: url("../../images/border-login-left-right-current.png") 0 2 stretch;
+}
+.webapp-logo-area {
+  width: 254px;
+  margin: 35px auto 0;
+}
+.webapp-logo-area .line {
+  height: 4px;
   width: 100%;
+  margin-bottom: 12px;
+}
+.webapp-logo-area .line2 {
+  height: 3px;
+  width: 100%;
+  margin-bottom: 12px;
+}
+.webapp-logo-area p input {
+  width: 100%;
+  height: 36px;
+  line-height: 36px;
+  border: none;
+  color: #333;
+  font-size: 18px;
+}
+.webapp-logo-area p input.inputCls {
+  margin-top: 18px;
+  height: 48px;
+  line-height: 48px;
   background-color: #14b1e4;
-}
-.login-content .logo {
-  width: 131px;
-  margin: 0 auto;
-  padding-top: 60px;
-}
-.login-content .text-area {
-  margin: 20px;
-  background-color: #fff;
-  border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-}
-.login-content .text-area p {
-  margin: 0;
-  padding: 10px;
-}
-.login-content .text-area p input {
-  border: none;
-  background-color: #fff;
-}
-.login-content .text-area p.line {
-  border-width: 0px 0px 1px 0px;
-  -webkit-border-image: url("../../images/border.png") 2 0 stretch;
-  border-image: url("../../images/border.png") 2 0 stretch;
-}
-.login-content .sub-controller {
-  margin: 20px;
-  height: 44px;
-}
-.login-content .sub-controller input {
-  height: 44px;
-  background-color: #5bc9ec;
-  border: none;
-  cursor: pointer;
-  text-align: center;
-  line-height: 44px;
-  font-size: 14px;
-  color: #fff;
-  width: 100%;
-  border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-}
-.category {
-  width: 100%;
-  background-color: #e3e3ea;
-}
-.category .title {
-  margin-bottom: 40px;
-  height: 45px;
-  line-height: 45px;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
   text-align: center;
   color: #fff;
   font-size: 18px;
-  background-color: #14b1e4;
+  -webkit-appearance: none;
 }
-.category table tr td {
-  padding: 4px;
+.tipsCls {
+  display: none;
+  width: 230px;
+  height: 35px;
+  border: 1px solid #ebebeb;
+  background-color: #f0f0f0;
+  line-height: 35px;
   text-align: center;
+  position: absolute;
+  font-size: 15px;
+  color: #666666;
+  top: 15px;
+  left: 50%;
+  margin-left: -115px;
+}
+.tipsCls img {
+  vertical-align: middle;
+  float: left;
+  margin: 10px 5px 0 10px;
+}
+.tipsCls span {
+  display: inline-block;
+  float: left;
+}
+.fpi-webapp-header {
+  height: 50px;
+  background-color: #14b1e4;
+  position: relative;
+}
+.fpi-webapp-header .fpi-webapp-header-category {
+  width: 122px;
+  height: 30px;
+  margin: 0 auto;
+  padding-top: 10px;
+}
+.fpi-webapp-header .fpi-webapp-header-category span {
+  display: inline-block;
+  height: 30px;
+  width: 61px;
+  line-height: 30px;
+  text-align: center;
+  float: left;
+  font-size: 16px;
+  background-color: #3bc4f7;
+  color: #1ba8dc;
+}
+.fpi-webapp-header .fpi-webapp-header-category span.air {
+  border-radius: 0px 15px 15px 0px;
+  -moz-border-radius: 0px 15px 15px 0px;
+  -webkit-border-radius: 0px 15px 15px 0px;
+}
+.fpi-webapp-header .fpi-webapp-header-category span.water {
+  border-radius: 15px 0px 0px 15px;
+  -moz-border-radius: 15px 0px 0px 15px;
+  -webkit-border-radius: 15px 0px 0px 15px;
+}
+.fpi-webapp-header .fpi-webapp-header-category span.cur {
+  background-color: #13a2d7;
+  color: #fff;
+}
+.fpi-webapp-header .fpi-webapp-header-area {
+  position: absolute;
+  height: 50px;
+  width: 76px;
+  top: 0;
+  left: 0;
+}
+.fpi-webapp-header .fpi-webapp-header-area img {
+  float: left;
+  margin: 14px 7px 0 10px;
+}
+.fpi-webapp-header .fpi-webapp-header-area span {
+  float: left;
+  display: inline-block;
+  height: 50px;
+  line-height: 50px;
+  font-size: 16px;
+  color: #fff;
+  width: 40px;
+  overflow: hidden;
+}
+.fpi-webapp-header .fpi-webapp-header-refresh {
+  position: absolute;
+  height: 50px;
+  width: 35px;
+  top: 0;
+  right: 0;
+}
+.fpi-webapp-header .fpi-webapp-header-refresh img {
+  float: left;
+  margin-top: 16px;
+  margin-left: 8px;
+}
+.fpi-webapp-header .fpi-webapp-header-user {
+  position: absolute;
+  height: 50px;
+  width: 35px;
+  top: 0;
+  right: 35px;
+}
+.fpi-webapp-header .fpi-webapp-header-user img {
+  float: left;
+  margin-top: 15px;
+  margin-left: 8px;
+}
+.fpi-webapp-home-search {
+  height: 45px;
+  background-color: #ededed;
+  padding: 0 10px;
+  position: relative;
+}
+.fpi-webapp-home-search input {
+  margin-top: 6px;
+  height: 32px;
+  line-height: 32px;
+  width: 100%;
+  border: 1px solid #dbdbdb;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  font-size: 14px;
+}
+.fpi-webapp-home-search .text {
+  position: absolute;
+  top: 12px;
+  left: 20px;
+  color: #dadada;
+  font-size: 14px;
+}
+.fpi-webapp-home-search .icon {
+  position: absolute;
+  top: 13px;
+  right: 15px;
+}
+.fpi-webapp-home-menu {
+  height: 60px;
+}
+.fpi-webapp-home-menu ul li {
+  float: left;
+  width: 25%;
+  height: 60px;
+}
+.fpi-webapp-home-menu ul li .line {
+  height: 60px;
+}
+.fpi-webapp-home-menu ul li .icon {
+  text-align: center;
+  height: 35px;
+}
+.fpi-webapp-home-menu ul li .icon img {
+  margin-top: 9px;
+}
+.fpi-webapp-home-menu ul li .txt {
+  text-align: center;
+}
+.fpi-webapp-home-menu .menu-bottom {
+  height: 5px;
+  background-color: #f5f5f5;
+  clear: both;
+  width: 100%;
+}
+.fpi-webapp-home-panel h1 {
+  font-size: 16px;
   color: #333;
+  line-height: 32px;
+  padding: 5px 0 5px 10px;
+}
+.fpi-webapp-home-panel p.txt {
+  line-height: 30px;
+  height: 30px;
+  padding-top: 5px;
+}
+.fpi-webapp-home-panel p.txt span {
+  color: #14b1e4;
+  display: inline-block;
+  padding: 0 3px;
+}
+.fpi-webapp-home-panel ul.zt li {
+  text-align: center;
+  float: left;
+  width: 20%;
+}
+.fpi-webapp-home-panel ul.zt li .status {
+  margin: 0 auto;
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  color: #fff;
+}
+.fpi-webapp-home-panel ul.zt li .status span {
+  display: block;
+  line-height: 18px;
+  height: 18px;
+  padding-top: 8px;
+  font-size: 16px;
+  text-align: center;
+}
+.fpi-webapp-home-panel ul.zt li .status p {
+  font-size: 12px;
+  text-align: center;
+  line-height: 16px;
+  height: 16px;
+  padding: 0;
+  margin: 0;
+}
+.fpi-webapp-home-panel ul.yxl li {
+  float: left;
+  width: 33%;
+}
+.fpi-webapp-home-panel p {
+  clear: both;
+  line-height: 30px;
+  padding-left: 10px;
+}
+.fpi-webapp-home-panel .menu-bottom {
+  height: 5px;
+  background-color: #f5f5f5;
+  clear: both;
+  width: 100%;
+}
+.home-exceed .h-e-content {
+  height: 58px;
+  margin-bottom: 10px;
+}
+.home-exceed .h-e-content .left {
+  width: 45px;
+  float: left;
+}
+.home-exceed .h-e-content .left span {
+  display: inline-block;
+  height: 23px;
+  width: 23px;
+  background-color: #ff6363;
+  color: #fff;
+  font-size: 18px;
+  line-height: 23px;
+  text-align: center;
+  border-radius: 12px;
+  -moz-border-radius: 12px;
+  -webkit-border-radius: 12px;
+  margin: 10px 0 0 6px;
+}
+.home-exceed .h-e-content .right {
+  -webkit-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.1);
+  position: relative;
+  margin-right: 10px;
+  margin-left: 45px;
+  border: 1px solid #f5f5f5;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+}
+.home-exceed .h-e-content .right table.info {
+  width: 100%;
+}
+.home-exceed .h-e-content .right table.info tr td {
+  padding: 4px 8px;
+}
+.home-exceed .h-e-content .right table.info tr td.align-c {
+  text-align: center;
+}
+.home-exceed .h-e-content .right table.info tr td.align-r {
+  text-align: right;
+}
+.home-exceed .h-e-content .right table.info tr td.title {
+  font-size: 14px;
+  font-weight: 700;
+}
+.home-exceed .h-e-content .right:after,
+.home-exceed .h-e-content .right:before {
+  border: solid transparent;
+  content: ' ';
+  height: 0;
+  right: 100%;
+  position: absolute;
+  width: 0;
+}
+.home-exceed .h-e-content .right:before {
+  border-width: 11px;
+  border-right-color: #f5f5f5;
+  top: 10px;
+}
+.home-exceed .h-e-content .right:after {
+  border-width: 9px;
+  border-right-color: #fff;
+  top: 12px;
 }

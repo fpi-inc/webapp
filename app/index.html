@@ -6,26 +6,24 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta content="black-translucent"name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no"name="format-detection"/>
     <title>环境监测移动应用系统</title>
 
     <!-- bootstrap-3.2.0-dist -->
-    <link rel="stylesheet" href="lib/bootstrap-3.2.0-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="lib/bootstrap-3.2.0-dist/css/bootstrap-theme.min.css">
+    <!-- <link rel="stylesheet" href="lib/bootstrap-3.2.0-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/bootstrap-3.2.0-dist/css/bootstrap-theme.min.css"> -->
     <link rel="stylesheet" href="dist/css/webapp.css">
     <!-- 设置Icon -->
-    <link rel="apple-touch-icon-precomposed" href="icon.png" />
+    <link rel="apple-touch-icon-precomposed" href="images/appico120.png" />
     <!-- 启动画面 -->
-    <link rel="apple-touch-startup-image" href="startup.png" />
+    <link rel="apple-touch-startup-image" href="images/start.png" />
     <script src="lib/jquery-1.11.1.min.js"></script>
-    <script src="lib/bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>
+    <!-- <script src="lib/bootstrap-3.2.0-dist/js/bootstrap.min.js"></script> -->
     <script type="text/javascript">
-      var platformServer = '';
+      var platformServer = 'http://122.224.196.67:10001';
     </script>
     <script src="lib/echarts-2.0.2/doc/example/www/js/esl.js"></script>
-
-      <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-
-  <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
   </head>
   <body>
     <div ng-view></div>
@@ -42,9 +40,8 @@
     <script src="../src/js/region/SelectRegionController.js"></script>
     <script src="../src/js/search/SearchController.js"></script>
     <script src="../src/js/category/CategoryController.js"></script>
-    <script src="../src/js/login/LoginController.js"></script>
-    <script src="../src/js/login/LoginService.js"></script>
     <script src="../src/js/home/HomeController.js"></script>
+    <script src="../src/js/home/HomeService.js"></script>
     <script src="../src/js/exceed/ExceedController.js"></script>
     <script src="../src/js/transport/TransportController.js"></script>
     <script src="../src/js/personal/PersonalController.js"></script>
@@ -69,7 +66,6 @@
     // Step:4 动态加载echarts然后在回调函数中开始使用，注意保持按需加载结构定义图表路径
     
     </script>
-    <div id="demo"></div>
     <script>
 function localSearch(){
     $("#demo").html('正在获取您的当前城市');
@@ -88,6 +84,28 @@ function localSearch(){
 }
 
 //localSearch();
+//window.onload = function() {
+//    var startPos;
+//    var geoOptions = {
+//        enableHighAccuracy: true
+//    }
+//
+//    var geoSuccess = function(position) {
+//        startPos = position;
+//        document.getElementById('startLat').innerHTML = startPos.coords.latitude;
+//        document.getElementById('startLon').innerHTML = startPos.coords.longitude;
+//    };
+//    var geoError = function(error) {
+//        console.log('Error occurred. Error code: ' + error.code);
+//        // error.code 可以是:
+//        //   0: 未知错误
+//        //   1: 权限不足
+//        //   2: 位置错误(位置供应商出错)
+//        //   3: 超时
+//    };
+//
+//    navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions);
+//};
 
     </script>
   </body>
