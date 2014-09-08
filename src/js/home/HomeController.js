@@ -1,18 +1,57 @@
 angular.module('fpiwebapp.home.ctrl', [ 'LocalStorageModule', 'fpiwebapp.home.service'])
  
-.controller('HomeController', function($scope, $rootScope, $location, $window, localStorageService, MenuServer, RegionService, HomeService) {
-    
-    $scope.currentRegion = localStorageService.get('currentRegions');
+.controller('HomeController', function($scope, $rootScope, $routeParams, $location, $window, localStorageService, MenuServer, RegionService, HomeService) {
 
-    HomeService.getState({
-        monitorTypeCode: 'WW',
-        regionCode: '33010400',
-        userName: 'root'
+    $scope.switchingCate = function(){
+        console.log('fpi');
+    };
+    $scope.currentCategory = localStorageService.get('currentCategory');
+    $scope.currentRegion = localStorageService.get('currentRegions');
+    $scope.currentUser = localStorageService.get('currentUser');
+    $scope.currentRegionCode = localStorageService.get('currentRegionCode');
+
+    //数据传输有效率
+    $scope.transPercentData = [];
+    $scope.transPercentDataTxt = ['传输率', '有效率', '传输有效率'];
+    HomeService.getEfficiency({
+        monitorTypeCode: $scope.currentCategory,
+        regionCode: $scope.currentRegionCode,
+        dateTime: '2014-9-3',
+        userName: $scope.currentUser
     }, function(result){
-        console.log(result);
+        if(result){
+            var trans = result.transEfficients;
+            $scope.transPercentData.push(trans[0].transPercent);
+            $scope.transPercentData.push(trans[0].efficientPercent);
+            $scope.transPercentData.push(trans[0].transEfficientPercent);
+        }
+    });
+    $scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {
+        drawProcess();
     });
 
-    console.log($rootScope.checkUser());
+    //监测点实时状态
+    $scope.stateData = [];
+    HomeService.getState({
+        monitorTypeCode: $scope.currentCategory,
+        regionCode: $scope.currentRegionCode,
+        userName: $scope.currentUser
+    }, function(result){
+        if(result){
+            $scope.stateData = result.region;
+        }
+    });
+
+    //超标排行
+    HomeService.getOverStandardData({
+        monitorTypeCode: $scope.currentCategory,
+        regionCode: $scope.currentRegionCode,
+        time: '2014-8-3',
+        userName: $scope.currentUser
+    }, function(result){
+        if(result){
+        }
+    });
 
     $scope.imgWidth = $(document).width();
     RegionService.query(function(result){
@@ -29,147 +68,59 @@ angular.module('fpiwebapp.home.ctrl', [ 'LocalStorageModule', 'fpiwebapp.home.se
         $location.path('/companyDetail/:id');
     }
 
-	//var mapData = ['蒸发量','降水量'];
-	/* var labelTop = {
-	    normal : {
-	        label : {
-	            show : false
-	        },
-	        labelLine : {
-	            show : false
-	        }
-	    }
-	};
-	var labelBottom = {
-	    normal : {
-	        color: '#f5f5f5',
-	        label : {
-	            show : true,
-	            position : 'center',
-	            formatter : function (a,b,c){return 100 - c + '%'},
-	            textStyle: {
-	                baseline : 'center'
-	            }
-	        },
-	        labelLine : {
-	            show : false
-	        }
-	    },
-	    emphasis: {
-	        color: 'rgba(0,0,0,0)'
-	    }
-	};
-	var radius = [40, 30];
-	require(
-        [
-            'echarts',
-            'echarts/chart/bar',
-            'echarts/chart/pie'
-        ],
-        function (ec) {
-            //--- 折柱 ---
-            var myChart = ec.init(document.getElementById('main'));
-            myChart.setOption({
-			    legend: {
-			        x : 'center',
-			        y : 'bottom',
-			        itemGap: 30,
-			        //selectedMode: 'single',
-			        //textStyle: {color: '#000', fontSize: '14px'},
-                    padding: [0, 0, 5, 0],
-			        data:[{
-                        name: '传输率',
-                        icon: "images/legend.png"
-                    },{
-                        name: '有效率',
-                        icon: "images/legend.png"
-                    },{
-                        name: '传输有效率',
-                        icon: "images/legend.png"
-                    }]
-			    },
-			    // title : {
-			    //     text: 'The App World',
-			    //     subtext: 'from global web index',
-			    //     x: 'center'
-			    // },
-			    toolbox: {
-			        show : false,
-			        feature : {
-			            dataView : {show: true, readOnly: false},
-			            restore : {show: true},
-			            saveAsImage : {show: true}
-			        }
-			    },
-			    series : [
-			        {
-			            type : 'pie',
-			            center : ['20%', '40%'],
-			            radius : radius,
-			            data : [
-			                {name:'other', value:46, itemStyle : labelBottom},
-			                {name:'传输率', value:54,itemStyle : labelTop}
-			            ]
-			        },
-			        {
-			            type : 'pie',
-			            center : ['50%', '40%'],
-			            radius : radius,
-			            data : [
-			                {name:'other', value:56, itemStyle : labelBottom},
-			                {name:'有效率', value:44,itemStyle : labelTop}
-			            ]
-			        },
-			        {
-			            type : 'pie',
-			            center : ['80%', '40%'],
-			            radius : radius,
-			            data : [
-			                {name:'other', value:65, itemStyle : labelBottom},
-			                {name:'传输有效率', value:35,itemStyle : labelTop}
-			            ]
-			        }
-			    ]
-            });
-            
+	function drawProcess() {
+        $('canvas.process').each(function() {
+            var canpi = 40;
+            //var text = commonutil.stringTrim($(this).text());
+            var text = $(this).text();
+            var process = text.substring(0, text.length-1);
+            var canvas = this;
+            var context = canvas.getContext('2d');
+            context.clearRect(0, 0, canpi, canpi);
+            context.beginPath();
+            context.moveTo(canpi, canpi);
+            context.arc(canpi, canpi, canpi, 0, Math.PI * 2, false);
+            context.closePath();
+            context.fillStyle = '#f5f5f5';
+            context.fill();
+            // 画进度
+            context.beginPath();
+            context.moveTo(canpi, canpi);
+            context.arc(canpi, canpi, canpi, 0, Math.PI * 2 * process / 100, false);
+            context.closePath();
+            context.fillStyle = '#ffa54b';
+            context.fill();
+            // 画内部空白
+            context.beginPath();
+            context.moveTo(canpi, canpi);
+            context.arc(canpi, canpi, (canpi - 7), 0, Math.PI * 2, true);
+            context.closePath();
+            context.fillStyle = 'rgba(255,255,255,1)';
+            context.fill();
+
+            context.font = "bold 20px Arial";
+            context.fillStyle = '#ffa54b';
+            context.textAlign = 'center';
+            context.textBaseline = 'middle';
+            context.moveTo(canpi, canpi);
+            context.fillText(text, canpi, canpi);
+        })
+
+    };
+
+
+
+})
+.directive('onFinishRenderFilters', function ($timeout) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attr) {
+            if (scope.$last === true) {
+                $timeout(function() {
+                    scope.$emit('ngRepeatFinished');
+                });
+            }
         }
-    );*/
-
-
-    //var supportOrientation=(typeof window.orientation == "number" && typeof window.onorientationchange == "object");  
-
-    //var updateOrientation=function(){  
-    //    if(supportOrientation){  
-    //        updateOrientation=function(){  
-    //            var orientation=window.orientation;  
-    //            switch(orientation){  
-    //            case 90:  
-    //            case -90:  
-    //                orientation="landscape";  
-    //                break;  
-    //            default:  
-    //                orientation="portrait";  
-    //            }  
-    //            document.body.parentNode.setAttribute("class",orientation);  
-    //        };  
-    //    }else{  
-    //        updateOrientation=function(){  
-    //            var orientation=(window.innerWidth > window.innerHeight)? "landscape":"portrait";  
-    //            document.body.parentNode.setAttribute("class",orientation);  
-    //        };  
-    //    }  
-    //    updateOrientation();  
-    //};  
-
-    //var init=function(){  
-    //    updateOrientation();  
-    //    if(supportOrientation){  
-    //        window.addEventListener("orientationchange",updateOrientation,false);  
-    //    }else{      
-    //        window.setInterval(updateOrientation,500);  
-    //    }  
-    //};
-    //init();
-
+    };
 });
  

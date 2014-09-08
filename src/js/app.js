@@ -7,6 +7,7 @@ angular.module('fpiwebapp', [
   'fpiwebapp.category.ctrl',
   //'fpiwebapp.login.ctrl',
   'fpiwebapp.home.ctrl',
+  'fpiwebapp.homeCate.ctrl',
   'fpiwebapp.exceed.ctrl',
   'fpiwebapp.transport.ctrl',
   'fpiwebapp.personal.ctrl',
@@ -31,6 +32,10 @@ angular.module('fpiwebapp', [
     //})
     .when('/', {
       controller:'HomeController',
+      templateUrl:'/app/partials/home/home.html'
+    })
+    .when('/cate/:cateCode', {
+      controller:'HomeCateController',
       templateUrl:'/app/partials/home/home.html'
     })
     .when('/selectRegion', {
@@ -72,6 +77,8 @@ angular.module('fpiwebapp', [
     $rootScope.back = function(){
         $window.history.back();
     };
+    //默认类型
+    $rootScope.categoryItem = 'WW';
 
     //menu
     //$rootScope.isChoice = false;

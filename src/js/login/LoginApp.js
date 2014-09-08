@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('login', [ 'ngCookies', 'LocalStorageModule', 'fpiwebapp.login.service']).controller(
-    'LoginController',[ '$scope', '$cookieStore', '$http','$window', 'localStorageService', 'LoginService', function($scope, $cookieStore, $http, $window, localStorageService, LoginService) {
-	
+    'LoginController',['$location', '$scope', '$rootScope', '$cookieStore', '$http','$window', 'localStorageService', 'LoginService', function($location, $scope, $rootScope, $cookieStore, $http, $window, localStorageService, LoginService) {
+    $scope.category = "WW";
     $scope.userName = '';
     $scope.passWord = '';
     $scope.login = function(){
@@ -15,7 +15,9 @@ angular.module('login', [ 'ngCookies', 'LocalStorageModule', 'fpiwebapp.login.se
                 if(loginData.result == 'true'){
                     localStorageService.set('currentUser', $scope.userName);
                     localStorageService.set('currentRegions', loginData.name);
-                    $window.location.href = '/app';
+                    localStorageService.set('currentRegionCode', loginData.id);
+                    //localStorageService.set('currentCategory', $scope.category);
+                    $window.location.href = '/app/#/cate/' + $scope.category;
                 }
                 else{
                     error.showTips();

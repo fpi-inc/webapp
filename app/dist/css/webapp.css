@@ -847,6 +847,9 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
 .fpi-webapp-home-menu ul li .txt {
   text-align: center;
 }
+.fpi-webapp-home-menu ul li a {
+  color: #333;
+}
 .fpi-webapp-home-menu .menu-bottom {
   height: 5px;
   background-color: #f5f5f5;
@@ -905,6 +908,18 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
 .fpi-webapp-home-panel ul.yxl li {
   float: left;
   width: 33%;
+  text-align: center;
+}
+.fpi-webapp-home-panel ul.yxl li .cavCls {
+  width: 80px;
+  margin: 0 auto;
+}
+.fpi-webapp-home-panel ul.yxl li canvas.process {
+  margin: 0 auto;
+}
+.fpi-webapp-home-panel ul.yxl li .txt {
+  text-align: center;
+  margin-bottom: 10px;
 }
 .fpi-webapp-home-panel p {
   clear: both;
@@ -984,4 +999,37 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   border-width: 9px;
   border-right-color: #fff;
   top: 12px;
+}
+.webapp-sub-panel-title {
+  text-align: center;
+  background-color: #14b1e4;
+  position: relative;
+}
+.webapp-sub-panel-title h3 {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+  color: #fff;
+  line-height: 40px;
+  font-weight: 500;
+}
+.webapp-sub-panel-title a.home {
+  display: inline-block;
+  position: absolute;
+  top: 12px;
+  left: 0px;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  vertical-align: middle;
+}
+.sub-time-area {
+  height: 30px;
+  line-height: 30px;
+  color: #01a2d6;
+  text-align: center;
+  font-size: 18px;
 }

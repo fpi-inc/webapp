@@ -1,7 +1,7 @@
 <div class="fpi-webapp-header">
     <div class="fpi-webapp-header-category">
-        <span class="water cur">废水</span>
-        <span class="air">废气</span>
+        <a href="/app/#/cate/WW"><span class="water" ng-class="{true: 'cur', false: ''}[isActive]">废水</span></a>
+        <a href="/app/#/cate/WG"><span class="air" ng-class="{true: 'cur', false: ''}[isSubActive]">废气</span></a>
     </div>
     <div class="fpi-webapp-header-area">
         <img src="images/area.png" width="14" height="20" border="0">
@@ -29,14 +29,18 @@
         </li>
         <li>
             <div class="border-image-right-1px line">
-                <div class="icon"><img src="images/icon2.png" width="20" height="20" border="0"></div>
-                <p class="txt">超标统计</p>
+                <a href="#/exceed">
+					<div class="icon"><img src="images/icon2.png" width="20" height="20" border="0"></div>
+					<p class="txt">超标统计</p>
+                </a>
             </div>
         </li>
         <li>
             <div class="border-image-right-1px line">
-                <div class="icon"><img src="images/icon3.png" width="21" height="21" border="0"></div>
-                <p class="txt">传输有效率</p>
+				<a href="#/transport">
+					<div class="icon"><img src="images/icon3.png" width="21" height="21" border="0"></div>
+                	<p class="txt">传输有效率</p>
+				</a>
             </div>
         </li>
         <li>
@@ -51,21 +55,22 @@
 <div class="fpi-webapp-home-panel">
     <h1>监测点实时状态</h1>
     <ul class="zt">
-        <li><div class="status" style="background-color: #6bd4a7;"><span>260</span><p>正常</p></div></li>
-        <li><div class="status" style="background-color: #ff6363;"><span>6</span><p>超标</p></div></li>
-        <li><div class="status" style="background-color: #cf88df;"><span>2</span><p>异常</p></div></li>
-        <li><div class="status" style="background-color: #bebebe;"><span>0</span><p>断线</p></div></li>
-        <li><div class="status" style="background-color: #ffb848;"><span>1</span><p>预警</p></div></li>
+        <li><div class="status" style="background-color: #6bd4a7;"><span>{{stateData[0].ZC}}</span><p>正常</p></div></li>
+        <li><div class="status" style="background-color: #ff6363;"><span>{{stateData[0].BJ}}</span><p>超标</p></div></li>
+        <li><div class="status" style="background-color: #cf88df;"><span>{{stateData[0].YC}}</span><p>异常</p></div></li>
+        <li><div class="status" style="background-color: #bebebe;"><span>{{stateData[0].unconnect}}</span><p>断线</p></div></li>
+        <li><div class="status" style="background-color: #ffb848;"><span>{{stateData[0].YJ}}</span><p>预警</p></div></li>
     </ul>
-    <p class="txt"><span>133</span>家企业,<span>266</span>个监测点，联网率<span>96%</span></p>
+    <p class="txt"><span>{{stateData[0].companyNum}}</span>家企业,<span>{{stateData[0].portNum}}</span>个监测点，联网率<span>{{stateData[0].connect}}%</span></p>
     <div class="menu-bottom"></div>
 </div>
 <div class="fpi-webapp-home-panel">
     <h1>数据传输有效率(2014-09-01)</h1>
     <ul class="yxl">
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
+        <li ng-repeat="trans in transPercentData" on-finish-render-filters>
+            <div class="cavCls"><canvas class="process" width="80px" height="80px">{{trans[$index]}}%</canvas></div>
+            <div class="txt">{{transPercentDataTxt[$index]}}</div>
+        </li>
     </ul>
     <div class="menu-bottom"></div>
 </div>
