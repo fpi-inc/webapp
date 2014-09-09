@@ -4,15 +4,21 @@
         <a href="/app/#/cate/WG"><span class="air" ng-class="{true: 'cur', false: ''}[isSubActive]">废气</span></a>
     </div>
     <div class="fpi-webapp-header-area">
-        <img src="images/area.png" width="14" height="20" border="0">
-        <span>{{currentRegion}}</span>
+        <a href="#/selectRegion">
+            <img src="images/area.png" width="14" height="20" border="0">
+            <span class="text-ellipsis">{{currentRegion}}</span>
+        </a>
     </div>
-    <div class="fpi-webapp-header-user">
-        <img src="images/user.png" width="19" height="19" border="0">
-    </div>
-    <div class="fpi-webapp-header-refresh">
-        <img src="images/refresh.png" width="17" height="17" border="0">
-    </div>
+    <a href="#/account">
+        <div class="fpi-webapp-header-user">
+            <img src="images/user.png" width="19" height="19" border="0">
+        </div>
+    </a>
+    <a href="javascript:;" ng-click="refresh();">
+        <div class="fpi-webapp-header-refresh">
+            <img src="images/refresh.png" width="17" height="17" border="0">
+        </div>
+    </a>
 </div>
 <div class="fpi-webapp-home-search">
     <input type="text" name="search" id="search" value="" readonly="true" />
@@ -77,7 +83,25 @@
 <div class="fpi-webapp-home-panel">
     <h1>超标排行(2014-09-01)</h1>
     <div class="home-exceed">
-        <div class="h-e-content">
+        <div class="h-e-content" ng-repeat="overData in overStandardData">
+            <div class="left"><span>超</span></div>
+            <div class="right">
+                <table class="info">
+                    <tr>
+                        <td class="title">{{overData.portName}}</td>
+                        <td class="align-r">{{overData.companyName}}</td>
+                    </tr>
+                </table>
+                <table class="info">
+                    <tr>
+                        <td>超标因子:{{overData.fatorName}}</td>
+                        <td class="align-c">超标倍数:{{overData.overTimesScope}}</td>
+                        <td class="align-r">时长:{{overData.hour}}h</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!-- div class="h-e-content">
             <div class="left"><span>超</span></div>
             <div class="right">
                 <table class="info">
@@ -94,24 +118,6 @@
                     </tr>
                 </table>
             </div>
-        </div>
-        <div class="h-e-content">
-            <div class="left"><span>超</span></div>
-            <div class="right">
-                <table class="info">
-                    <tr>
-                        <td class="title">排水进水口</td>
-                        <td class="align-r">长兴污染处理厂</td>
-                    </tr>
-                </table>
-                <table class="info">
-                    <tr>
-                        <td>超标因子:COD</td>
-                        <td class="align-c">超标倍数:0.24~2.13</td>
-                        <td class="align-r">时长:20h</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+        </div -->
     </div>
 </div>

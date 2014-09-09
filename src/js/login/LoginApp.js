@@ -2,7 +2,13 @@
 
 angular.module('login', [ 'ngCookies', 'LocalStorageModule', 'fpiwebapp.login.service']).controller(
     'LoginController',['$location', '$scope', '$rootScope', '$cookieStore', '$http','$window', 'localStorageService', 'LoginService', function($location, $scope, $rootScope, $cookieStore, $http, $window, localStorageService, LoginService) {
+
     $scope.category = "WW";
+    $scope.user = localStorageService.get('currentUser'); 
+    $scope.categoryin = localStorageService.get('currentCategory'); 
+    if($scope.user && $scope.categoryin){
+        $window.location.href = '/app/#/cate/' + $scope.categoryin;
+    }
     $scope.userName = '';
     $scope.passWord = '';
     $scope.login = function(){

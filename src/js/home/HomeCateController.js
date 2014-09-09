@@ -1,15 +1,16 @@
 angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.home.service'])
  
-.controller('HomeCateController', function($scope, $rootScope, $routeParams, $location, $window, localStorageService, MenuServer, RegionService, HomeService) {
+.controller('HomeCateController', function($route, $scope, $rootScope, $routeParams, $location, $window, localStorageService, MenuServer, RegionService, HomeService) {
 	//var cateCode = $routeParams.cateCode;
 	//console.log(cateCode);
+    $scope.currentUser = $rootScope.checkUser();
 
     $scope.routeCategory = $routeParams.cateCode;
 
 	localStorageService.set('currentCategory', $scope.routeCategory);
     $scope.currentCategory = localStorageService.get('currentCategory');
     $scope.currentRegion = localStorageService.get('currentRegions');
-    $scope.currentUser = localStorageService.get('currentUser');
+    //$scope.currentUser = localStorageService.get('currentUser');
     $scope.currentRegionCode = localStorageService.get('currentRegionCode');
 	
 	if($scope.currentCategory == 'WW'){
@@ -19,6 +20,9 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
 		$scope.isSubActive = true;
 	}
 	
+    $scope.refresh = function(){
+        $route.reload();
+    };
 	console.log($scope.currentCategory);
 
     //数据传输有效率
@@ -54,24 +58,26 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
     });
 
     //超标排行
+    $scope.overStandardData = [];
     HomeService.getOverStandardData({
         monitorTypeCode: $scope.currentCategory,
-        regionCode: $scope.currentRegionCode,
-        time: '2014-8-3',
+        //regionCode: $scope.currentRegionCode,
+        regionCode: '33010401',
+        time: '2014-9-9',
         userName: $scope.currentUser
     }, function(result){
         if(result){
+            $scope.overStandardData = result.overStandardData;
         }
     });
 
-    $scope.imgWidth = $(document).width();
-    RegionService.query(function(result){
-        var data = result.region;
-        if(data){
-            $scope.regionName = localStorageService.get('currentRegion') || data[0].regionName;
-            //localStorageService.set('currentRegion', $scope.regionName);
-        }
-    });
+    //RegionService.query(function(result){
+    //    var data = result.region;
+    //    if(data){
+    //        $scope.regionName = localStorageService.get('currentRegion') || data[0].regionName;
+    //        //localStorageService.set('currentRegion', $scope.regionName);
+    //    }
+    //});
 	//$scope.regionName = localStorageService.get('currentRegion');
 	
     $scope.showCompanyDetail = function(){
@@ -109,7 +115,7 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
             context.fillStyle = 'rgba(255,255,255,1)';
             context.fill();
 
-            context.font = "bold 20px Arial";
+            context.font = "normal 20px Calibri";
             context.fillStyle = '#ffa54b';
             context.textAlign = 'center';
             context.textBaseline = 'middle';
