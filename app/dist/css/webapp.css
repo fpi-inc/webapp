@@ -1267,6 +1267,15 @@ a.webapp-btn.red {
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
 }
+.choose-panel .choose-panel-title .choose-p-t-r a.buttonCls {
+  color: #fff;
+  background-color: #4fc1e9;
+  width: auto;
+  padding: 0 10px;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
 .choose-panel .choose-panel-body {
   padding: 0px 15px 10px;
   position: relative;
@@ -1293,6 +1302,28 @@ a.webapp-btn.red {
 .choose-panel .choose-panel-body .control a img {
   position: relative;
   top: -3px;
+}
+.choose-panel .choose-panel-body ul.yz li {
+  float: left;
+}
+.choose-panel .choose-panel-body ul.yz li a {
+  display: inline-block;
+  padding: 5px 10px;
+  line-height: 30px;
+  height: 30px;
+}
+.choose-panel .choose-panel-body ul.yz li a i {
+  float: left;
+  width: 14px;
+  height: 14px;
+  margin: 3px 5px 0 0;
+}
+.choose-panel .choose-panel-body ul.yz li a span {
+  float: left;
+  display: inline-block;
+  line-height: 30px;
+  height: 30px;
+  font-size: 15px;
 }
 .choose-panel .choose-panel-foot {
   height: 22px;
