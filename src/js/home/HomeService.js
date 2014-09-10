@@ -6,6 +6,7 @@ angular.module('fpiwebapp.home.service', ['ngResource']).
 			query: {method: 'JSONP'},
             getState: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getState.do'},
             getEfficiency: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getTransmissionEfficientBySelfRegion.do'},
-            getOverStandardData: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getOverStandardData.do'}
+            getOverStandardData: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getOverStandardData.do'},
+            getOverStandardDataByCompany: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getOverStandardDataByCompany.do'}
 		});
 	}]);

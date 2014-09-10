@@ -153,12 +153,17 @@ a:hover{
         border-bottom: 1px solid #dbdbdb;
     }
 	.fpiwebapp-home-panel-title{
-		height: 30px;
+		height: 40px;
 		background-color: #f5f5f5;
 		padding-left: 13px;
 		color: #333;
-		line-height: 30px;
-		font-size: 12px;
+		line-height: 40px;
+		font-size: 16px;
+        & i{
+            width: 13px;
+            height: 13px;
+            margin-left: 6px;
+        }
 	}
 	.border-top-line{
 		border-top: 1px solid #cfcfcf;
@@ -171,24 +176,25 @@ a:hover{
 	}
 	.fpiwebapp-home-panel-body{
         .tab{
-            height: 30px;
-            line-height: 30px;
+            height: 40px;
+            line-height: 40px;
             -webkit-box-shadow:0px 2px 2px #f4f4f4;
             -moz-box-shadow:0px 2px 2px #f4f4f4;
             position: relative;
             text-align: center;
+            background-color: #fff;
             & a{
                 display: inline-block;
                 color: #333;
-                font-size: 12px;
-                width: 60px;
-                margin: 0 20px;
+                font-size: 14px;
+                width: 70px;
+                margin: 0 10px;
 
             }
             & i.c-line{
                 height: 3px;
                 background-color: #14b1e4;
-                width: 60px;
+                width: 70px;
                 position: absolute;
                 bottom: 0;
                 left: 0;
@@ -292,36 +298,54 @@ ul.fpiwebapp-ul-list{
     color: #333;
 	& tr{
         & th{
-            height: 30px;
+            height: 40px;
             background-color: #f5f5f5;
-            line-height: 30px;
+            line-height: 40px;
             font-weight: 700;
             text-align: center;
             border-top: 1px solid #dbdbdb;
+            font-size: 15px;
             & p{
-                height: 30px;
-                line-height: 30px;
+                height: 40px;
+                line-height: 40px;
                 margin: 0;
 
             }
         }
 		& td{
-            height: 30px;
+            height: 40px;
 			text-align: center;
-			font-size: 12px;
+			font-size: 14px;
             & span.red{
-                color: #red;
+                color: red;
             }
             & p{
-                height: 30px;
-                line-height: 30px;
+                height: 40px;
+                line-height: 40px;
                 margin: 0;
+                &.red{
+                    color: #ff6363;
+                }
+                & span.yz{
+                    width: 30px;
+                    height: 30px;
+                    display: inline-block;
+                    text-align: center;
+                    line-height: 30px;
+                    color: #fff;
+                    background-color: #ff6363;
+                    .border-radius(15px);
+                    font-size: 12px;
+                }
             }
 		}
 		&.num{
 			& td{
 				font-size: 16px;
 			}
+            & th{
+                background-color: #fff;
+            }
 		}
 	}
 }
@@ -469,11 +493,14 @@ ul.fpiwebapp-ul-list{
 	}
 }
 .sub-time-area{
-	height: 30px;
-	line-height: 30px;
+	height: 40px;
+	line-height: 40px;
 	color: #01a2d6;
 	text-align: center;
 	font-size: 18px;
+    &.bg{
+        background-color: #f5f5f5;
+    }
 }
 
 //区域选择
@@ -496,6 +523,18 @@ ul.fpiwebapp-ul-list{
             float: left;
             margin: 15px 0 0 15px;
         }
+    }
+    .ok{
+        height: 50px;
+        width: 50px;
+        display: inline-block;
+        line-height: 50px;
+        color: #fff;
+        text-align: center;
+        font-size: 18px;
+        position: absolute;
+        right: 0;
+        top: 0;
     }
 }
 .current-city{
@@ -537,6 +576,43 @@ table.fpiwebapp-table-list{
                 font-size: 15px;
                 background-color: #f9f9f9;
                 .box-shadow(1px, 1px, 1px, 0.1);
+            }
+        }
+    }
+}
+table.fpiwebapp-calendar{
+    width: 100%;
+    & tr{
+        & th{
+            text-align: center;
+            height: 20px;
+            line-height: 20px;
+            color: #bdbdbd;
+            &.blue{
+                color: #14b1e4;
+            }
+        }
+        & td{
+            padding: 5px 0;
+            text-align: center;
+            line-height: 30px;
+            height: 30px;
+            font-size: 15px;
+            & a{
+                display: inline-block;
+                height: 30px;
+                width: 30px;
+                line-height: 30px;
+                font-size: 15px;
+                .border-radius(30px);
+                color: #666666;
+                &.cur{
+                    color: #fff;
+                    background-color: #4fc1e9;
+                }
+            }
+            &.gray{
+                color: #aaaaaa;
             }
         }
     }
@@ -593,5 +669,74 @@ a.webapp-btn{
     text-align: center;
     &.red{
         background-color: #fb6155;
+    }
+}
+
+//条件选择
+.choose-panel{
+    .choose-panel-title{
+        background-color: #fefefe;
+        height: 40px;
+        .choose-p-t-l{
+            float: left;
+            line-height: 40px;
+            padding-left: 10px;
+            font-size: 16px;
+        }
+        .choose-p-t-r{
+            margin: 10px 10px 0 0;
+            float: right;
+            & a{
+                width: 32px;
+                height: 20px;
+                line-height: 20px;
+                text-align: center;
+                border: 1px solid #5bc5ea;
+                display: inline-block;
+                &.cur{
+                    color: #fff;
+                    background-color: #4fc1e9;
+                }
+                &.day{
+                    border-top-left-radius: 3px;
+                    border-bottom-left-radius: 3px;
+                }
+                &.month{
+                    border-top-right-radius: 3px;
+                    border-bottom-right-radius: 3px;
+                }
+            }
+        }
+    }
+    .choose-panel-body{
+        padding: 0px 15px 10px;
+        position: relative;
+        background-color: #fefefe;
+        .control{
+            position: absolute;
+            bottom: -18px;
+            width: 100%;
+            left: 0;
+            text-align: center;
+            & a{
+                display: inline-block;
+                width: 45px;
+                height: 15px;
+                border: 1px solid #e8e8eb;
+                border-top: none;
+                margin: 0 auto;
+                border-bottom-left-radius: 9px;
+                border-bottom-right-radius: 9px;
+                background-color: #fefefe;
+                & img{
+                    position: relative;
+                    top: -3px;
+                }
+            }
+        }
+    }
+    .choose-panel-foot{
+        height: 22px;
+        background-color: #f5f5f5;
     }
 }

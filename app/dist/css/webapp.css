@@ -14,6 +14,7 @@ html {
 html,
 body {
   height: 100%;
+  min-height: 100%;
 }
 /* 初始化内外边距 */
 body,
@@ -394,12 +395,17 @@ a:hover {
   border-bottom: 1px solid #dbdbdb;
 }
 .fpiwebapp-home-panel .fpiwebapp-home-panel-title {
-  height: 30px;
+  height: 40px;
   background-color: #f5f5f5;
   padding-left: 13px;
   color: #333;
-  line-height: 30px;
-  font-size: 12px;
+  line-height: 40px;
+  font-size: 16px;
+}
+.fpiwebapp-home-panel .fpiwebapp-home-panel-title i {
+  width: 13px;
+  height: 13px;
+  margin-left: 6px;
 }
 .fpiwebapp-home-panel .border-top-line {
   border-top: 1px solid #cfcfcf;
@@ -411,24 +417,25 @@ a:hover {
   font-weight: 700;
 }
 .fpiwebapp-home-panel .fpiwebapp-home-panel-body .tab {
-  height: 30px;
-  line-height: 30px;
+  height: 40px;
+  line-height: 40px;
   -webkit-box-shadow: 0px 2px 2px #f4f4f4;
   -moz-box-shadow: 0px 2px 2px #f4f4f4;
   position: relative;
   text-align: center;
+  background-color: #fff;
 }
 .fpiwebapp-home-panel .fpiwebapp-home-panel-body .tab a {
   display: inline-block;
   color: #333;
-  font-size: 12px;
-  width: 60px;
-  margin: 0 20px;
+  font-size: 14px;
+  width: 70px;
+  margin: 0 10px;
 }
 .fpiwebapp-home-panel .fpiwebapp-home-panel-body .tab i.c-line {
   height: 3px;
   background-color: #14b1e4;
-  width: 60px;
+  width: 70px;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -514,33 +521,53 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   color: #333;
 }
 .fpiwebapp-detail-table tr th {
-  height: 30px;
+  height: 40px;
   background-color: #f5f5f5;
-  line-height: 30px;
+  line-height: 40px;
   font-weight: 700;
   text-align: center;
   border-top: 1px solid #dbdbdb;
+  font-size: 15px;
 }
 .fpiwebapp-detail-table tr th p {
-  height: 30px;
-  line-height: 30px;
+  height: 40px;
+  line-height: 40px;
   margin: 0;
 }
 .fpiwebapp-detail-table tr td {
-  height: 30px;
+  height: 40px;
   text-align: center;
-  font-size: 12px;
+  font-size: 14px;
 }
 .fpiwebapp-detail-table tr td span.red {
-  color: #red;
+  color: red;
 }
 .fpiwebapp-detail-table tr td p {
-  height: 30px;
-  line-height: 30px;
+  height: 40px;
+  line-height: 40px;
   margin: 0;
+}
+.fpiwebapp-detail-table tr td p.red {
+  color: #ff6363;
+}
+.fpiwebapp-detail-table tr td p span.yz {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  text-align: center;
+  line-height: 30px;
+  color: #fff;
+  background-color: #ff6363;
+  border-radius: 15px;
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+  font-size: 12px;
 }
 .fpiwebapp-detail-table tr.num td {
   font-size: 16px;
+}
+.fpiwebapp-detail-table tr.num th {
+  background-color: #fff;
 }
 .fpiwebapp-table-sec {
   width: 100%;
@@ -1031,11 +1058,14 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   vertical-align: middle;
 }
 .sub-time-area {
-  height: 30px;
-  line-height: 30px;
+  height: 40px;
+  line-height: 40px;
   color: #01a2d6;
   text-align: center;
   font-size: 18px;
+}
+.sub-time-area.bg {
+  background-color: #f5f5f5;
 }
 .webapp-sub-2-title {
   height: 50px;
@@ -1057,6 +1087,18 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
 .webapp-sub-2-title .backnew img {
   float: left;
   margin: 15px 0 0 15px;
+}
+.webapp-sub-2-title .ok {
+  height: 50px;
+  width: 50px;
+  display: inline-block;
+  line-height: 50px;
+  color: #fff;
+  text-align: center;
+  font-size: 18px;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 .current-city {
   height: 42px;
@@ -1100,6 +1142,43 @@ table.fpiwebapp-table-list tr td .area {
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+table.fpiwebapp-calendar {
+  width: 100%;
+}
+table.fpiwebapp-calendar tr th {
+  text-align: center;
+  height: 20px;
+  line-height: 20px;
+  color: #bdbdbd;
+}
+table.fpiwebapp-calendar tr th.blue {
+  color: #14b1e4;
+}
+table.fpiwebapp-calendar tr td {
+  padding: 5px 0;
+  text-align: center;
+  line-height: 30px;
+  height: 30px;
+  font-size: 15px;
+}
+table.fpiwebapp-calendar tr td a {
+  display: inline-block;
+  height: 30px;
+  width: 30px;
+  line-height: 30px;
+  font-size: 15px;
+  border-radius: 30px;
+  -moz-border-radius: 30px;
+  -webkit-border-radius: 30px;
+  color: #666666;
+}
+table.fpiwebapp-calendar tr td a.cur {
+  color: #fff;
+  background-color: #4fc1e9;
+}
+table.fpiwebapp-calendar tr td.gray {
+  color: #aaaaaa;
 }
 .user-items {
   margin: 10px 10px 0;
@@ -1153,4 +1232,69 @@ a.webapp-btn {
 }
 a.webapp-btn.red {
   background-color: #fb6155;
+}
+.choose-panel .choose-panel-title {
+  background-color: #fefefe;
+  height: 40px;
+}
+.choose-panel .choose-panel-title .choose-p-t-l {
+  float: left;
+  line-height: 40px;
+  padding-left: 10px;
+  font-size: 16px;
+}
+.choose-panel .choose-panel-title .choose-p-t-r {
+  margin: 10px 10px 0 0;
+  float: right;
+}
+.choose-panel .choose-panel-title .choose-p-t-r a {
+  width: 32px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  border: 1px solid #5bc5ea;
+  display: inline-block;
+}
+.choose-panel .choose-panel-title .choose-p-t-r a.cur {
+  color: #fff;
+  background-color: #4fc1e9;
+}
+.choose-panel .choose-panel-title .choose-p-t-r a.day {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.choose-panel .choose-panel-title .choose-p-t-r a.month {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+.choose-panel .choose-panel-body {
+  padding: 0px 15px 10px;
+  position: relative;
+  background-color: #fefefe;
+}
+.choose-panel .choose-panel-body .control {
+  position: absolute;
+  bottom: -18px;
+  width: 100%;
+  left: 0;
+  text-align: center;
+}
+.choose-panel .choose-panel-body .control a {
+  display: inline-block;
+  width: 45px;
+  height: 15px;
+  border: 1px solid #e8e8eb;
+  border-top: none;
+  margin: 0 auto;
+  border-bottom-left-radius: 9px;
+  border-bottom-right-radius: 9px;
+  background-color: #fefefe;
+}
+.choose-panel .choose-panel-body .control a img {
+  position: relative;
+  top: -3px;
+}
+.choose-panel .choose-panel-foot {
+  height: 22px;
+  background-color: #f5f5f5;
 }
