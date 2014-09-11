@@ -31,20 +31,18 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
                 //$rootScope.factor.push(item.fatorName);
             }
             console.log($rootScope.factor);
-            $scope.overStandarData = function(){
+            $scope.overStandarData = (function(){
                 var factorData = [];
-                angular.forEach(standarData, function(standar) {
-                    //if (!todo.done) $scope.todos.push(todo);
+                angular.forEach(standarData, function(standar, index) {
                     angular.forEach($rootScope.factor, function(factor){
                         if(standar.fatorName == factor){
-                            standarData.splice(standar.$index, 1);
+                            standarData.splice(index, 1);
                         }
                     });
                 });
                 factorData = standarData;
                 return factorData;
-            };
-            $scope.overStandarData();
+            })();
         }        
     }); 
 
