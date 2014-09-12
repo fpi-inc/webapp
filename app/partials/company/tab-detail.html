@@ -85,7 +85,7 @@
                 <th><p class="border-image-bottom-1px">超标倍数</p></th>
                 <th><p class="border-image-bottom-1px">时长</p></th>
             </tr>
-            <tr ng-repeat="overData in overStandarData">
+            <tr ng-repeat="overData in overStandarData" ng-click="showChart()">
                 <td><p class="border-image-bottom-1px"><span class="yz">{{overData.fatorName}}</span></p></td>
                 <td><p class="border-image-bottom-1px">{{overData.standardValue}}</p></td>
                 <td><p class="border-image-bottom-1px red">{{overData.alarmValueScope}}</p></td>
