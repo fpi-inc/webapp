@@ -5,38 +5,38 @@
     </div>
     <div class="fpi-webapp-header-area">
         <a href="#/selectRegion">
-            <img src="images/area.png" width="14" height="20" border="0">
+			<div class="img"></div>
             <span class="text-ellipsis">{{currentRegion}}</span>
         </a>
     </div>
     <a href="#/account">
         <div class="fpi-webapp-header-user">
-            <img src="images/user.png" width="19" height="19" border="0">
+			<div class="img"></div>
         </div>
     </a>
     <a href="javascript:;" ng-click="refresh();">
         <div class="fpi-webapp-header-refresh">
-            <img src="images/refresh.png" width="17" height="17" border="0">
+			<div class="img"></div>
         </div>
     </a>
 </div>
 <div class="fpi-webapp-home-search">
     <input type="text" name="search" id="search" value="" readonly="true" />
     <div class="text">请输入企业名称</div>
-    <div class="icon"><img src="images/search1.png" width="20" height="20"></div>
+    <div class="icon"></div>
 </div>
 <div class="fpi-webapp-home-menu">
     <ul>
         <li>
             <div class="border-image-right-1px line">
-                <div class="icon"><img src="images/icon1.png" width="23" height="18" border="0"></div>
+				<div class="icon home-m"></div>
                 <p class="txt">首页</p>
             </div>
         </li>
         <li>
             <div class="border-image-right-1px line">
                 <a href="#/exceed">
-					<div class="icon"><img src="images/icon2.png" width="20" height="20" border="0"></div>
+					<div class="icon exceed-m"></div>
 					<p class="txt">超标统计</p>
                 </a>
             </div>
@@ -44,14 +44,14 @@
         <li>
             <div class="border-image-right-1px line">
 				<a href="#/transport">
-					<div class="icon"><img src="images/icon3.png" width="21" height="21" border="0"></div>
+					<div class="icon transport-m"></div>
                 	<p class="txt">传输有效率</p>
 				</a>
             </div>
         </li>
         <li>
             <div>
-                <div class="icon"><img src="images/icon4.png" width="20" height="20" border="0"></div>
+                <div class="icon me-m"></div>
                 <p class="txt">我的关注</p>
             </div>
         </li>
@@ -71,7 +71,7 @@
     <div class="menu-bottom"></div>
 </div>
 <div class="fpi-webapp-home-panel">
-    <h1>数据传输有效率(2014-09-01)</h1>
+	<h1>数据传输有效率({{preDate}})</h1>
     <ul class="yxl">
         <li ng-repeat="trans in transPercentData" on-finish-render-filters>
             <div class="cavCls"><canvas class="process" width="80px" height="80px">{{trans[$index]}}%</canvas></div>
@@ -81,7 +81,7 @@
     <div class="menu-bottom"></div>
 </div>
 <div class="fpi-webapp-home-panel">
-    <h1>超标排行(2014-09-01)</h1>
+	<h1>超标排行({{nowDate}})</h1>
     <div class="home-exceed">
         <div class="h-e-content" ng-repeat="overData in overStandardData" ng-click="showCompanyDetail();">
             <div class="left"><span>超</span></div>

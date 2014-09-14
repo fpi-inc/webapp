@@ -1,11 +1,3 @@
-/**
- * @name: webapp 
- * @version: v0.0.1
- * @company: fpi-inc 
- * @author: pingping_feng 
- */
-
-
 'use strict';
 
 angular.module('fpiwebapp.login.service', ['ngResource']).
@@ -136,6 +128,15 @@ angular.module('fpiwebapp', [
             return $rootScope.user;
         }
     };
+
+	//获取日期
+	$rootScope.currentDate = function(addDayCount){
+		var dateString = '';
+		var curDate = new Date();
+		curDate.setDate(curDate.getDate() + addDayCount);
+		dateString = curDate.getFullYear() + '-' + (curDate.getMonth() + 1) + '-' + curDate.getDate();
+		return dateString;
+	};
 
 });
  
@@ -395,6 +396,8 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
 .controller('HomeCateController', function($route, $scope, $rootScope, $routeParams, $location, $window, localStorageService, MenuServer, RegionService, HomeService) {
 	//var cateCode = $routeParams.cateCode;
 	//console.log(cateCode);
+	$scope.nowDate = $rootScope.currentDate(0);
+	$scope.preDate = $rootScope.currentDate(-1);
     $scope.currentUser = $rootScope.checkUser();
 
     $scope.routeCategory = $routeParams.cateCode;
@@ -423,7 +426,7 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
     HomeService.getEfficiency({
         monitorTypeCode: $scope.currentCategory,
         regionCode: $scope.currentRegionCode,
-        dateTime: '2014-9-3',
+        dateTime: $scope.preDate,
         userName: $scope.currentUser
     }, function(result){
         if(result){
@@ -455,7 +458,7 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
         monitorTypeCode: $scope.currentCategory,
         //regionCode: $scope.currentRegionCode,
         regionCode: '33010401',
-        time: '2014-9-9',
+        time: $scope.nowDate,
         userName: $scope.currentUser
     }, function(result){
         if(result){

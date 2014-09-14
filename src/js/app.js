@@ -118,5 +118,14 @@ angular.module('fpiwebapp', [
         }
     };
 
+	//获取日期
+	$rootScope.currentDate = function(addDayCount){
+		var dateString = '';
+		var curDate = new Date();
+		curDate.setDate(curDate.getDate() + addDayCount);
+		dateString = curDate.getFullYear() + '-' + (curDate.getMonth() + 1) + '-' + curDate.getDate();
+		return dateString;
+	};
+
 });
  

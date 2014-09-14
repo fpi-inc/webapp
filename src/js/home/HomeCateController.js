@@ -3,6 +3,8 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
 .controller('HomeCateController', function($route, $scope, $rootScope, $routeParams, $location, $window, localStorageService, MenuServer, RegionService, HomeService) {
 	//var cateCode = $routeParams.cateCode;
 	//console.log(cateCode);
+	$scope.nowDate = $rootScope.currentDate(0);
+	$scope.preDate = $rootScope.currentDate(-1);
     $scope.currentUser = $rootScope.checkUser();
 
     $scope.routeCategory = $routeParams.cateCode;
@@ -31,7 +33,7 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
     HomeService.getEfficiency({
         monitorTypeCode: $scope.currentCategory,
         regionCode: $scope.currentRegionCode,
-        dateTime: '2014-9-3',
+        dateTime: $scope.preDate,
         userName: $scope.currentUser
     }, function(result){
         if(result){
@@ -63,7 +65,7 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
         monitorTypeCode: $scope.currentCategory,
         //regionCode: $scope.currentRegionCode,
         regionCode: '33010401',
-        time: '2014-9-9',
+        time: $scope.nowDate,
         userName: $scope.currentUser
     }, function(result){
         if(result){
