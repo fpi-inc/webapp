@@ -1,0 +1,74 @@
+<div class="choose-panel">
+    <div class="choose-panel-title border-image-bottom-1px">
+        <div class="choose-p-t-l" ng-bind="calendarModel.monthText()"></div>
+        <div class="choose-p-t-r"><a href="javascript:;" class="day cur">日</a><a href="javascript:;" class="month">月</a></div>
+    </div>
+    <div class="choose-panel-body border-image-bottom-1px">
+        <table class="fpiwebapp-calendar">
+            <tr>
+                <th class="blue">日</th>
+                <th>一</th>
+                <th>二</th>
+                <th>三</th>
+                <th>四</th>
+                <th>五</th>
+                <th class="blue">六</th>
+            </tr>
+            <tr>
+                <td ng-class="{'gray': !calendarModel.isCurrentMonth(0)}"><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(0)}" ng-bind="calendarModel.getDate(0)"></a></td>
+                <td ng-class="{'gray': !calendarModel.isCurrentMonth(1)}"><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(1)}" ng-bind="calendarModel.getDate(1)"></a></td>
+                <td ng-class="{'gray': !calendarModel.isCurrentMonth(2)}"><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(2)}" ng-bind="calendarModel.getDate(2)"></a></td>
+                <td ng-class="{'gray': !calendarModel.isCurrentMonth(3)}"><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(3)}" ng-bind="calendarModel.getDate(3)"></a></td>
+                <td ng-class="{'gray': !calendarModel.isCurrentMonth(4)}"><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(4)}" ng-bind="calendarModel.getDate(4)"></a></td>
+                <td ng-class="{'gray': !calendarModel.isCurrentMonth(5)}"><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(5)}" ng-bind="calendarModel.getDate(5)"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(6)}" ng-bind="calendarModel.getDate(6)"></a></td>
+            </tr>
+            <tr>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(7)}" ng-bind="calendarModel.getDate(7)"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(8)}" ng-bind="calendarModel.getDate(8)"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(9)}" ng-bind="calendarModel.getDate(9)"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(10)}" ng-bind="calendarModel.getDate(10)"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(11)}" ng-bind="calendarModel.getDate(11)"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(12)}" ng-bind="calendarModel.getDate(12)"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(13)}" ng-bind="calendarModel.getDate(13)"></a></td>
+            </tr>
+            <tr>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(14)}" ng-bind="calendarModel.getDate(14)"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(15)}" ng-bind="calendarModel.getDate(15)"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(16)}" ng-bind="calendarModel.getDate(16)"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(17)}" ng-bind="calendarModel.getDate(17)"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(18)}" ng-bind="calendarModel.getDate(18)"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(19)}" ng-bind="calendarModel.getDate(19)"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(20)}" ng-bind="calendarModel.getDate(20)"></a></td>
+            </tr>
+            <tr>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(21)}" ng-bind="calendarModel.getDate(21)"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(22)}" ng-bind="calendarModel.getDate(22)"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(23)}" ng-bind="calendarModel.getDate(23)"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(24)}" ng-bind="calendarModel.getDate(24)"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(25)}" ng-bind="calendarModel.getDate(25)"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(26)}" ng-bind="calendarModel.getDate(26)"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(27)}" ng-bind="calendarModel.getDate(27)"></a></td>
+            </tr>
+            <tr style="display:{{calendarModel.checkWeek(5) ? '' : 'none'}}">
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(28)}" ng-bind="calendarModel.getDate(28)"></a></td>
+                <td ng-class="{'gray': !calendarModel.isCurrentMonth(29)}"><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(29)}" ng-bind="calendarModel.getDate(29)"></a></td>
+                <td ng-class="{'gray': !calendarModel.isCurrentMonth(30)}"><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(30)}" ng-bind="calendarModel.getDate(30)"></a></td>
+                <td ng-class="{'gray': !calendarModel.isCurrentMonth(31)}"><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(31)}" ng-bind="calendarModel.getDate(31)"></a></td>
+                <td ng-class="{'gray': !calendarModel.isCurrentMonth(32)}"><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(32)}" ng-bind="calendarModel.getDate(32)"></a></td>
+                <td ng-class="{'gray': !calendarModel.isCurrentMonth(33)}"><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(33)}" ng-bind="calendarModel.getDate(33)"></a></td>
+                <td ng-class="{'gray': !calendarModel.isCurrentMonth(34)}"><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(34)}" ng-bind="calendarModel.getDate(34)"></a></td>
+            </tr>
+            <tr style="display:{{calendarModel.checkWeek(6) ? '' : 'none'}}">
+                <td ng-class="{'gray': !calendarModel.isCurrentMonth(35)}"><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(35)}" ng-bind="calendarModel.getDate(35)"></a></td>
+                <td ng-class="{'gray': !calendarModel.isCurrentMonth(36)}"><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(36)}" ng-bind="calendarModel.getDate(36)"></a></td>
+                <td ng-class="{'gray': !calendarModel.isCurrentMonth(37)}"><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(37)}" ng-bind="calendarModel.getDate(37)"></a></td>
+                <td ng-class="{'gray': !calendarModel.isCurrentMonth(38)}"><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(38)}" ng-bind="calendarModel.getDate(38)"></a></td>
+                <td ng-class="{'gray': !calendarModel.isCurrentMonth(39)}"><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(39)}" ng-bind="calendarModel.getDate(39)"></a></td>
+                <td ng-class="{'gray': !calendarModel.isCurrentMonth(40)}"><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(40)}" ng-bind="calendarModel.getDate(40)"></a></td>
+                <td ng-class="{'gray': !calendarModel.isCurrentMonth(41)}"><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentDate(41)}" ng-bind="calendarModel.getDate(41)"></a></td>
+            </tr>
+        </table>
+        <!-- <div class="control"><a href="javascript:;"><img src="images/up.png" width="8" height="7"></a></div> -->
+    </div>
+</div>
