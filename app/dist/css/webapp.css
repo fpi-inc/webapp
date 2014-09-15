@@ -594,19 +594,17 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   font-size: 20px;
 }
 .search-input {
-  margin-right: 48px;
-  padding-left: 10px;
+  margin: 0 10px;
   position: relative;
 }
 .search-input input.search-query {
   width: 100%;
   border: 1px solid #c7c9cb;
-  border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
   height: 28px;
   line-height: 28px;
-  padding: 3px;
 }
 .search-input .search-icon {
   position: absolute;
@@ -623,6 +621,116 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   width: 35px;
   text-align: center;
   line-height: 45px;
+}
+.search-control-r {
+  width: 57px;
+  float: right;
+}
+.search-control-r a {
+  display: inline-block;
+  width: 57px;
+  line-height: 50px;
+  color: #fff;
+  font-size: 18px;
+  text-align: center;
+}
+.search-input-control {
+  margin-right: 57px;
+  padding-left: 10px;
+  height: 42px;
+  position: relative;
+  padding-top: 8px;
+}
+.search-input-control .input-area-bg {
+  height: 34px;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  background-color: #fff;
+}
+.search-input-control .input-area-bg i {
+  width: 30px;
+  float: left;
+  height: 34px;
+  line-height: 34px;
+  text-align: center;
+  color: #e5e5e5;
+  font-size: 20px;
+}
+.search-input-control .input-area-bg .search-input-txt {
+  margin-left: 30px;
+}
+.search-input-control .input-area-bg .search-input-txt input {
+  width: 100%;
+  height: 26px;
+  border: 0;
+  float: left;
+  margin-top: 5px;
+}
+.hot-search {
+  margin: 10px 10px 0;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  background-color: #fff;
+}
+.hot-search .hot-search-content {
+  overflow: hidden;
+  padding: 10px 0;
+}
+.hot-search .hot-search-content ul li {
+  height: 30px;
+  line-height: 30px;
+  float: left;
+}
+.hot-search .hot-search-content ul li a {
+  display: inline-block;
+  padding: 0 16px;
+  text-align: center;
+  height: 21px;
+  line-height: 21px;
+  font-size: 16px;
+  color: #666;
+  border-right: 1px solid #ededed;
+}
+.hot-search .hot-search-content ul li a.h {
+  color: #ff9900;
+}
+.search-result-list {
+  background-color: #fff;
+  margin-top: 15px;
+}
+.search-result-list ul li {
+  height: 40px;
+  line-height: 40px;
+}
+.search-result-list ul li i {
+  width: 35px;
+  color: #999;
+  font-size: 18px;
+  float: left;
+  text-align: center;
+  margin-top: 11px;
+}
+.search-result-list ul li a {
+  float: left;
+  color: #999;
+  font-size: 18px;
+}
+.search-result-list .clear-history {
+  height: 40px;
+  line-height: 40px;
+  color: #bbbbbb;
+  font-size: 18px;
+  text-align: center;
+}
+.search-result-list .clear-history i {
+  width: 30px;
+  display: inline-block;
+  text-align: center;
+}
+.search-result-list .clear-history a {
+  color: #bbb;
 }
 .coverCls {
   width: 100%;
@@ -790,6 +898,12 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   top: 0;
   left: 0;
 }
+.fpi-webapp-header .fpi-webapp-header-area i {
+  color: #fff;
+  font-size: 20px;
+  margin: 15px 7px 0 10px;
+  float: left;
+}
 .fpi-webapp-header .fpi-webapp-header-area .img {
   float: left;
   margin: 14px 7px 0 10px;
@@ -816,6 +930,12 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   top: 0;
   right: 0;
 }
+.fpi-webapp-header .fpi-webapp-header-refresh i {
+  color: #fff;
+  font-size: 20px;
+  margin: 15px 0 0 10px;
+  float: left;
+}
 .fpi-webapp-header .fpi-webapp-header-refresh .img {
   float: left;
   margin-top: 16px;
@@ -832,6 +952,12 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   width: 35px;
   top: 0;
   right: 35px;
+}
+.fpi-webapp-header .fpi-webapp-header-user i {
+  color: #fff;
+  font-size: 20px;
+  margin: 15px 0 0 10px;
+  float: left;
 }
 .fpi-webapp-header .fpi-webapp-header-user .img {
   width: 19px;
@@ -862,20 +988,24 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
 }
 .fpi-webapp-home-search .text {
   position: absolute;
-  top: 12px;
+  top: 14px;
   left: 20px;
   color: #dadada;
   font-size: 14px;
 }
 .fpi-webapp-home-search .icon {
   position: absolute;
-  top: 13px;
+  top: 8px;
   right: 15px;
   width: 20px;
   height: 20px;
-  background: url("../../images/sprite.png") no-repeat;
-  background-size: 37px 403px;
-  background-position: -6px -374px;
+  color: #e5e5e5;
+  font-size: 20px;
+  /*
+		background: url("../../images/sprite.png") no-repeat;
+		background-size: 37px 403px;
+		background-position: -6px -374px;
+        */
 }
 .fpi-webapp-home-menu {
   background-color: #fff;
@@ -896,24 +1026,49 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   height: 35px;
 }
 .fpi-webapp-home-menu ul li .icon.home-m {
-  background: url("../../images/sprite.png") no-repeat;
-  background-size: 37px 403px;
-  background-position: center -152px;
+  /* background: url("../../images/sprite.png") no-repeat;
+					background-size: 37px 403px;
+					background-position: center -152px; */
+}
+.fpi-webapp-home-menu ul li .icon.home-m i {
+  font-size: 26px;
+  line-height: 45px;
+  color: #c5c5c5;
 }
 .fpi-webapp-home-menu ul li .icon.exceed-m {
-  background: url("../../images/sprite.png") no-repeat;
-  background-size: 37px 403px;
-  background-position: center -185px;
+  /*
+					background: url("../../images/sprite.png") no-repeat;
+					background-size: 37px 403px;
+					background-position: center -185px; */
+}
+.fpi-webapp-home-menu ul li .icon.exceed-m i {
+  font-size: 26px;
+  line-height: 45px;
+  color: #c5c5c5;
 }
 .fpi-webapp-home-menu ul li .icon.transport-m {
-  background: url("../../images/sprite.png") no-repeat;
-  background-size: 37px 403px;
-  background-position: center -218px;
+  /* 
+					background: url("../../images/sprite.png") no-repeat;
+					background-size: 37px 403px;
+					background-position: center -218px;
+                    */
+}
+.fpi-webapp-home-menu ul li .icon.transport-m i {
+  font-size: 26px;
+  line-height: 45px;
+  color: #c5c5c5;
 }
 .fpi-webapp-home-menu ul li .icon.me-m {
-  background: url("../../images/sprite.png") no-repeat;
-  background-size: 37px 403px;
-  background-position: center -249px;
+  /* 
+					background: url("../../images/sprite.png") no-repeat;
+					background-size: 37px 403px;
+					background-position: center -249px;
+                    */
+}
+.fpi-webapp-home-menu ul li .icon.me-m i {
+  font-size: 26px;
+  line-height: 45px;
+  color: #c5c5c5;
 }
 .fpi-webapp-home-menu ul li .icon img {
   margin-top: 9px;
@@ -1127,10 +1282,16 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   left: 0;
   top: 0;
 }
+.webapp-sub-2-title .backnew i {
+  font-size: 30px;
+  color: #fff;
+  line-height: 50px;
+}
 .webapp-sub-2-title .backnew.img {
-  background: url("../../images/sprite.png") no-repeat;
-  background-size: 37px 403px;
-  background-position: 10px -320px;
+  /* background: url("../../images/sprite.png") no-repeat;
+			background-size: 37px 403px;
+			background-position: 10px -320px;
+            */
 }
 .webapp-sub-2-title .ok {
   height: 50px;

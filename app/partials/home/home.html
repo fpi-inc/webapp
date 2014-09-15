@@ -5,38 +5,42 @@
     </div>
     <div class="fpi-webapp-header-area">
         <a href="#/selectRegion">
-			<div class="img"></div>
+			<i class="icon-map-marker"></i>
             <span class="text-ellipsis">{{currentRegion}}</span>
         </a>
     </div>
     <a href="#/account">
         <div class="fpi-webapp-header-user">
-			<div class="img"></div>
+			<!-- div class="img"></div -->
+            <i class="icon-user"></i>
         </div>
     </a>
     <a href="javascript:;" ng-click="refresh();">
         <div class="fpi-webapp-header-refresh">
-			<div class="img"></div>
+            <i class="icon-undo"></i>
+			<!-- div class="img"></div -->
         </div>
     </a>
 </div>
 <div class="fpi-webapp-home-search">
-    <input type="text" name="search" id="search" value="" readonly="true" />
-    <div class="text">请输入企业名称</div>
-    <div class="icon"></div>
+    <a href="#/search">
+        <input type="text" name="search" id="search" value="" readonly="true" />
+        <div class="text">请输入企业名称</div>
+        <div class="icon"><i class="icon-search"></i></div>
+    </a>
 </div>
 <div class="fpi-webapp-home-menu">
     <ul>
         <li>
             <div class="border-image-right-1px line">
-				<div class="icon home-m"></div>
+                <div class="icon home-m"><i class="icon-home"></i></div>
                 <p class="txt">首页</p>
             </div>
         </li>
         <li>
             <div class="border-image-right-1px line">
                 <a href="#/exceed">
-					<div class="icon exceed-m"></div>
+                    <div class="icon exceed-m"><i class="icon-bar-chart"></i></div>
 					<p class="txt">超标统计</p>
                 </a>
             </div>
@@ -44,14 +48,14 @@
         <li>
             <div class="border-image-right-1px line">
 				<a href="#/transport">
-					<div class="icon transport-m"></div>
+                    <div class="icon transport-m"><i class="icon-link"></i></div>
                 	<p class="txt">传输有效率</p>
 				</a>
             </div>
         </li>
         <li>
             <div>
-                <div class="icon me-m"></div>
+                <div class="icon me-m"><i class="icon-heart-empty"></i></div>
                 <p class="txt">我的关注</p>
             </div>
         </li>

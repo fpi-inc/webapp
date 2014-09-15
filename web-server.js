@@ -10,4 +10,4 @@ app.configure(function(){
 });
 
 app.listen(port);
-console.log('Now serving the webapp at http://localhost:' + port + '/app');
+console.log('Now serving the webapp at http://localhost:' + port);

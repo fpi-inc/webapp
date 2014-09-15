@@ -22,12 +22,12 @@
 <body>
 <div class="webapp-logo"></div>  
 <div class="webapp-logo-area" ng-controller="LoginController">
-    <form id="target" ng-submit="login();">
+    <form id="target" ng-submit="login()">
         <p><input type="text" ng-model="userName" placeholder="用户名" value="" /></p>
         <div class="line border-image-left-right-1px-login"><div class="line2 border-image-bottom-1px-login"></div></div>
         <p><input type="password" ng-model="passWord" name="passWord" id="passWord" placeholder="密码" value="" /></p>
         <div class="line border-image-left-right-1px-login"><div class="line2 border-image-bottom-1px-login"></div></div>
-        <p><input class="inputCls" type="submit" id="submit" value="登录"></p>
+        <p><input class="inputCls" ng-click="login()" type="submit" id="submit" value="登录"></p>
     </form>
 </div>
 <script src="app/lib/jquery-1.11.1.min.js"></script>
