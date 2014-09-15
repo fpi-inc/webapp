@@ -29,6 +29,8 @@ angular.module('fpiwebapp', [
   'fpiwebapp.common',
   'fpiwebapp.home.service',
   'fpiwebapp.directives',
+  'fpiwebapp.service',
+  'fpiwebapp.calendar',
   'angular-md5',
   'LocalStorageModule'
   ])
@@ -224,6 +226,11 @@ angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule'])
 angular.module('fpiwebapp.choose.ctrl', ['LocalStorageModule'])
  
 .controller('ChooseController', function($rootScope, $scope, $location, $routeParams, localStorageService) {
+	$scope.currentDate = new Date();
+	$scope.setCurrentDate = function(date) {
+		$scope.currentDate = date;
+	}
+
 	$scope.factorData = localStorageService.get('currentFactor');	
     //操作
     $scope.archive = function() {
@@ -239,7 +246,6 @@ angular.module('fpiwebapp.choose.ctrl', ['LocalStorageModule'])
         });
         return count;
     };
-
 });
  
 

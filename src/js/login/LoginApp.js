@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('login', [ 'ngCookies', 'LocalStorageModule', 'fpiwebapp.login.service']).controller(
-    'LoginController',['$location', '$scope', '$rootScope', '$cookieStore', '$http','$window', 'localStorageService', 'LoginService', function($location, $scope, $rootScope, $cookieStore, $http, $window, localStorageService, LoginService) {
+angular.module('login', [ 'ngCookies', 'LocalStorageModule', 'fpiwebapp.login.service', 'angular-md5']).controller(
+    'LoginController',['$location', '$scope', '$rootScope', '$cookieStore', '$http','$window', 'localStorageService', 'LoginService', 'md5', function($location, $scope, $rootScope, $cookieStore, $http, $window, localStorageService, LoginService, md5) {
 
     $scope.category = "WW";
     $scope.user = localStorageService.get('currentUser'); 
@@ -15,7 +15,7 @@ angular.module('login', [ 'ngCookies', 'LocalStorageModule', 'fpiwebapp.login.se
         if($scope.userName && $scope.passWord){
             LoginService.query({
                 userName: $scope.userName,
-                passWord: $scope.passWord
+                passWord: md5.createHash($scope.passWord)
             }, function(data){
                 var loginData = data;
                 if(loginData.result == 'true'){
