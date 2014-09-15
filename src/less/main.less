@@ -519,9 +519,10 @@ ul.fpiwebapp-ul-list{
         position: absolute;
         left: 0;
         top: 0;
-        & img{
-            float: left;
-            margin: 15px 0 0 15px;
+        &.img{
+			background: url("../../images/sprite.png") no-repeat;
+			background-size: 37px 403px;
+			background-position: 10px -320px;
         }
     }
     .ok{
@@ -629,6 +630,16 @@ table.fpiwebapp-calendar{
         height: 30px;
         line-height: 30px;
         clear: both;
+		&.adminicon{
+			background: url("../../images/sprite.png") no-repeat;
+			background-size: 37px 403px;
+			background-position: 5px 3px;
+		}
+		&.passwordicon{
+			background: url("../../images/sprite.png") no-repeat;
+			background-size: 37px 403px;
+			background-position: 5px -29px;
+		}
         & img{
             float: left;
             margin: 3px 10px 0 10px;
@@ -636,6 +647,7 @@ table.fpiwebapp-calendar{
         & span{
             display: inline-block;
             font-size: 18px;
+			padding-left: 43px;
             float: left;
         }
         &.root{

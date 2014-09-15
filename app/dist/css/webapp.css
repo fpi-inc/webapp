@@ -659,6 +659,9 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
 .webapp-logo {
   width: 197px;
   margin: 88px auto 0;
+  height: 102px;
+  background: url("../../images/newlogo.png") no-repeat top center;
+  background-size: 197px 102px ;
 }
 .border-image-bottom-1px-login {
   border-width: 0px 0px 1px;
@@ -787,9 +790,14 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   top: 0;
   left: 0;
 }
-.fpi-webapp-header .fpi-webapp-header-area img {
+.fpi-webapp-header .fpi-webapp-header-area .img {
   float: left;
   margin: 14px 7px 0 10px;
+  width: 14px;
+  height: 20px;
+  background: url("../../images/sprite.png") no-repeat;
+  background-size: 37px 403px;
+  background-position: -5px -66px;
 }
 .fpi-webapp-header .fpi-webapp-header-area span {
   float: left;
@@ -808,10 +816,15 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   top: 0;
   right: 0;
 }
-.fpi-webapp-header .fpi-webapp-header-refresh img {
+.fpi-webapp-header .fpi-webapp-header-refresh .img {
   float: left;
   margin-top: 16px;
   margin-left: 8px;
+  width: 17px;
+  height: 17px;
+  background: url("../../images/sprite.png") no-repeat;
+  background-size: 37px 403px;
+  background-position: -4px -132px;
 }
 .fpi-webapp-header .fpi-webapp-header-user {
   position: absolute;
@@ -820,10 +833,15 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   top: 0;
   right: 35px;
 }
-.fpi-webapp-header .fpi-webapp-header-user img {
+.fpi-webapp-header .fpi-webapp-header-user .img {
+  width: 19px;
+  height: 19px;
   float: left;
   margin-top: 15px;
   margin-left: 8px;
+  background: url("../../images/sprite.png") no-repeat;
+  background-size: 37px 403px;
+  background-position: -4px -99px;
 }
 .fpi-webapp-home-search {
   height: 45px;
@@ -853,6 +871,11 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   position: absolute;
   top: 13px;
   right: 15px;
+  width: 20px;
+  height: 20px;
+  background: url("../../images/sprite.png") no-repeat;
+  background-size: 37px 403px;
+  background-position: -6px -374px;
 }
 .fpi-webapp-home-menu {
   background-color: #fff;
@@ -871,6 +894,26 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
 .fpi-webapp-home-menu ul li .icon {
   text-align: center;
   height: 35px;
+}
+.fpi-webapp-home-menu ul li .icon.home-m {
+  background: url("../../images/sprite.png") no-repeat;
+  background-size: 37px 403px;
+  background-position: center -152px;
+}
+.fpi-webapp-home-menu ul li .icon.exceed-m {
+  background: url("../../images/sprite.png") no-repeat;
+  background-size: 37px 403px;
+  background-position: center -185px;
+}
+.fpi-webapp-home-menu ul li .icon.transport-m {
+  background: url("../../images/sprite.png") no-repeat;
+  background-size: 37px 403px;
+  background-position: center -218px;
+}
+.fpi-webapp-home-menu ul li .icon.me-m {
+  background: url("../../images/sprite.png") no-repeat;
+  background-size: 37px 403px;
+  background-position: center -249px;
 }
 .fpi-webapp-home-menu ul li .icon img {
   margin-top: 9px;
@@ -1084,9 +1127,10 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   left: 0;
   top: 0;
 }
-.webapp-sub-2-title .backnew img {
-  float: left;
-  margin: 15px 0 0 15px;
+.webapp-sub-2-title .backnew.img {
+  background: url("../../images/sprite.png") no-repeat;
+  background-size: 37px 403px;
+  background-position: 10px -320px;
 }
 .webapp-sub-2-title .ok {
   height: 50px;
@@ -1192,6 +1236,16 @@ table.fpiwebapp-calendar tr td.gray {
   line-height: 30px;
   clear: both;
 }
+.user-items .u-item-c.adminicon {
+  background: url("../../images/sprite.png") no-repeat;
+  background-size: 37px 403px;
+  background-position: 5px 3px;
+}
+.user-items .u-item-c.passwordicon {
+  background: url("../../images/sprite.png") no-repeat;
+  background-size: 37px 403px;
+  background-position: 5px -29px;
+}
 .user-items .u-item-c img {
   float: left;
   margin: 3px 10px 0 10px;
@@ -1199,6 +1253,7 @@ table.fpiwebapp-calendar tr td.gray {
 .user-items .u-item-c span {
   display: inline-block;
   font-size: 18px;
+  padding-left: 43px;
   float: left;
 }
 .user-items .u-item-c.root {
