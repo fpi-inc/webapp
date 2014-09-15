@@ -3,72 +3,10 @@
     <a href="javascript:;" ng-click="back();" class="backnew"><img src="images/backiconnew.png" width="12" height="20"></a>
     <a href="javascript:;" class="ok">确定</a>
 </div>
-<div class="choose-panel">
-    <div class="choose-panel-title border-image-bottom-1px">
-        <div class="choose-p-t-l">2014年9月</div>
-        <div class="choose-p-t-r"><a href="javascript:;" class="day cur">日</a><a href="javascript:;" class="month">月</a></div>
-    </div>
-    <div class="choose-panel-body border-image-bottom-1px">
-        <table class="fpiwebapp-calendar">
-            <tr>
-                <th class="blue">日</th>
-                <th>一</th>
-                <th>二</th>
-                <th>三</th>
-                <th>四</th>
-                <th>五</th>
-                <th class="blue">六</th>
-            </tr>
-            <tr>
-                <td class="gray">31</td>
-                <td><a href="javascript:;">1</a></td>
-                <td><a href="javascript:;">2</a></td>
-                <td><a href="javascript:;">3</a></td>
-                <td><a href="javascript:;" class="cur">4</a></td>
-                <td><a href="javascript:;">5</a></td>
-                <td><a href="javascript:;">6</a></td>
-            </tr>
-            <tr>
-                <td><a href="javascript:;">7</a></td>
-                <td><a href="javascript:;">8</a></td>
-                <td><a href="javascript:;">9</a></td>
-                <td><a href="javascript:;">10</a></td>
-                <td><a href="javascript:;">11</a></td>
-                <td><a href="javascript:;">12</a></td>
-                <td><a href="javascript:;">13</a></td>
-            </tr>
-            <tr>
-                <td><a href="javascript:;">14</a></td>
-                <td><a href="javascript:;">15</a></td>
-                <td><a href="javascript:;">16</a></td>
-                <td><a href="javascript:;">16</a></td>
-                <td><a href="javascript:;">17</a></td>
-                <td><a href="javascript:;">18</a></td>
-                <td><a href="javascript:;">19</a></td>
-            </tr>
-            <tr>
-                <td><a href="javascript:;">20</a></td>
-                <td><a href="javascript:;">21</a></td>
-                <td><a href="javascript:;">22</a></td>
-                <td><a href="javascript:;">23</a></td>
-                <td><a href="javascript:;">24</a></td>
-                <td><a href="javascript:;">25</a></td>
-                <td><a href="javascript:;">26</a></td>
-            </tr>
-            <tr>
-                <td><a href="javascript:;">27</a></td>
-                <td><a href="javascript:;">28</a></td>
-                <td><a href="javascript:;">29</a></td>
-                <td><a href="javascript:;">30</a></td>
-                <td class="gray">1</td>
-                <td class="gray">2</td>
-                <td class="gray">3</td>
-            </tr>
-        </table>
-        <div class="control"><a href="javascript:;"><img src="images/up.png" width="8" height="7"></a></div>
-    </div>
-    <div class="choose-panel-foot border-image-bottom-1px"></div>
-</div>
+<calendar update_date_method="setCurrentDate">
+</calendar>
+{{currentDate}}
+
 <div class="choose-panel">
     <div class="choose-panel-title">
         <div class="choose-p-t-l">因子选择</div>

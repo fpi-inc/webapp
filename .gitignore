@@ -10,6 +10,7 @@ Desktop.ini
 *.log
 *.swp
 *.swo
+*.bak
 *~
 *.diff
 *.patch

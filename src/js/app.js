@@ -18,6 +18,8 @@ angular.module('fpiwebapp', [
   'fpiwebapp.common',
   'fpiwebapp.home.service',
   'fpiwebapp.directives',
+  'fpiwebapp.service',
+  'fpiwebapp.calendar',
   'angular-md5',
   'LocalStorageModule'
   ])
