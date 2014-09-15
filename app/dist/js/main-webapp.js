@@ -236,18 +236,29 @@ angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.search
     //        }
     //    });	
     //};
-	$scope.name = $routeParams.key || $scope.companyName;
+	//$scope.searchName = '';
+	//$scope.searchName = $scope.companyName;
     $scope.companyArray = [];
+	$scope.name = $routeParams.key;
+	if($scope.name !== undefined){
+		var name = $scope.name;
+		SearchService.query({
+			monitorTypeCode: 'WW',
+			companyName: name,
+			userName: 'root'
+		}, function(result){
+			if(result){
+				$scope.companyArray = result.company;
+			}
+		});	
+
+	}
+
     $scope.search = function(){
-        SearchService.query({
-            monitorTypeCode: 'WW',
-            companyName: $scope.name,
-            userName: 'root'
-        }, function(result){
-            if(result){
-                $scope.companyArray = result.company;
-            }
-        });	
+		$scope.searchName = $scope.companyName;
+		$location.url('/search/' + $scope.searchName);
+		//$scope.searchFunc();
+		//$scope.name = $routeParams.key;
     };
 });
  
