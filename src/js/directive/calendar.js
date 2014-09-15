@@ -36,11 +36,11 @@ angular.module('fpiwebapp.calendar', ['fpiwebapp.service'])
 	    		return date.getFullYear() == this.currentDate.getFullYear() &&
 	    			date.getMonth() == this.currentDate.getMonth() &&
 	    			date.getDate() == this.currentDate.getDate();
-	    	},
-	    	nextMonth: function() {
-	    		scope.calendarModel = new CalendarModel(new Date(this.currentDate.getFullYear(), this.currentDate,getMonth() + 1, this.currentDate.getDate())));
-  			  	scope.$apply(scope.calendarModel);
-	    	}
+	    	}//,
+	    	//nextMonth: function() {
+	    	//	scope.calendarModel = new CalendarModel(new Date(this.currentDate.getFullYear(), this.currentDate,getMonth() + 1, this.currentDate.getDate())));
+  			//  	scope.$apply(scope.calendarModel);
+	    	//}
 	    };
 	    
     return {
@@ -52,10 +52,10 @@ angular.module('fpiwebapp.calendar', ['fpiwebapp.service'])
       templateUrl: '/app/partials/calendar.html',
       link: function(scope, element, attrs) {
     	  var now = new Date();
-    	  require(['jquery.mobile-1.4.4.js'], function() {
-    		  
-    		  alert($.mobile);
-    	  });
+    	  //require(['jquery.mobile-1.4.4.js'], function() {
+    	  //    
+    	  //    alert($.mobile);
+    	  //});
     	  element.on('swiperight', function() {
     		  alert('fuck');
     	  });
