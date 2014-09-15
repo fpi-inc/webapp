@@ -4,6 +4,8 @@ angular.module('fpiwebapp', [
   'fpiwebapp.region.service',
   'fpiwebapp.region.ctrl',
   'fpiwebapp.search.ctrl',
+  'fpiwebapp.search.key.ctrl',
+  'fpiwebapp.search.service',
   'fpiwebapp.choose.ctrl',
   'fpiwebapp.category.ctrl',
   //'fpiwebapp.login.ctrl',
@@ -55,6 +57,10 @@ angular.module('fpiwebapp', [
       templateUrl:'/app/partials/choose/choose.html'
     })
     .when('/search', {
+      controller:'SearchController',
+      templateUrl:'/app/partials/search/search.html'
+    })
+    .when('/search/:key', {
       controller:'SearchController',
       templateUrl:'/app/partials/search/search.html'
     })

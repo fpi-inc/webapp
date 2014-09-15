@@ -2,7 +2,8 @@
 
 angular.module('fpiwebapp.login.service', ['ngResource']).
 	factory('LoginService', ['$resource', function($resource) {
-		return $resource('http://122.224.196.67:10001/mobile/mobile/load/login.do', {callback: 'JSON_CALLBACK'}, {
+		//return $resource('http://122.224.196.67:10001/mobile/mobile/load/login.do', {callback: 'JSON_CALLBACK'}, {
+		return $resource('http://172.19.20.218:8088/mobile/mobile/load/login.do', {callback: 'JSON_CALLBACK'}, {
 		//return $resource('http://172.19.20.69:8088/mobile/mobile/load/login.do', {callback: 'JSON_CALLBACK'}, {
 			query: {method: 'JSONP'}
 		});
@@ -15,6 +16,8 @@ angular.module('fpiwebapp', [
   'fpiwebapp.region.service',
   'fpiwebapp.region.ctrl',
   'fpiwebapp.search.ctrl',
+  'fpiwebapp.search.key.ctrl',
+  'fpiwebapp.search.service',
   'fpiwebapp.choose.ctrl',
   'fpiwebapp.category.ctrl',
   //'fpiwebapp.login.ctrl',
@@ -66,6 +69,10 @@ angular.module('fpiwebapp', [
       templateUrl:'/app/partials/choose/choose.html'
     })
     .when('/search', {
+      controller:'SearchController',
+      templateUrl:'/app/partials/search/search.html'
+    })
+    .when('/search/:key', {
       controller:'SearchController',
       templateUrl:'/app/partials/search/search.html'
     })
@@ -202,9 +209,9 @@ angular.module('fpiwebapp.region.ctrl', ['LocalStorageModule'])
  
 
 
-angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule'])
+angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.search.service'])
  
-.controller('SearchController', function($rootScope, $scope, $location, $routeParams, localStorageService) {
+.controller('SearchController', function($rootScope, $scope, $location, $routeParams, localStorageService, SearchService) {
 	
 	//$rootScope.menu.hideItems();
 	////查询
@@ -218,7 +225,30 @@ angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule'])
 	//	// });
 	//	console.log($scope.name);
 	//};
-	
+    //$scope.companyName = '';
+    //$scope.searchCompany = function(){
+    //    SearchService.query({
+    //        monitorTypeCode: 'WW',
+    //        companyName: $scope.searchCompany,
+    //        userName: 'root'
+    //    }, function(result){
+    //        if(result){
+    //        }
+    //    });	
+    //};
+	$scope.name = $routeParams.key || $scope.companyName;
+    $scope.companyArray = [];
+    $scope.search = function(){
+        SearchService.query({
+            monitorTypeCode: 'WW',
+            companyName: $scope.name,
+            userName: 'root'
+        }, function(result){
+            if(result){
+                $scope.companyArray = result.company;
+            }
+        });	
+    };
 });
  
 
