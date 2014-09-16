@@ -15,8 +15,17 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
         });
 
         if($event.currentTarget){
-            angular.element($event.currentTarget).after('<tr><td colspan="4"><div></div></td></tr>');
+			if(angular.element("#chartTr")){
+				angular.element("#chartTr").remove();
+			}
+            angular.element($event.currentTarget).after('<tr id="chartTr"><td colspan="4"><div id="chartcontainer">fpi</div></td></tr>');
         }
+
+		var myData = new Array([10, 20], [15, 10], [20, 30], [25, 10], [30, 5]);
+		var myChart = new JSChart('chartcontainer', 'line');
+		myChart.setDataArray(myData);
+		myChart.setSize(320, 320);
+		myChart.draw();
         //addRow
         //$scope.addRow(target);
     };

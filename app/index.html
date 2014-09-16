@@ -27,7 +27,8 @@
       var platformServer = 'http://122.224.196.67:10001';
       //var platformServer = 'http://172.19.20.69:8088';
     </script>
-    <script src="lib/echarts-2.0.2/doc/example/www/js/esl.js"></script>
+    <!-- script src="lib/echarts-2.0.2/doc/example/www/js/esl.js"></script -->
+    <script src="lib/JSCharts3_demo/sources/jscharts.js"></script>
   </head>
   <body style="background-color: #f5f5f5;">
     <div ng-view></div>
@@ -63,14 +64,14 @@
     <script type="text/javascript">
     // Step:3 conifg ECharts's path, link to echarts.js from current page.
     // Step:3 为模块加载器配置echarts的路径，从当前页面链接到echarts.js，定义所需图表路径
-    require.config({
-        paths:{ 
-            echarts:'lib/echarts-2.0.2/doc/example/www/js/echarts',
-            'echarts/chart/bar' : 'lib/echarts-2.0.2/doc/example/www/js/echarts-map',
-            'echarts/chart/line' : 'lib/echarts-2.0.2/doc/example/www/js/echarts-map',
-            'echarts/chart/pie': 'lib/echarts-2.0.2/doc/example/www/js/echarts-map'
-        }
-    });
+    //require.config({
+    //    paths:{ 
+    //        echarts:'lib/echarts-2.0.2/doc/example/www/js/echarts',
+    //        'echarts/chart/bar' : 'lib/echarts-2.0.2/doc/example/www/js/echarts-map',
+    //        'echarts/chart/line' : 'lib/echarts-2.0.2/doc/example/www/js/echarts-map',
+    //        'echarts/chart/pie': 'lib/echarts-2.0.2/doc/example/www/js/echarts-map'
+    //    }
+    //});
     
     // Step:4 require echarts and use it in the callback.
     // Step:4 动态加载echarts然后在回调函数中开始使用，注意保持按需加载结构定义图表路径
