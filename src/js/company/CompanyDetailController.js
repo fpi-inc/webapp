@@ -1,12 +1,39 @@
 angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebapp.home.service'])
  
+.controller('CompanyDetailController', function($scope, $location, $window, $routeParams, localStorageService, MenuServer, HomeService) {
+	$scope.companyId = $routeParams.id;
+    $scope.currentItem = 0;
+    $scope.portNameArray = [];
+    $scope.realDataByTableArray = [];
 
+    HomeService.getPortsByCompany({
+        monitorTypeCode: 'WW',
+        companyId: $scope.companyId
+    }, function(result){
+        if(result){
+            $scope.portNameArray = result.ports;
+            $scope.realDataByTable(result.ports[0].portId);
+        }
+    });
+
+    $scope.realDataByTable = function(portId){
+
+        HomeService.getRealDataByTable({
+            monitorTypeCode: 'WW',
+            portId: portId
+        }, function(result){
+            if(result){
+                $scope.realDataByTableArray = result.realDataTbale;
+            }
+        });
+    };
+})
 .directive('tabDetail', function(){
     return{
         restrict: 'EA',
         replace: true,
         //scope: {
-        //    current: '@'
+        //    realDataByTableArray: '@realDataByTableArray'
         //},
         //transclude: true,
         templateUrl: 'partials/company/tab-detail.html',
@@ -23,7 +50,7 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
             for(var i = 0; i < tabs.length; i++){
                leftArray.push(tabs[i].offsetLeft);
             }
-            console.log(leftArray);
+            //console.log(leftArray);
             line.css('left', leftArray[currentItem] + 'px');
             tabs.click(function(){
                 var index = $(this).index();
@@ -36,19 +63,5 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
             }
         }
     }
-})
-.controller('CompanyDetailController', function($scope, $location, $window, $routeParams, localStorageService, MenuServer, HomeService) {
-	console.log($routeParams);
-    $scope.currentItem = 2;
-    //HomeService.getOverStandardDataByCompany({
-    //    monitorTypeCode: 'WW',
-    //    portId: '2c93871641b498170141b49cfb6b0004',
-    //    factorIds: '-1',
-    //    dateType: 1,
-    //    time: '2014-09-09'
-    //},function(result){
-    //    if(result){
-    //    }        
-    //}); 
 });
 

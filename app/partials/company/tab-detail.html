@@ -6,36 +6,18 @@
         <i class="c-line"></i>
     </div>
     <div class="tab-content">
-        <div class="p-title">24小时数据</div>
-        <div style="height: 150px; background-color: #f4f4f4;" id="linemain"></div>
-        <div class="p-point">
-            <a href="javascript:;" class="cur"></a>
-            <a href="javascript:;"></a>
-        </div>
-        <table class="fpiwebapp-detail-table">
+        <table class="fpiwebapp-detail-table bg" id="realTable">
             <tr class="num">
                 <th><p class="border-image-bottom-1px">因子</p></th>
                 <th><p class="border-image-bottom-1px">值</p></th>
                 <th><p class="border-image-bottom-1px">单位</p></th>
                 <th><p class="border-image-bottom-1px">标准</p></th>
             </tr>
-            <tr>
-                <td><p class="border-image-bottom-1px">COD</p></td>
-                <td><p class="border-image-bottom-1px">16.27</p></td>
-                <td><p class="border-image-bottom-1px">mg/l</p></td>
-                <td><p class="border-image-bottom-1px">50</p></td>
-            </tr>
-            <tr>
-                <td><p class="border-image-bottom-1px">COD</p></td>
-                <td><p class="border-image-bottom-1px">16.27</p></td>
-                <td><p class="border-image-bottom-1px">mg/l</p></td>
-                <td><p class="border-image-bottom-1px">50</p></td>
-            </tr>
-            <tr>
-                <td><p class="border-image-bottom-1px">COD</p></td>
-                <td><p class="border-image-bottom-1px">16.27</p></td>
-                <td><p class="border-image-bottom-1px">mg/l</p></td>
-                <td><p class="border-image-bottom-1px">50</p></td>
+            <tr ng-repeat="realData in realDataByTableArray" ng-click="showChartFunc($event);">
+                <td><p class="border-image-bottom-1px"><span ng-class="{true: 'yz', false: 'noyz'}[realData.factorFlag]">{{realData.factorName}}</span></p></td>
+                <td><p class="border-image-bottom-1px">{{realData.factorVal}}</p></td>
+                <td><p class="border-image-bottom-1px">{{realData.unit}}</p></td>
+                <td><p class="border-image-bottom-1px">{{realData.standard}}</p></td>
             </tr>
         </table>
     </div>

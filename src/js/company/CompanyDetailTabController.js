@@ -2,6 +2,33 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
  
 
 .controller('CompanyDetailTabController', function($scope, $rootScope, $location, $window, $routeParams, localStorageService, MenuServer, HomeService) {
+    //实时数据
+    $scope.showChartFunc = function($event){
+        HomeService.get24RealDataByChart({
+            portId: '2c93871641b6111b0141b61a1f600002',
+            monitorTypeCode: 'WW',
+            factor: 'F_B01'
+        }, function(result){
+            if(result){
+                
+            }
+        });
+
+        if($event.currentTarget){
+            angular.element($event.currentTarget).after('<tr><td colspan="4"><div></div></td></tr>');
+        }
+        //addRow
+        //$scope.addRow(target);
+    };
+
+    
+    $scope.addRow = function(target){
+        console.log(target.parent);
+        //var trs = angular.element("#realTable").find('tr');
+        //$(this).after('<tr><td colspan="4">fdsafsa</td></tr>');
+    };
+
+
 	//console.log($routeParams);
     $scope.myText = 'Not Selected';
     $scope.currentDate = '';

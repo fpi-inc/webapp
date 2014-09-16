@@ -4,7 +4,6 @@ angular.module('fpiwebapp', [
   'fpiwebapp.region.service',
   'fpiwebapp.region.ctrl',
   'fpiwebapp.search.ctrl',
-  'fpiwebapp.search.key.ctrl',
   'fpiwebapp.search.service',
   'fpiwebapp.choose.ctrl',
   'fpiwebapp.category.ctrl',

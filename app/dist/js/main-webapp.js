@@ -16,7 +16,6 @@ angular.module('fpiwebapp', [
   'fpiwebapp.region.service',
   'fpiwebapp.region.ctrl',
   'fpiwebapp.search.ctrl',
-  'fpiwebapp.search.key.ctrl',
   'fpiwebapp.search.service',
   'fpiwebapp.choose.ctrl',
   'fpiwebapp.category.ctrl',
@@ -212,39 +211,25 @@ angular.module('fpiwebapp.region.ctrl', ['LocalStorageModule'])
 angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.search.service'])
  
 .controller('SearchController', function($rootScope, $scope, $location, $routeParams, localStorageService, SearchService) {
-	
-	//$rootScope.menu.hideItems();
-	////查询
-	//$scope.searchCompanyName = [];
-	//$scope.name = $routeParams.name;
-	//$scope.searchCompany = function(){
-	//	var name = $scope.name;
-	//	//获取数据
-	//	// CompanyService.search({name:name},function(result){
-	//	// 	$scope.searchCompanyName = result.data;
-	//	// });
-	//	console.log($scope.name);
-	//};
-    //$scope.companyName = '';
-    //$scope.searchCompany = function(){
-    //    SearchService.query({
-    //        monitorTypeCode: 'WW',
-    //        companyName: $scope.searchCompany,
-    //        userName: 'root'
-    //    }, function(result){
-    //        if(result){
-    //        }
-    //    });	
-    //};
-	//$scope.searchName = '';
-	//$scope.searchName = $scope.companyName;
+    $scope.toggle = false;
+    $scope.focusFunc = function(){
+        console.log("focus");
+        $scope.toggle = true;
+    };
+    $scope.blurFunc = function(){
+        console.log("blur");
+        $scope.toggle = false;
+    };
+
+	$scope.name = $routeParams.key || '';
+
     $scope.companyArray = [];
-	$scope.name = $routeParams.key;
+
 	if($scope.name !== undefined){
-		var name = $scope.name;
-		SearchService.query({
+		SearchService.search({
 			monitorTypeCode: 'WW',
-			companyName: name,
+			//companyName: escape(escape($scope.name)),
+			companyName: $scope.name,
 			userName: 'root'
 		}, function(result){
 			if(result){
@@ -254,12 +239,24 @@ angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.search
 
 	}
 
-    $scope.search = function(){
-		$scope.searchName = $scope.companyName;
-		$location.url('/search/' + $scope.searchName);
-		//$scope.searchFunc();
-		//$scope.name = $routeParams.key;
+    $scope.search = function() {
+        $location.path('/search/' + $scope.key);
+    }
+
+    //快速搜索
+    $scope.quickFunc = function(manageLevel){
+        
+		SearchService.quickSearch({
+			monitorTypeCode: 'WW',
+			manageLevel: manageLevel,
+			userName: 'root'
+		}, function(result){
+			if(result){
+				$scope.companyArray = result.company;
+			}
+		});	
     };
+
 });
  
 
@@ -595,7 +592,11 @@ angular.module('fpiwebapp.home.service', ['ngResource']).
             getEfficiency: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getTransmissionEfficientBySelfRegion.do'},
             getOverStandardData: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getOverStandardData.do'},
             getOverStandardDataByCompany: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getOverStandardDataByCompany.do'},
-            getDetailOverStandardDataByCompany: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getDetailOverStandardDataByCompany.do'}
+            getDetailOverStandardDataByCompany: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getDetailOverStandardDataByCompany.do'},
+            getPortsByCompany: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getPortsByCompany.do'},
+            getRealDataByTable: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getRealDataByTable.do'},
+            get24RealDataByChart: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/get24RealDataByChart.do'},
+            get48RealDataByChart: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/get48RealDataByChart.do'}
 		});
 	}]);
 
@@ -640,13 +641,40 @@ angular.module('fpiwebapp.account.ctrl', [ 'LocalStorageModule'])
 
 angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebapp.home.service'])
  
+.controller('CompanyDetailController', function($scope, $location, $window, $routeParams, localStorageService, MenuServer, HomeService) {
+	$scope.companyId = $routeParams.id;
+    $scope.currentItem = 0;
+    $scope.portNameArray = [];
+    $scope.realDataByTableArray = [];
 
+    HomeService.getPortsByCompany({
+        monitorTypeCode: 'WW',
+        companyId: $scope.companyId
+    }, function(result){
+        if(result){
+            $scope.portNameArray = result.ports;
+            $scope.realDataByTable(result.ports[0].portId);
+        }
+    });
+
+    $scope.realDataByTable = function(portId){
+
+        HomeService.getRealDataByTable({
+            monitorTypeCode: 'WW',
+            portId: portId
+        }, function(result){
+            if(result){
+                $scope.realDataByTableArray = result.realDataTbale;
+            }
+        });
+    };
+})
 .directive('tabDetail', function(){
     return{
         restrict: 'EA',
         replace: true,
         //scope: {
-        //    current: '@'
+        //    realDataByTableArray: '@realDataByTableArray'
         //},
         //transclude: true,
         templateUrl: 'partials/company/tab-detail.html',
@@ -663,7 +691,7 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
             for(var i = 0; i < tabs.length; i++){
                leftArray.push(tabs[i].offsetLeft);
             }
-            console.log(leftArray);
+            //console.log(leftArray);
             line.css('left', leftArray[currentItem] + 'px');
             tabs.click(function(){
                 var index = $(this).index();
@@ -676,20 +704,6 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
             }
         }
     }
-})
-.controller('CompanyDetailController', function($scope, $location, $window, $routeParams, localStorageService, MenuServer, HomeService) {
-	console.log($routeParams);
-    $scope.currentItem = 2;
-    //HomeService.getOverStandardDataByCompany({
-    //    monitorTypeCode: 'WW',
-    //    portId: '2c93871641b498170141b49cfb6b0004',
-    //    factorIds: '-1',
-    //    dateType: 1,
-    //    time: '2014-09-09'
-    //},function(result){
-    //    if(result){
-    //    }        
-    //}); 
 });
 
 
@@ -698,6 +712,33 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
  
 
 .controller('CompanyDetailTabController', function($scope, $rootScope, $location, $window, $routeParams, localStorageService, MenuServer, HomeService) {
+    //实时数据
+    $scope.showChartFunc = function($event){
+        HomeService.get24RealDataByChart({
+            portId: '2c93871641b6111b0141b61a1f600002',
+            monitorTypeCode: 'WW',
+            factor: 'F_B01'
+        }, function(result){
+            if(result){
+                
+            }
+        });
+
+        if($event.currentTarget){
+            angular.element($event.currentTarget).after('<tr><td colspan="4"><div></div></td></tr>');
+        }
+        //addRow
+        //$scope.addRow(target);
+    };
+
+    
+    $scope.addRow = function(target){
+        console.log(target.parent);
+        //var trs = angular.element("#realTable").find('tr');
+        //$(this).after('<tr><td colspan="4">fdsafsa</td></tr>');
+    };
+
+
 	//console.log($routeParams);
     $scope.myText = 'Not Selected';
     $scope.currentDate = '';

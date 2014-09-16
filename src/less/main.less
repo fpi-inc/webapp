@@ -296,6 +296,9 @@ ul.fpiwebapp-ul-list{
 	width: 100%;
 	border-collapse: collapse;
     color: #333;
+    &.bg{
+        background-color: #fff;
+    }
 	& tr{
         & th{
             height: 40px;
@@ -334,6 +337,17 @@ ul.fpiwebapp-ul-list{
                     line-height: 30px;
                     color: #fff;
                     background-color: #ff6363;
+                    .border-radius(15px);
+                    font-size: 12px;
+                }
+                & span.noyz{
+                    width: 30px;
+                    height: 30px;
+                    display: inline-block;
+                    text-align: center;
+                    line-height: 30px;
+                    color: #fff;
+                    background-color: #14b1e4;
                     .border-radius(15px);
                     font-size: 12px;
                 }
@@ -427,6 +441,16 @@ ul.fpiwebapp-ul-list{
         color: #fff;
         font-size: 18px;
         text-align: center;
+    }
+    & input{
+        display: inline-block;
+        width: 57px;
+        line-height: 50px;
+        color: #fff;
+        font-size: 18px;
+        text-align: center;
+        border: none;
+        background-color: transparent;
     }
 }
 .search-input-control{

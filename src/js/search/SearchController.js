@@ -1,39 +1,25 @@
 angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.search.service'])
  
 .controller('SearchController', function($rootScope, $scope, $location, $routeParams, localStorageService, SearchService) {
-	
-	//$rootScope.menu.hideItems();
-	////查询
-	//$scope.searchCompanyName = [];
-	//$scope.name = $routeParams.name;
-	//$scope.searchCompany = function(){
-	//	var name = $scope.name;
-	//	//获取数据
-	//	// CompanyService.search({name:name},function(result){
-	//	// 	$scope.searchCompanyName = result.data;
-	//	// });
-	//	console.log($scope.name);
-	//};
-    //$scope.companyName = '';
-    //$scope.searchCompany = function(){
-    //    SearchService.query({
-    //        monitorTypeCode: 'WW',
-    //        companyName: $scope.searchCompany,
-    //        userName: 'root'
-    //    }, function(result){
-    //        if(result){
-    //        }
-    //    });	
-    //};
-	//$scope.searchName = '';
-	//$scope.searchName = $scope.companyName;
+    $scope.toggle = false;
+    $scope.focusFunc = function(){
+        console.log("focus");
+        $scope.toggle = true;
+    };
+    $scope.blurFunc = function(){
+        console.log("blur");
+        $scope.toggle = false;
+    };
+
+	$scope.name = $routeParams.key || '';
+
     $scope.companyArray = [];
-	$scope.name = $routeParams.key;
+
 	if($scope.name !== undefined){
-		var name = $scope.name;
-		SearchService.query({
+		SearchService.search({
 			monitorTypeCode: 'WW',
-			companyName: name,
+			//companyName: escape(escape($scope.name)),
+			companyName: $scope.name,
 			userName: 'root'
 		}, function(result){
 			if(result){
@@ -43,11 +29,23 @@ angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.search
 
 	}
 
-    $scope.search = function(){
-		$scope.searchName = $scope.companyName;
-		$location.url('/search/' + $scope.searchName);
-		//$scope.searchFunc();
-		//$scope.name = $routeParams.key;
+    $scope.search = function() {
+        $location.path('/search/' + $scope.key);
+    }
+
+    //快速搜索
+    $scope.quickFunc = function(manageLevel){
+        
+		SearchService.quickSearch({
+			monitorTypeCode: 'WW',
+			manageLevel: manageLevel,
+			userName: 'root'
+		}, function(result){
+			if(result){
+				$scope.companyArray = result.company;
+			}
+		});	
     };
+
 });
  
