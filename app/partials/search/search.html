@@ -3,12 +3,12 @@
     <form ng-submit="search()">
         <div class="search-control-r">
             <a href="javascript:;" ng-click="back()" ng-hide="toggle">取消</a>
-            <input type="submit" value="搜索" id="submit" ng-show="toggle">
+            <input type="submit" value="搜索" id="submit" ng-show="toggle" ng-click="search()">
         </div>
         <div class="search-input-control">
             <div class="input-area-bg">
                 <i class="icon-search"></i>
-                <div class="search-input-txt"><input type="text" value="" ng-model="key" name="" ng-blur="blurFunc()" ng-focus="focusFunc()"></div>
+                <div class="search-input-txt"><input type="text" value="" ng-model="key" name="" ng-focus="focusFunc()"></div>
             </div>
         </div>
     </form>
@@ -16,10 +16,10 @@
 <div class="hot-search">
     <div class="hot-search-content">
         <ul>
-            <li><a href="javascript:;" class="h">热门搜索</a></li>
-            <li><a href="javascript:;" ng-click="quickFunc(1)">国控</a></li>
-            <li><a href="javascript:;" ng-click="quickFunc(2)">省控</a></li>
-            <li><a href="javascript:;" ng-click="quickFunc(3)">其它</a></li>
+            <li><a href="javascript:;" class="h">快捷搜索</a></li>
+            <li><a href="javascript:;" ng-click="quickFunc(1)" ng-class="{true: 'cur', false: ''}[isActiveA]">国控</a></li>
+            <li><a href="javascript:;" ng-click="quickFunc(2)" ng-class="{true: 'cur', false: ''}[isActiveB]">省控</a></li>
+            <li><a href="javascript:;" ng-click="quickFunc(3)" ng-class="{true: 'cur', false: ''}[isActiveC]">其它</a></li>
         </ul>
         <div class="clear"></div>
     </div>
@@ -28,7 +28,8 @@
     <ul ng-repeat="company in companyArray">
         <li class="border-image-bottom-1px"><i class="icon-time"></i><a href="#/companyDetail/{{company.companyId}}">{{company.companyName}}</a></li>
     </ul>
-    <div class="clear-history"><i class="icon-trash"></i><a href="javascript:;">清除历史记录</a></div>
+    <div class="clear-history" ng-click="clearHistory()" ng-show="hasData"><i class="icon-trash"></i><a href="javascript:;">清除历史记录</a></div>
+    <div class="noSearchData" ng-show="isNoData"><div class="noSearchData-c"><img src="images/wu.gif" width="130" height="130"><span>没有搜到您要的数据</span><div></div>
 </div>
 <!-- div class="fpiwebapp-content">
 	<div class="fpiwebapp-header-sub">

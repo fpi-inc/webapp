@@ -1,15 +1,19 @@
 angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.search.service'])
  
 .controller('SearchController', function($rootScope, $scope, $location, $routeParams, localStorageService, SearchService) {
+    $scope.currentUser = $rootScope.checkUser();
+    $scope.currentCategory = localStorageService.get('currentCategory');
     $scope.toggle = false;
     $scope.focusFunc = function(){
         console.log("focus");
         $scope.toggle = true;
     };
-    $scope.blurFunc = function(){
-        console.log("blur");
-        $scope.toggle = false;
-    };
+    $scope.isNoData = false;
+    //$scope.blurFunc = function(){
+    //    console.log("blur");
+    //    $scope.toggle = false;
+    //};
+    $scope.hasData = false;
 
 	$scope.name = $routeParams.key || '';
 
@@ -17,13 +21,21 @@ angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.search
 
 	if($scope.name !== undefined){
 		SearchService.search({
-			monitorTypeCode: 'WW',
+			monitorTypeCode: $scope.currentCategory,
 			//companyName: escape(escape($scope.name)),
 			companyName: $scope.name,
-			userName: 'root'
+			userName: $scope.currentUser
 		}, function(result){
 			if(result){
 				$scope.companyArray = result.company;
+                if($scope.companyArray.length > 0){
+                    $scope.hasData = true;
+                    $scope.isNoData = false;
+                }
+                else{
+                    $scope.hasData = false;
+                    $scope.isNoData = true;
+                }
 			}
 		});	
 
@@ -35,16 +47,51 @@ angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.search
 
     //快速搜索
     $scope.quickFunc = function(manageLevel){
+        $scope.isActiveA = false;
+        $scope.isActiveB = false;
+        $scope.isActiveC = false;
+        switch (manageLevel){
+            case 1:
+                $scope.isActiveA = true;
+                $scope.isActiveB = false;
+                $scope.isActiveC = false;
+                break;
+            case 2:
+                $scope.isActiveA = false;
+                $scope.isActiveB = true;
+                $scope.isActiveC = false;
+                break;
+            case 3:
+                $scope.isActiveA = false;
+                $scope.isActiveB = false;
+                $scope.isActiveC = true;
+                break;
+            default:
+                break;
+        }
         
 		SearchService.quickSearch({
-			monitorTypeCode: 'WW',
+			monitorTypeCode: $scope.currentCategory,
 			manageLevel: manageLevel,
-			userName: 'root'
+			userName: $scope.currentUser
 		}, function(result){
 			if(result){
 				$scope.companyArray = result.company;
+                if($scope.companyArray.length > 0){
+                    $scope.hasData = true;
+                    $scope.isNoData = false;
+                }
+                else{
+                    $scope.hasData = false;
+                    $scope.isNoData = true;
+                }
 			}
 		});	
+    };
+
+    //清除历史记录
+    $scope.clearHistory = function(){
+        $scope.companyArray = [];
     };
 
 });

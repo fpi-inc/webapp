@@ -2,7 +2,13 @@
 <div class="webapp-sub-2-title">企业详情<a href="javascript:;" ng-click="back();" class="backnew img"><i class="icon-angle-left"></i></a></div>
 <div class="fpiwebapp-content">
 	<div class="fpiwebapp-home-panel">
-        <div class="fpiwebapp-home-panel-title border-image-bottom-1px"><span ng-repeat="port in portNameArray"><a href="javascript:;">{{port.portName}}</a></span></div>
+        <!-- div class="fpiwebapp-home-panel-title border-image-bottom-1px"><span ng-repeat="port in portNameArray"><a href="javascript:;">{{port.portName}}</a></span></div -->
+        <div class="fpiwebapp-home-panel-title border-image-bottom-1px" ng-click="toggleCate()"><div class="cate-title">{{currentPorts}}</div><i class="icon-angle-down"></i></div>
+        <div class="cate-down" ng-show="isActive">
+            <ul ng-repeat="port in portNameArray">
+                <li ng-class="{'no-bottom-line': $last}"><a href="javascript:;" ng-click="realDataByTable(port.portId, port.portName)">{{port.portName}}</a></li>
+            </ul>
+        </div>
 		<div class="fpiwebapp-home-panel-body">
             <tab-detail></tab-detail>
 		</div>

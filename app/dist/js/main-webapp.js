@@ -211,15 +211,19 @@ angular.module('fpiwebapp.region.ctrl', ['LocalStorageModule'])
 angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.search.service'])
  
 .controller('SearchController', function($rootScope, $scope, $location, $routeParams, localStorageService, SearchService) {
+    $scope.currentUser = $rootScope.checkUser();
+    $scope.currentCategory = localStorageService.get('currentCategory');
     $scope.toggle = false;
     $scope.focusFunc = function(){
         console.log("focus");
         $scope.toggle = true;
     };
-    $scope.blurFunc = function(){
-        console.log("blur");
-        $scope.toggle = false;
-    };
+    $scope.isNoData = false;
+    //$scope.blurFunc = function(){
+    //    console.log("blur");
+    //    $scope.toggle = false;
+    //};
+    $scope.hasData = false;
 
 	$scope.name = $routeParams.key || '';
 
@@ -227,13 +231,21 @@ angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.search
 
 	if($scope.name !== undefined){
 		SearchService.search({
-			monitorTypeCode: 'WW',
+			monitorTypeCode: $scope.currentCategory,
 			//companyName: escape(escape($scope.name)),
 			companyName: $scope.name,
-			userName: 'root'
+			userName: $scope.currentUser
 		}, function(result){
 			if(result){
 				$scope.companyArray = result.company;
+                if($scope.companyArray.length > 0){
+                    $scope.hasData = true;
+                    $scope.isNoData = false;
+                }
+                else{
+                    $scope.hasData = false;
+                    $scope.isNoData = true;
+                }
 			}
 		});	
 
@@ -245,16 +257,51 @@ angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.search
 
     //快速搜索
     $scope.quickFunc = function(manageLevel){
+        $scope.isActiveA = false;
+        $scope.isActiveB = false;
+        $scope.isActiveC = false;
+        switch (manageLevel){
+            case 1:
+                $scope.isActiveA = true;
+                $scope.isActiveB = false;
+                $scope.isActiveC = false;
+                break;
+            case 2:
+                $scope.isActiveA = false;
+                $scope.isActiveB = true;
+                $scope.isActiveC = false;
+                break;
+            case 3:
+                $scope.isActiveA = false;
+                $scope.isActiveB = false;
+                $scope.isActiveC = true;
+                break;
+            default:
+                break;
+        }
         
 		SearchService.quickSearch({
-			monitorTypeCode: 'WW',
+			monitorTypeCode: $scope.currentCategory,
 			manageLevel: manageLevel,
-			userName: 'root'
+			userName: $scope.currentUser
 		}, function(result){
 			if(result){
 				$scope.companyArray = result.company;
+                if($scope.companyArray.length > 0){
+                    $scope.hasData = true;
+                    $scope.isNoData = false;
+                }
+                else{
+                    $scope.hasData = false;
+                    $scope.isNoData = true;
+                }
 			}
 		});	
+    };
+
+    //清除历史记录
+    $scope.clearHistory = function(){
+        $scope.companyArray = [];
     };
 
 });
@@ -596,7 +643,8 @@ angular.module('fpiwebapp.home.service', ['ngResource']).
             getPortsByCompany: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getPortsByCompany.do'},
             getRealDataByTable: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getRealDataByTable.do'},
             get24RealDataByChart: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/get24RealDataByChart.do'},
-            get48RealDataByChart: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/get48RealDataByChart.do'}
+            get48RealDataByChart: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/get48RealDataByChart.do'},
+            getHistoryData: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getHistoryData.do'}
 		});
 	}]);
 
@@ -641,33 +689,82 @@ angular.module('fpiwebapp.account.ctrl', [ 'LocalStorageModule'])
 
 angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebapp.home.service'])
  
-.controller('CompanyDetailController', function($scope, $location, $window, $routeParams, localStorageService, MenuServer, HomeService) {
+.controller('CompanyDetailController', function($scope, $rootScope, $location, $window, $routeParams, localStorageService, MenuServer, HomeService) {
+
+	$scope.nowDate = $rootScope.currentDate(0);
+    $scope.currentCategory = localStorageService.get('currentCategory');
+
 	$scope.companyId = $routeParams.id;
     $scope.currentItem = 0;
     $scope.portNameArray = [];
     $scope.realDataByTableArray = [];
+    if($scope.realDataByTableArray.length > 0){
+        $scope.realLoading = false;
+    }
+    else{
+        $scope.realLoading = true;
+    }
 
     HomeService.getPortsByCompany({
-        monitorTypeCode: 'WW',
+        monitorTypeCode: $scope.currentCategory,
         companyId: $scope.companyId
     }, function(result){
         if(result){
             $scope.portNameArray = result.ports;
-            $scope.realDataByTable(result.ports[0].portId);
+            //存储排口
+            localStorageService.set('currentPorts', {portName: result.ports[0].portName, portId: result.ports[0].portId});
+            $scope.currentPorts = localStorageService.get('currentPorts').portName;
+            $scope.realDataByTable(result.ports[0].portId, result.ports[0].portName);
+            //$scope.getHistoryDataFunc(result.ports[0].portId, $scope.nowDate);
         }
     });
 
-    $scope.realDataByTable = function(portId){
-
+    $scope.realDataByTable = function(portId, portName){
+        localStorageService.set('currentPorts', {portName: portName, portId: portId});
+        $scope.currentPorts = localStorageService.get('currentPorts').portName;
+        $scope.isActive = false;
         HomeService.getRealDataByTable({
-            monitorTypeCode: 'WW',
+            monitorTypeCode: $scope.currentCategory,
             portId: portId
         }, function(result){
             if(result){
                 $scope.realDataByTableArray = result.realDataTbale;
+                $scope.realLoading = false;
             }
         });
     };
+
+    //类别显示
+    $scope.isActive = false;
+    $scope.toggleCate = function(){
+        $scope.isActive = true;
+    };
+
+    //历史数据
+    $scope.historyDataArray = [];
+    if($scope.historyDataArray.length > 0){
+        $scope.historyLoading = false;
+    }
+    else{
+        $scope.historyLoading = true;
+    }
+    $scope.getHistoryDataFunc = function(portId, time){
+
+        HomeService.getHistoryData({
+            portId: portId,
+            monitorTypeCode: $scope.currentCategory,
+            factors: '-1',
+            dateType: 1,
+            time: time
+        }, function(result){
+            if(result){
+                $scope.historyDataArray = result.data;
+                $scope.historyLoading = false;
+            }
+        });
+    };
+
+    //超标数据
 })
 .directive('tabDetail', function(){
     return{
@@ -681,7 +778,7 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
         link: function(scope, element, attrs){
             scope.isShow = false;
         },
-        controller: function($scope){
+        controller: function($scope, localStorageService){
             var currentItem = $scope.currentItem;
             $('.tab-content').hide();
             $('.tab-content').eq(currentItem).show();
@@ -698,6 +795,20 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
                 $('.tab-content').hide();
                 $('.tab-content').eq(index).show();
                 runCurrentLine(index);
+                switch (index){
+                    case 0:
+                        break;
+                    case 1:
+                        console.log(2);
+                        $scope.currentPortsAll = localStorageService.get('currentPorts');
+                        $scope.getHistoryDataFunc($scope.currentPortsAll.portId, $scope.nowDate);
+                        break;
+                    case 2:
+                        console.log(3);
+                        break;
+                    default:
+                        break;
+                }
             });
             function runCurrentLine(index){
                 line.animate({'left': leftArray[index] + 'px'});

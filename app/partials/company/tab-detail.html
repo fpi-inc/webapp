@@ -20,13 +20,11 @@
                 <td><p class="border-image-bottom-1px">{{realData.standard}}</p></td>
             </tr>
         </table>
+        <div class="loadingCls" ng-show="realLoading"><img src="images/loading.gif" width="32" height="32"></div>
     </div>
     <div class="tab-content">
-        <div style="padding: 10px;">
-            <!-- <input id="dateField" datepicker ng-model="currentDate" readonly="true" select="updateMyText(date)"> -->
-        </div>
-        <div>{{myText}} - {{currentDate}}</div>
-        <table class="fpiwebapp-detail-table">
+        <a href="#/choose"><div class="sub-time-area">{{nowDate}}</div></a>
+        <table class="fpiwebapp-detail-table bg">
             <tr class="num">
                 <th><p class="border-image-bottom-1px">时间</p></th>
                 <th><p class="border-image-bottom-1px">因子</p></th>
@@ -34,31 +32,18 @@
                 <th><p class="border-image-bottom-1px">单位</p></th>
                 <th><p class="border-image-bottom-1px">标准</p></th>
             </tr>
-            <tr>
-                <td><p class="border-image-bottom-1px">08.06 12</p></td>
-                <td><p class="border-image-bottom-1px">COD</p></td>
-                <td><p class="border-image-bottom-1px">16.27</p></td>
-                <td><p class="border-image-bottom-1px">mg/l</p></td>
-                <td><p class="border-image-bottom-1px">50</p></td>
-            </tr>
-            <tr>
-                <td><p class="border-image-bottom-1px">08.06 12</p></td>
-                <td><p class="border-image-bottom-1px">COD</p></td>
-                <td><p class="border-image-bottom-1px">16.27</p></td>
-                <td><p class="border-image-bottom-1px">mg/l</p></td>
-                <td><p class="border-image-bottom-1px">50</p></td>
-            </tr>
-            <tr>
-                <td><p class="border-image-bottom-1px">08.06 12</p></td>
-                <td><p class="border-image-bottom-1px">COD</p></td>
-                <td><p class="border-image-bottom-1px">16.27</p></td>
-                <td><p class="border-image-bottom-1px">mg/l</p></td>
-                <td><p class="border-image-bottom-1px">50</p></td>
+            <tr ng-repeat="historyData in historyDataArray">
+                <td><p class="border-image-bottom-1px">{{historyData.dataTime}}</p></td>
+                <td><p class="border-image-bottom-1px"><span ng-class="{true: 'yz', false: 'noyz'}[historyData.factorFlag]">{{historyData.factorName}}</span></p></td>
+                <td><p class="border-image-bottom-1px">{{historyData.factorVal}}</p></td>
+                <td><p class="border-image-bottom-1px">{{historyData.unit}}</p></td>
+                <td><p class="border-image-bottom-1px">{{historyData.standard}}</p></td>
             </tr>
         </table>
+        <div class="loadingCls" ng-show="historyLoading"><img src="images/loading.gif" width="32" height="32"></div>
     </div>
     <div class="tab-content">
-        <a href="#/choose"><div class="sub-time-area">2014.09.01 ...</div></a>
+        <a href="#/choose"><div class="sub-time-area">{{nowDate}}</div></a>
         <table class="fpiwebapp-detail-table">
             <tr class="num">
                 <th><p class="border-image-bottom-1px">因子</p></th>

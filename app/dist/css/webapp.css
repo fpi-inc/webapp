@@ -394,6 +394,51 @@ a:hover {
 .fpiwebapp-home-panel .border-line {
   border-bottom: 1px solid #dbdbdb;
 }
+.fpiwebapp-home-panel .cate-down {
+  position: absolute;
+  top: 84px;
+  left: 21px;
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  padding: 10px;
+  z-index: 9999;
+  background-color: #fff;
+}
+.fpiwebapp-home-panel .cate-down:after,
+.fpiwebapp-home-panel .cate-down:before {
+  border: solid transparent;
+  content: '';
+  height: 0;
+  top: 84px;
+  position: absolute;
+  width: 0;
+}
+.fpiwebapp-home-panel .cate-down:after {
+  border-width: 9px;
+  border-bottom-color: #fff;
+  top: -15px;
+  left: 14px;
+}
+.fpiwebapp-home-panel .cate-down:before {
+  top: -16px;
+  left: 15px;
+  border-width: 8px;
+  border-bottom-color: #d0d0d0;
+}
+.fpiwebapp-home-panel .cate-down ul li {
+  border-bottom: 1px solid #dddddd;
+}
+.fpiwebapp-home-panel .cate-down ul li.no-bottom-line {
+  border-bottom: none;
+}
+.fpiwebapp-home-panel .cate-down ul li a {
+  height: 30px;
+  line-height: 30px;
+  font-size: 16px;
+  color: #a9a9a9;
+}
 .fpiwebapp-home-panel .fpiwebapp-home-panel-title {
   height: 40px;
   background-color: #f5f5f5;
@@ -403,9 +448,16 @@ a:hover {
   font-size: 16px;
 }
 .fpiwebapp-home-panel .fpiwebapp-home-panel-title i {
-  width: 13px;
-  height: 13px;
-  margin-left: 6px;
+  float: left;
+  font-size: 18px;
+  margin-top: 12px;
+}
+.fpiwebapp-home-panel .fpiwebapp-home-panel-title .cate-title {
+  float: left;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 10px;
+  font-size: 16px;
 }
 .fpiwebapp-home-panel .border-top-line {
   border-top: 1px solid #cfcfcf;
@@ -554,6 +606,8 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   color: #ff6363;
 }
 .fpiwebapp-detail-table tr td p span.yz {
+  overflow: hidden;
+  white-space: nowrap;
   width: 30px;
   height: 30px;
   display: inline-block;
@@ -567,6 +621,8 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   font-size: 12px;
 }
 .fpiwebapp-detail-table tr td p span.noyz {
+  overflow: hidden;
+  white-space: nowrap;
   width: 30px;
   height: 30px;
   display: inline-block;
@@ -722,6 +778,10 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
 .hot-search .hot-search-content ul li a.h {
   color: #ff9900;
 }
+.hot-search .hot-search-content ul li a.cur {
+  color: #14b1e4;
+  font-weight: 700;
+}
 .search-result-list {
   background-color: #fff;
   margin-top: 15px;
@@ -758,6 +818,20 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
 .search-result-list .clear-history a {
   color: #bbb;
 }
+.search-result-list .noSearchData {
+  background-color: #fff;
+  padding-bottom: 10px;
+  text-align: center;
+  height: 130px;
+  overflow: hidden;
+}
+.search-result-list .noSearchData .noSearchData-c img {
+  vertical-align: middle;
+}
+.search-result-list .noSearchData .noSearchData-c span {
+  font-size: 15px;
+  color: #999;
+}
 .coverCls {
   width: 100%;
   background-color: #000;
@@ -789,6 +863,10 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   height: 30px;
   text-align: center;
   line-height: 30px;
+}
+.tab-content .loadingCls {
+  text-align: center;
+  padding: 20px;
 }
 .webapp-logo {
   width: 197px;
