@@ -126,5 +126,11 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
             }
         }
     }
+})
+.filter('timeFilter', function(){
+	var timeCaseFilter = function(input){
+		var words = input.substring(0, 13);
+		return words;
+	};
+	return timeCaseFilter;
 });
-

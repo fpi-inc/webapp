@@ -1,11 +1,3 @@
-/**
- * @name: webapp 
- * @version: v0.0.1
- * @company: fpi-inc 
- * @author: pingping_feng 
- */
-
-
 'use strict';
 
 angular.module('fpiwebapp.login.service', ['ngResource']).
@@ -312,6 +304,15 @@ angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.search
         $scope.companyArray = [];
     };
 
+})
+.filter('keyWords', function(){
+	var keyWordsFilter = function(input){
+		var keyWords = '长兴';
+		var words = input;
+		words.replace(/keyWords/, '<span style="color: red;">' + keyWords + '</span>');
+		return words;
+	}
+	return keyWordsFilter;
 });
  
 
@@ -823,8 +824,14 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
             }
         }
     }
+})
+.filter('timeFilter', function(){
+	var timeCaseFilter = function(input){
+		var words = input.substring(0, 13);
+		return words;
+	};
+	return timeCaseFilter;
 });
-
 
 
 angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwebapp.home.service'])

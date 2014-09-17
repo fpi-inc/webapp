@@ -94,5 +94,14 @@ angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.search
         $scope.companyArray = [];
     };
 
+})
+.filter('keyWords', function(){
+	var keyWordsFilter = function(input){
+		var keyWords = '长兴';
+		var words = input;
+		words.replace(/keyWords/, '<span style="color: red;">' + keyWords + '</span>');
+		return words;
+	}
+	return keyWordsFilter;
 });
  
