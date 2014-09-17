@@ -33,7 +33,7 @@
                 <th><p class="border-image-bottom-1px">标准</p></th>
             </tr>
             <tr ng-repeat="historyData in historyDataArray">
-                <td><p class="border-image-bottom-1px">{{historyData.dataTime}}</p></td>
+                <td><p class="border-image-bottom-1px">{{historyData.dataTime | date:"MM/dd/yyyy"}}</p></td>
                 <td><p class="border-image-bottom-1px"><span ng-class="{true: 'yz', false: 'noyz'}[historyData.factorFlag]">{{historyData.factorName}}</span></p></td>
                 <td><p class="border-image-bottom-1px">{{historyData.factorVal}}</p></td>
                 <td><p class="border-image-bottom-1px">{{historyData.unit}}</p></td>

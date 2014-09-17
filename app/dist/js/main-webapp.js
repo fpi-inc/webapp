@@ -1,3 +1,11 @@
+/**
+ * @name: webapp 
+ * @version: v0.0.1
+ * @company: fpi-inc 
+ * @author: pingping_feng 
+ */
+
+
 'use strict';
 
 angular.module('fpiwebapp.login.service', ['ngResource']).
