@@ -1,10 +1,17 @@
 angular.module('fpiwebapp.choose.ctrl', ['LocalStorageModule'])
  
-.controller('ChooseController', function($rootScope, $scope, $location, $routeParams, localStorageService) {
-	$scope.currentDate = new Date();
+.controller('ChooseController', function($window, $rootScope, $scope, $location, $routeParams, localStorageService) {
+    $scope.currentCate = $routeParams.currentCate;
+    $scope.companyId = $routeParams.id;
+    $scope.currentTime = localStorageService.get("currentDateTime");
 	$scope.setCurrentDate = function(date) {
-		$scope.currentDate = date;
+        var time = date.format('yyyy-MM-dd');
+		$scope.currentTime = time;
+        localStorageService.set("currentDateTime", $scope.currentTime);
 	}
+    $scope.defineFunc = function(){
+        $window.location.href = '#/companyDetail/' + $scope.companyId + '/' + $scope.currentCate; 
+    }
 
 	$scope.factorData = localStorageService.get('currentFactor');	
     //操作

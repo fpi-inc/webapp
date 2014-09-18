@@ -3,11 +3,39 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
 .controller('CompanyDetailController', function($scope, $rootScope, $location, $window, $routeParams, localStorageService, MenuServer, HomeService) {
 
 	$scope.nowDate = $rootScope.currentDate(0);
-    $scope.currentCategory = localStorageService.get('currentCategory');
+    if(!localStorageService.get('currentDateTime')){
+        localStorageService.set('currentDateTime', $scope.nowDate);
+        //localStorageService.set('currentDateTime', new Date());
+    }
+    $scope.currentTime = localStorageService.get('currentDateTime');
 
+    $scope.currentCategory = localStorageService.get('currentCategory');
 	$scope.companyId = $routeParams.id;
-    $scope.currentItem = 0;
+	$scope.currentItem = $routeParams.currentCate;
+    //类别显示
+    $scope.isActive = false;
+    $scope.toggleCate = function(){
+        $scope.isActive = true;
+    };
+    //排口
     $scope.portNameArray = [];
+    $scope.portsDataByCompany = function(){
+        
+        HomeService.getPortsByCompany({
+            monitorTypeCode: $scope.currentCategory,
+            companyId: $scope.companyId
+        }, function(result){
+            if(result){
+                $scope.portNameArray = result.ports;
+                //存储排口
+                localStorageService.set('currentPorts', {portName: result.ports[0].portName, portId: result.ports[0].portId});
+                $scope.currentPorts = localStorageService.get('currentPorts').portName;
+                //$scope.realDataByTable(result.ports[0].portId, result.ports[0].portName);
+                //$scope.getHistoryDataFunc(result.ports[0].portId, $scope.nowDate);
+            }
+        });
+    };
+    //实时数据
     $scope.realDataByTableArray = [];
     if($scope.realDataByTableArray.length > 0){
         $scope.realLoading = false;
@@ -15,20 +43,6 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
     else{
         $scope.realLoading = true;
     }
-
-    HomeService.getPortsByCompany({
-        monitorTypeCode: $scope.currentCategory,
-        companyId: $scope.companyId
-    }, function(result){
-        if(result){
-            $scope.portNameArray = result.ports;
-            //存储排口
-            localStorageService.set('currentPorts', {portName: result.ports[0].portName, portId: result.ports[0].portId});
-            $scope.currentPorts = localStorageService.get('currentPorts').portName;
-            $scope.realDataByTable(result.ports[0].portId, result.ports[0].portName);
-            //$scope.getHistoryDataFunc(result.ports[0].portId, $scope.nowDate);
-        }
-    });
 
     $scope.realDataByTable = function(portId, portName){
         localStorageService.set('currentPorts', {portName: portName, portId: portId});
@@ -43,12 +57,6 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
                 $scope.realLoading = false;
             }
         });
-    };
-
-    //类别显示
-    $scope.isActive = false;
-    $scope.toggleCate = function(){
-        $scope.isActive = true;
     };
 
     //历史数据
@@ -73,11 +81,58 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
                 $scope.historyLoading = false;
             }
         });
+        
+    };
+    //超标数据
+    $scope.overStandarData = [];
+    $scope.getOverStandarData = function(portId, time){
+        HomeService.getOverStandardDataByCompany({
+            monitorTypeCode: $scope.currentCategory,
+            portId: portId,
+            factorIds: '-1',
+            dateType: 1,
+            time: time 
+        },function(result){
+            if(result){
+                $scope.overStandarData = result.overStandardData;
+
+                //$scope.factor = [];
+                //$scope.factorAll = [];
+                //angular.forEach(standarData, function(standarItem){
+                //    $scope.factorAll.push({'text': standarItem.fatorName, 'done': true});
+                //});
+                //var hasCurrentFactor = localStorageService.get('currentFactor');
+                //if(hasCurrentFactor){
+                //    angular.forEach(hasCurrentFactor, function(fac){
+                //        if(!fac.done){
+                //            $scope.factor.push(fac.text);
+                //        }
+                //    });
+                //    $scope.overStandarData = (function(){
+                //        var factorData = [];
+                //        //处理已选中的因子
+                //        angular.forEach($scope.factor, function(factor) {
+                //            angular.forEach(standarData, function(standar, index){
+                //                if(standar.fatorName.toLowerCase() == factor.toLowerCase()){
+                //                    standarData.splice(index, 1);
+                //                }
+                //            });
+                //        });
+
+                //        factorData = standarData;
+                //        return factorData;
+                //    })();
+                //}
+                //else{
+                //    localStorageService.set('currentFactor', $scope.factorAll);
+                //    $scope.overStandarData = standarData;
+                //}
+            }        
+        }); 
     };
 
-    //超标数据
 })
-.directive('tabDetail', function(){
+.directive('tabDetail', ['$location', function($location){
     return{
         restrict: 'EA',
         replace: true,
@@ -90,6 +145,8 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
             scope.isShow = false;
         },
         controller: function($scope, localStorageService){
+            $scope.portsDataByCompany();
+
             var currentItem = $scope.currentItem;
             $('.tab-content').hide();
             $('.tab-content').eq(currentItem).show();
@@ -103,28 +160,33 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
             line.css('left', leftArray[currentItem] + 'px');
             tabs.click(function(){
                 var index = $(this).index();
+                controlTab(index);
+            });
+            controlTab($scope.currentItem);
+            function controlTab(index){
                 $('.tab-content').hide();
                 $('.tab-content').eq(index).show();
                 runCurrentLine(index);
-                switch (index){
-                    case 0:
-                        break;
-                    case 1:
-                        console.log(2);
-                        $scope.currentPortsAll = localStorageService.get('currentPorts');
-                        $scope.getHistoryDataFunc($scope.currentPortsAll.portId, $scope.nowDate);
-                        break;
-                    case 2:
-                        console.log(3);
-                        break;
-                    default:
-                        break;
+                if(index == 0){
+                    $scope.currentPortsAll = localStorageService.get('currentPorts');
+                    $scope.realDataByTable($scope.currentPortsAll.portId, $scope.currentPortsAll.portName);
+                    //window.location.href = '#/companyDetail/' + $scope.companyId + '/' + index; 
                 }
-            });
+                else if(index == 1){
+                    $scope.currentPortsAll = localStorageService.get('currentPorts');
+                    $scope.getHistoryDataFunc($scope.currentPortsAll.portId, $scope.currentTime);
+                    //window.location.href = '#/companyDetail/' + $scope.companyId + '/' + index; 
+                }
+                else if(index == 2){
+                    $scope.currentPortsAll = localStorageService.get('currentPorts');
+                    $scope.getOverStandarData($scope.currentPortsAll.portId, $scope.currentTime);
+                    //window.location.href = '#/companyDetail/' + $scope.companyId + '/' + index; 
+                }
+            };
             function runCurrentLine(index){
                 line.animate({'left': leftArray[index] + 'px'});
             }
         }
     }
-});
+}]);
 

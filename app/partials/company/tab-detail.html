@@ -23,7 +23,7 @@
         <div class="loadingCls" ng-show="realLoading"><img src="images/loading.gif" width="32" height="32"></div>
     </div>
     <div class="tab-content">
-        <a href="#/choose"><div class="sub-time-area">{{nowDate}}</div></a>
+        <a href="#/choose/{{companyId}}/1"><div class="sub-time-area">{{currentTime}}</div></a>
         <table class="fpiwebapp-detail-table bg">
             <tr class="num">
                 <th><p class="border-image-bottom-1px">时间</p></th>
@@ -43,7 +43,7 @@
         <div class="loadingCls" ng-show="historyLoading"><img src="images/loading.gif" width="32" height="32"></div>
     </div>
     <div class="tab-content">
-        <a href="#/choose"><div class="sub-time-area">{{nowDate}}</div></a>
+        <a href="#/choose/{{companyId}}/2"><div class="sub-time-area">{{nowDate}}</div></a>
         <table class="fpiwebapp-detail-table">
             <tr class="num">
                 <th><p class="border-image-bottom-1px">因子</p></th>

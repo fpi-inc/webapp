@@ -1,9 +1,30 @@
 angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.search.service'])
- 
-.controller('SearchController', function($rootScope, $scope, $location, $routeParams, localStorageService, SearchService) {
+.filter('keyWords', function($sce){
+    //var keyWordsFilter = function(input){
+    //    var key = "长";
+    //    var words = input;
+    //    var color = "red";
+    //    var sKey = "<span style='color: " + color + ";'>" + key + "</span>";
+    //    var rStr = new RegExp(key, "g");
+    //    words = words.replace(rStr, sKey);
+    //    return $sce.trustAsHtml(words);
+
+    //};
+    return keyWordsFilter;
+})
+.controller('SearchController', function($rootScope, $scope, $location, $routeParams, localStorageService, SearchService, $sce) {
     $scope.currentUser = $rootScope.checkUser();
     $scope.currentCategory = localStorageService.get('currentCategory');
     $scope.toggle = false;
+    $scope.htmlShow = function(str) {
+        var key = $scope.name;
+        var words = str;
+        var color = "#19b2e4";
+        var sKey = "<span style='color: " + color + ";'>" + key + "</span>";
+        var rStr = new RegExp(key, "g");
+        words = words.replace(rStr, sKey);
+        return $sce.trustAsHtml(words);
+    }
     $scope.focusFunc = function(){
         console.log("focus");
         $scope.toggle = true;

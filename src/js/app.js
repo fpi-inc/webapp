@@ -1,6 +1,7 @@
 
 angular.module('fpiwebapp', [
   'ngRoute', 
+  'ngSanitize', 
   'fpiwebapp.region.service',
   'fpiwebapp.region.ctrl',
   'fpiwebapp.search.ctrl',
@@ -51,7 +52,7 @@ angular.module('fpiwebapp', [
       controller: 'SelectRegionController',
       templateUrl: '/app/partials/region/region.html'
     })
-    .when('/choose', {
+    .when('/choose/:id/:currentCate', {
       controller:'ChooseController',
       templateUrl:'/app/partials/choose/choose.html'
     })
@@ -75,7 +76,7 @@ angular.module('fpiwebapp', [
       controller:'PersonalController',
       templateUrl:'/app/partials/personal/personal.html'
     })
-    .when('/companyDetail/:id', {
+    .when('/companyDetail/:id/:currentCate', {
       controller:'CompanyDetailController',
       templateUrl:'/app/partials/company/companyDetail.html'
     })
@@ -133,6 +134,14 @@ angular.module('fpiwebapp', [
 		dateString = curDate.getFullYear() + '-' + (curDate.getMonth() + 1) + '-' + curDate.getDate();
 		return dateString;
 	};
+
+
+    //日期格式化
+    $rootScope.formatTime = function(curDate) {
+		var dateString = '';
+		dateString = curDate.substring(1, 11);
+		return dateString;
+    }
 
 });
  
