@@ -1,5 +1,5 @@
-angular.module('fpiwebapp.calendar', ['fpiwebapp.service'])
-  .directive('calendar', function(dateutil) {
+angular.module('fpiwebapp.calendar', ['fpiwebapp.service', 'LocalStorageModule'])
+  .directive('calendar', function(dateutil, localStorageService) {
 
 	    function CalendarModel(date) {
 	    	this.currentDate = date;
@@ -51,7 +51,9 @@ angular.module('fpiwebapp.calendar', ['fpiwebapp.service'])
       },
       templateUrl: '/app/partials/calendar.html',
       link: function(scope, element, attrs) {
+
     	  var now = new Date();
+    	  //var now = localStorageService.get('currentDateTime');
     	  //require(['jquery.mobile-1.4.4.js'], function() {
     	  //    
     	  //    alert($.mobile);
