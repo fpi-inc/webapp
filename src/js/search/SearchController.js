@@ -97,10 +97,11 @@ angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.search
 })
 .filter('keyWords', function(){
 	var keyWordsFilter = function(input){
+		var text = '';
 		var keyWords = '长兴';
 		var words = input;
-		words.replace(/keyWords/, '<span style="color: red;">' + keyWords + '</span>');
-		return words;
+		text = words.replace(keyWords, '<span style="color: red;">' + keyWords + '</span>');
+		return text;
 	}
 	return keyWordsFilter;
 });
