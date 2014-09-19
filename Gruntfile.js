@@ -76,21 +76,7 @@ module.exports = function(grunt){
         },
 
         concat: {
-            //dist: {
-            //    options: {
-            //        separator: "\n\n"
-            //    },
-            //    src: [
-            //        "src/js/app.js",
-            //        "src/js/directive/menu.js",
-            //        "src/js/home/HomeController.js",
-            //        "src/js/CategoryService.js"
-            //    ],
-            //    dest: "app/dist/js/<%= pkg.name %>.js"
-            //}
-
-
-            basic: {
+            dist: {
                 options: {
                     separator: "\n\n"
                 },
@@ -100,16 +86,17 @@ module.exports = function(grunt){
                 ],
                 dest: 'app/dist/js/login-<%= pkg.name %>.js'
             },
-            extras: {
+				
+            dist2: {
                 options: {
                     separator: "\n\n"
                 },
                 src: [
-                    'src/js/login/LoginService.js',
                     'src/js/app.js',
                     'src/js/region/RegionService.js',
                     'src/js/region/SelectRegionController.js',
                     'src/js/search/SearchController.js',
+                    'src/js/search/SearchService.js',
                     'src/js/choose/ChooseController.js',
                     'src/js/category/CategoryController.js',
                     'src/js/home/HomeController.js',
@@ -122,19 +109,63 @@ module.exports = function(grunt){
                     'src/js/company/CompanyDetailController.js',
                     'src/js/company/CompanyDetailTabController.js',
                     'src/js/common/Common.js',
-                    'src/js/directive/datepicker.js'
+                    'src/js/directive/datepicker.js',
+                    'src/js/directive/calendar.js',
+                    'src/js/services/dateservice.js'
                 ],
                 dest: 'app/dist/js/main-<%= pkg.name %>.js'
             }
 
+
+//            basic: {
+//                options: {
+//                    separator: "\n\n"
+//                },
+//                src: [
+//                    'src/js/login/LoginApp.js',
+//                    'src/js/login/LoginService.js'
+//                ],
+//                dest: 'app/dist/js/login-<%= pkg.name %>.js'
+//            },
+//            extras: {
+//                options: {
+//                    separator: "\n\n"
+//                },
+//                src: [
+//                    'src/js/login/LoginService.js',
+//                    'src/js/app.js',
+//                    'src/js/region/RegionService.js',
+//                    'src/js/region/SelectRegionController.js',
+//                    'src/js/search/SearchController.js',
+//                    'src/js/choose/ChooseController.js',
+//                    'src/js/category/CategoryController.js',
+//                    'src/js/home/HomeController.js',
+//                    'src/js/home/HomeCateController.js',
+//                    'src/js/home/HomeService.js',
+//                    'src/js/exceed/ExceedController.js',
+//                    'src/js/transport/TransportController.js',
+//                    'src/js/personal/PersonalController.js',
+//                    'src/js/personal/AccountController.js',
+//                    'src/js/company/CompanyDetailController.js',
+//                    'src/js/company/CompanyDetailTabController.js',
+//                    'src/js/common/Common.js',
+//                    'src/js/directive/datepicker.js'
+//                ],
+//                dest: 'app/dist/js/main-<%= pkg.name %>.js'
+//            }
+
         },
         uglify: {
-            login_target: {
+			options: {
+				report: 'min',
+				mangle: false
+			},
+            my_target: {
                 files: {
                     'app/dist/js/login-<%= pkg.name %>.min.js': ['app/dist/js/login-<%= pkg.name %>.js']
                 }
             },
-            main_target: {
+            me_target: {
                 files: {
                     'app/dist/js/main-<%= pkg.name %>.min.js': ['app/dist/js/main-<%= pkg.name %>.js']
                 }

@@ -1,13 +1,9 @@
-'use strict';
-
-angular.module('fpiwebapp.login.service', ['ngResource']).
-	factory('LoginService', ['$resource', function($resource) {
-		return $resource('http://122.224.196.67:10001/mobile/mobile/load/login.do', {callback: 'JSON_CALLBACK'}, {
-		//return $resource('http://172.19.20.218:8088/mobile/mobile/load/login.do', {callback: 'JSON_CALLBACK'}, {
-		//return $resource('http://172.19.20.69:8088/mobile/mobile/load/login.do', {callback: 'JSON_CALLBACK'}, {
-			query: {method: 'JSONP'}
-		});
-	}]);
+/**
+ * @name: webapp 
+ * @version: v0.0.1
+ * @company: fpi-inc 
+ * @author: pingping_feng 
+ */
 
 
 
@@ -186,7 +182,7 @@ angular.module('fpiwebapp.region.ctrl', ['LocalStorageModule'])
         if(regionData.length > 0){
             for(var i = 0; i < regionData.length; i++){
                 var item = regionData[i];
-                $scope.regions.push(item.regionName);
+                $scope.regions.push({'name': item.regionName, 'code': item.regionCode});
             }
             $scope.isLoading = true;
             $scope.dataFunc($scope.regions);
@@ -206,10 +202,11 @@ angular.module('fpiwebapp.region.ctrl', ['LocalStorageModule'])
 
     $scope.dataFunc($scope.regions);
 
-  	$scope.selectFunc = function(name){
+  	$scope.selectFunc = function(name, code){
   		console.log(name);
   		//localStorageService.clearAll();
     	localStorageService.set('currentRegions', name);
+    	localStorageService.set('currentRegionCode', code);
   		$location.path("/cate/" + $scope.currentCate);
   	}
 	
@@ -346,6 +343,18 @@ angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.search
 	return keyWordsFilter;
 });
  
+
+
+'use strict';
+
+angular.module('fpiwebapp.search.service', ['ngResource']).
+	factory('SearchService', ['$resource', 'platformServer', function($resource, platformServer) {
+		return $resource(platformServer + '', {callback: 'JSON_CALLBACK'}, {
+			query: {method: 'JSONP'},
+            search: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getCompany.do'},
+            quickSearch: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/QuickSearchCompany.do'}
+		});
+	}]);
 
 
 angular.module('fpiwebapp.choose.ctrl', ['LocalStorageModule'])
@@ -559,7 +568,6 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
 	console.log($scope.currentCategory);
 
     //数据传输有效率
-    $scope.transPercentData = [];
     $scope.transPercentDataTxt = ['传输率', '有效率', '传输有效率'];
     HomeService.getEfficiency({
         monitorTypeCode: $scope.currentCategory,
@@ -568,10 +576,12 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
         userName: $scope.currentUser
     }, function(result){
         if(result){
+            $scope.transPercentData = [];
             var trans = result.transEfficients;
-            $scope.transPercentData.push(trans[0].transPercent);
-            $scope.transPercentData.push(trans[0].efficientPercent);
-            $scope.transPercentData.push(trans[0].transEfficientPercent);
+            $scope.transPercentData.push({'code': trans[0].transPercent});
+            $scope.transPercentData.push({'code': trans[0].efficientPercent});
+            $scope.transPercentData.push({'code': trans[0].transEfficientPercent});
+            console.log($scope.transPercentData);
         }
     });
     $scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {
@@ -591,16 +601,22 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
     });
 
     //超标排行
+    $scope.noStandardData = false;
     $scope.overStandardData = [];
     HomeService.getOverStandardData({
         monitorTypeCode: $scope.currentCategory,
-        //regionCode: $scope.currentRegionCode,
-        regionCode: '33010401',
+        regionCode: $scope.currentRegionCode,
+        //regionCode: '33010401',
         time: $scope.nowDate,
         userName: $scope.currentUser
     }, function(result){
         if(result){
-            $scope.overStandardData = result.overStandardData;
+            if(result.overStandardData.length > 0){
+                $scope.overStandardData = result.overStandardData;
+            }
+            else{
+                $scope.noStandardData = true;
+            }
         }
     });
 
@@ -613,13 +629,14 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
     //});
 	//$scope.regionName = localStorageService.get('currentRegion');
 	
-    $scope.showCompanyDetail = function(){
-        var id = 5;
-        $location.path('/companyDetail/:id');
+    $scope.showCompanyDetail = function(id, currentCate){
+        //$location.path('/companyDetail/:id/:currentCate');
+        $window.location.href = '#/companyDetail/' + id + '/' + currentCate;
     }
 
 	function drawProcess() {
-        $('canvas.process').each(function() {
+        var colors = ['#ffa54b', '#f57d6e', '#53e18c'];
+        $('canvas.process').each(function(index) {
             var canpi = 40;
             //var text = commonutil.stringTrim($(this).text());
             var text = $(this).text();
@@ -638,7 +655,7 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
             context.moveTo(canpi, canpi);
             context.arc(canpi, canpi, canpi, 0, Math.PI * 2 * process / 100, false);
             context.closePath();
-            context.fillStyle = '#ffa54b';
+            context.fillStyle = colors[index];
             context.fill();
             // 画内部空白
             context.beginPath();
@@ -648,8 +665,8 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
             context.fillStyle = 'rgba(255,255,255,1)';
             context.fill();
 
-            context.font = "normal 20px Calibri";
-            context.fillStyle = '#ffa54b';
+            context.font = "normal 18px arial";
+            context.fillStyle = colors[index];
             context.textAlign = 'center';
             context.textBaseline = 'middle';
             context.moveTo(canpi, canpi);
@@ -691,7 +708,8 @@ angular.module('fpiwebapp.home.service', ['ngResource']).
             getRealDataByTable: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getRealDataByTable.do'},
             get24RealDataByChart: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/get24RealDataByChart.do'},
             get48RealDataByChart: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/get48RealDataByChart.do'},
-            getHistoryData: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getHistoryData.do'}
+            getHistoryData: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getHistoryData.do'},
+            getHistoryChart: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getHistoryChart.do'}
 		});
 	}]);
 
@@ -737,6 +755,8 @@ angular.module('fpiwebapp.account.ctrl', [ 'LocalStorageModule'])
 angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebapp.home.service'])
  
 .controller('CompanyDetailController', function($scope, $rootScope, $location, $window, $routeParams, localStorageService, MenuServer, HomeService) {
+	$scope.companyId = $routeParams.id;
+	$scope.currentItem = $routeParams.currentCate;
 
 	$scope.nowDate = $rootScope.currentDate(0);
     if(!localStorageService.get('currentDateTime')){
@@ -746,8 +766,6 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
     $scope.currentTime = localStorageService.get('currentDateTime');
 
     $scope.currentCategory = localStorageService.get('currentCategory');
-	$scope.companyId = $routeParams.id;
-	$scope.currentItem = $routeParams.currentCate;
     //类别显示
     $scope.isActive = false;
     $scope.toggleCate = function(){
@@ -766,8 +784,9 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
                 //存储排口
                 localStorageService.set('currentPorts', {portName: result.ports[0].portName, portId: result.ports[0].portId});
                 $scope.currentPorts = localStorageService.get('currentPorts').portName;
-                //$scope.realDataByTable(result.ports[0].portId, result.ports[0].portName);
-                //$scope.getHistoryDataFunc(result.ports[0].portId, $scope.nowDate);
+                $scope.realDataByTable(result.ports[0].portId, result.ports[0].portName);
+                $scope.getHistoryDataFunc(result.ports[0].portId, $scope.nowDate);
+                $scope.getOverStandarData(result.ports[0].portId, $scope.nowDate);
             }
         });
     };
@@ -904,18 +923,24 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
                 $('.tab-content').eq(index).show();
                 runCurrentLine(index);
                 if(index == 0){
-                    $scope.currentPortsAll = localStorageService.get('currentPorts');
-                    $scope.realDataByTable($scope.currentPortsAll.portId, $scope.currentPortsAll.portName);
+                    if(localStorageService.get('currentPorts')){
+                        $scope.currentPortsAll = localStorageService.get('currentPorts');
+                        $scope.realDataByTable($scope.currentPortsAll.portId, $scope.currentPortsAll.portName);
+                    }
                     //window.location.href = '#/companyDetail/' + $scope.companyId + '/' + index; 
                 }
                 else if(index == 1){
-                    $scope.currentPortsAll = localStorageService.get('currentPorts');
-                    $scope.getHistoryDataFunc($scope.currentPortsAll.portId, $scope.currentTime);
+                    if(localStorageService.get('currentPorts')){
+                        $scope.currentPortsAll = localStorageService.get('currentPorts');
+                        $scope.getHistoryDataFunc($scope.currentPortsAll.portId, $scope.currentTime);
+                    }
                     //window.location.href = '#/companyDetail/' + $scope.companyId + '/' + index; 
                 }
                 else if(index == 2){
-                    $scope.currentPortsAll = localStorageService.get('currentPorts');
-                    $scope.getOverStandarData($scope.currentPortsAll.portId, $scope.currentTime);
+                    if(localStorageService.get('currentPorts')){
+                        $scope.currentPortsAll = localStorageService.get('currentPorts');
+                        $scope.getOverStandarData($scope.currentPortsAll.portId, $scope.currentTime);
+                    }
                     //window.location.href = '#/companyDetail/' + $scope.companyId + '/' + index; 
                 }
             };
@@ -951,13 +976,14 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
 			if(angular.element("#chartTr")){
 				angular.element("#chartTr").remove();
 			}
-            angular.element($event.currentTarget).after('<tr id="chartTr"><td colspan="4"><div id="chartcontainer">fpi</div></td></tr>');
+            angular.element($event.currentTarget).after('<tr id="chartTr"><td colspan="4"><div id="chartcontainer" style="margin: 0 auto; width: 320px;">fpi</div></td></tr>');
         }
 
 		var myData = new Array([10, 20], [15, 10], [20, 30], [25, 10], [30, 5]);
 		var myChart = new JSChart('chartcontainer', 'line');
 		myChart.setDataArray(myData);
-		myChart.setSize(320, 320);
+		myChart.setSize(320, 220);
+        myChart.setTitle('fpi');
 		myChart.draw();
         //addRow
         //$scope.addRow(target);
@@ -997,7 +1023,63 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
         if(result){
         }
     });
+
+    HomeService.getHistoryChart({
+        monitorTypeCode: 'WW',
+        portId: '2c93871641b498170141b49cfb6b0004',
+        factors: '-1',
+        dateType: 1,
+        time: '2014-09-09'
+    }, function(result){
+        if(result){
+        }
+    });
+
+    $scope.isActiveHistory = false;
+    $scope.showHistoryTable = function(){
+        $scope.isActiveHistory = false;
+    };
     
+    $scope.showHistoryChart = function(){
+        $scope.isActiveHistory = true;
+        var myChart = new JSChart('history-chart', 'line');
+        myChart.setDataArray([[1, 80],[2, 40],[3, 60],[4, 65],[5, 50],[6, 50],[7, 60],[8, 80],[9, 150],[10, 100]], 'blue');
+        myChart.setDataArray([[1, 100],[2, 55],[3, 80],[4, 115],[5, 80],[6, 70],[7, 30],[8, 130],[9, 160],[10, 170]], 'green');
+        myChart.setDataArray([[1, 150],[2, 25],[3, 100],[4, 80],[5, 20],[6, 65],[7, 0],[8, 155],[9, 190],[10, 200]], 'gray');
+        myChart.setAxisPaddingBottom(40);
+        myChart.setTextPaddingBottom(10);
+        myChart.setAxisValuesNumberY(5);
+        myChart.setIntervalStartY(0);
+        myChart.setIntervalEndY(200);
+        myChart.setLabelX([2,'p1']);
+        myChart.setLabelX([4,'p2']);
+        myChart.setLabelX([6,'p3']);
+        myChart.setLabelX([8,'p4']);
+        myChart.setLabelX([10,'p5']);
+        myChart.setAxisValuesNumberX(5);
+        myChart.setShowXValues(false);
+        myChart.setTitleColor('#454545');
+        myChart.setAxisValuesColor('#454545');
+        myChart.setLineColor('#A4D314', 'green');
+        myChart.setLineColor('#BBBBBB', 'gray');
+        //myChart.setTooltip([1]);
+        //myChart.setTooltip([2]);
+        //myChart.setTooltip([3]);
+        //myChart.setTooltip([4]);
+        //myChart.setTooltip([5]);
+        //myChart.setTooltip([6]);
+        //myChart.setTooltip([7]);
+        //myChart.setTooltip([8]);
+        //myChart.setTooltip([9]);
+        //myChart.setTooltip([10]);
+        myChart.setFlagColor('#9D16FC');
+        myChart.setFlagRadius(4);
+        //myChart.setBackgroundImage('chart_bg.jpg');
+        myChart.setSize(320, 321);
+        myChart.setTitle('fpi-inc');
+        myChart.draw();
+    };
+
 });
 
 
@@ -1156,3 +1238,126 @@ angular.module('fpiwebapp.directives', [])
       }
     };
   });
+
+
+angular.module('fpiwebapp.calendar', ['fpiwebapp.service', 'LocalStorageModule'])
+  .directive('calendar', function(dateutil, localStorageService) {
+
+	    function CalendarModel(date) {
+	    	this.currentDate = date;
+	    	
+	    	this.weekNumber = dateutil.getWeekNumberOfMonth(date);
+	    	this.firstDate = dateutil.getFirstDateOfFirstWeek(date);
+	    	
+	    	this.fY = this.firstDate.getFullYear();
+	    	this.fM = this.firstDate.getMonth();
+	    	this.fD = this.firstDate.getDate();
+	    };
+	    
+	    CalendarModel.prototype = {
+	    	get: function(index) {
+	    		return new Date(this.fY, this.fM, this.fD + index);
+	    	},
+	    	getDate: function(index) {
+	    		return this.get(index).getDate();
+	    	},
+	    	monthText: function() {
+	    		return this.currentDate.getFullYear() + '年' + (this.currentDate.getMonth() + 1) + '月';
+	    	},
+	    	checkWeek: function(week) {
+	    		return this.weekNumber >= week;
+	    	},
+	    	isCurrentMonth: function(index) {
+	    		var date = this.get(index);
+	    		
+	    		return date.getMonth() == this.currentDate.getMonth();
+	    	},
+	    	isCurrentDate: function(index) {
+	    		var date = this.get(index);
+	    		
+	    		return date.getFullYear() == this.currentDate.getFullYear() &&
+	    			date.getMonth() == this.currentDate.getMonth() &&
+	    			date.getDate() == this.currentDate.getDate();
+	    	}//,
+	    	//nextMonth: function() {
+	    	//	scope.calendarModel = new CalendarModel(new Date(this.currentDate.getFullYear(), this.currentDate,getMonth() + 1, this.currentDate.getDate())));
+  			//  	scope.$apply(scope.calendarModel);
+	    	//}
+	    };
+	    
+    return {
+      restrict: 'EA',
+      replace: true,
+      scope: {
+    	  updateDateMethod: '@'
+      },
+      templateUrl: '/app/partials/calendar.html',
+      link: function(scope, element, attrs) {
+    	  var nowDate = localStorageService.get('currentDateTime');
+          var now = new Date(Date.parse(nowDate.replace(/-/g,   "/")));  
+    	  //require(['jquery.mobile-1.4.4.js'], function() {
+    	  //    
+    	  //    alert($.mobile);
+    	  //});
+    	  element.on('swiperight', function() {
+    		  alert('fuck');
+    	  });
+    	  $('table a', element).each(function(i) {
+    		  $(this).click(function() {
+    			  var currentDate = scope.calendarModel.get(i);
+    			  
+    			  var parentUpdateDateMethod = scope.$parent[scope['updateDateMethod']];
+    			  parentUpdateDateMethod && parentUpdateDateMethod(currentDate);
+    			  
+    			  //scope.calendarModel.currentDate = currentDate;
+    			  scope.calendarModel = new CalendarModel(currentDate);
+    			  scope.$apply(scope.calendarModel);
+    		  });
+    	  });
+    	  
+    	  scope.calendarModel = new CalendarModel(now);
+      }
+    };
+  });
+
+
+angular.module('fpiwebapp.service', [])
+.factory('dateutil', function() {
+	return {
+		/**
+		 * 获取给定日期所在月的周数
+		 */
+		getWeekNumberOfMonth: function(date) {
+			return this.getWeekOfMonth(this.getLastDateOfMonth(date));
+		},
+		/**
+		 * 获取给定日期在当前月的第几周
+		 */
+		getWeekOfMonth: function(date) {
+			var dayOfWeek = date.getDay(),
+				dayOfMonth = date.getDate();
+			
+			return Math.ceil((dayOfMonth - (dayOfWeek + 1) + 7) / 7);
+		},
+		/**
+		 * 获取给定日期所在月的最后一天
+		 */
+		getLastDateOfMonth: function(date) {
+			return new Date(date.getFullYear(), date.getMonth() + 1, 0);
+		},
+		/**
+		 * 获取给定日期所在月的第一周的第一天日期（很有可能是上个月的日期）
+		 */
+		getFirstDateOfFirstWeek: function(date) {
+			var d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+			
+			d.setDate(1);
+			
+			var dayOfWeek = d.getDay();
+			
+			d.setDate(1- dayOfWeek);
+			
+			return d;
+		}
+	};
+});

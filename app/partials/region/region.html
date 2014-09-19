@@ -8,7 +8,7 @@
 <div class="city-list-title">城市列表</div>
 <table class="fpiwebapp-table-list">
     <tr ng-repeat="area in areas">
-        <td ng-repeat="region in area" ng-click="selectFunc(region); $event.stopPropagation();"><div class="area">{{region}}</div></td>
+        <td ng-repeat="region in area" ng-click="selectFunc(region.name, region.code); $event.stopPropagation();"><div class="area">{{region.name}}</div></td>
     </tr>
 </table>
 <!-- div class="fpiwebapp-content">

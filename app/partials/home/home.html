@@ -79,8 +79,12 @@
 <div class="fpi-webapp-home-panel">
 	<h1>数据传输有效率({{preDate}})</h1>
     <ul class="yxl">
-        <li ng-repeat="trans in transPercentData" on-finish-render-filters>
+        <!-- li ng-repeat="trans in transPercentData" on-finish-render-filters>
             <div class="cavCls"><canvas class="process" width="80px" height="80px">{{trans[$index]}}%</canvas></div>
+            <div class="txt">{{transPercentDataTxt[$index]}}</div>
+        </li -->
+        <li ng-repeat="trans in transPercentData" on-finish-render-filters>
+            <div class="cavCls"><canvas class="process" width="80px" height="80px">{{trans.code}}%</canvas></div>
             <div class="txt">{{transPercentDataTxt[$index]}}</div>
         </li>
     </ul>
@@ -89,7 +93,8 @@
 <div class="fpi-webapp-home-panel">
 	<h1>超标排行({{nowDate}})</h1>
     <div class="home-exceed">
-        <div class="h-e-content" ng-repeat="overData in overStandardData" ng-click="showCompanyDetail();">
+        <div class="no-overstandar" ng-show="noStandardData">暂无超标数据！</div>
+        <div class="h-e-content" ng-repeat="overData in overStandardData" ng-click="showCompanyDetail(overData.companyId, 2);">
             <div class="left"><span>超</span></div>
             <div class="right">
                 <table class="info">

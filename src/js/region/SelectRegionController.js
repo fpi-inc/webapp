@@ -15,7 +15,7 @@ angular.module('fpiwebapp.region.ctrl', ['LocalStorageModule'])
         if(regionData.length > 0){
             for(var i = 0; i < regionData.length; i++){
                 var item = regionData[i];
-                $scope.regions.push(item.regionName);
+                $scope.regions.push({'name': item.regionName, 'code': item.regionCode});
             }
             $scope.isLoading = true;
             $scope.dataFunc($scope.regions);
@@ -35,10 +35,11 @@ angular.module('fpiwebapp.region.ctrl', ['LocalStorageModule'])
 
     $scope.dataFunc($scope.regions);
 
-  	$scope.selectFunc = function(name){
+  	$scope.selectFunc = function(name, code){
   		console.log(name);
   		//localStorageService.clearAll();
     	localStorageService.set('currentRegions', name);
+    	localStorageService.set('currentRegionCode', code);
   		$location.path("/cate/" + $scope.currentCate);
   	}
 	

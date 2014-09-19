@@ -1,3 +1,11 @@
+/**
+ * @name: webapp 
+ * @version: v0.0.1
+ * @company: fpi-inc 
+ * @author: pingping_feng 
+ */
+
+
 /** 
  * @名称: base
  * @说明: 重设浏览器默认样式
@@ -1365,9 +1373,22 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   color: #01a2d6;
   text-align: center;
   font-size: 18px;
+  position: relative;
+}
+.sub-time-area .chart-area-icon {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  left: 0;
+  top: 0;
+  font-size: 18px;
+  color: #14b1e4;
 }
 .sub-time-area.bg {
   background-color: #f5f5f5;
+}
+.sub-time-area a {
+  color: #5ab1ef;
 }
 .webapp-sub-2-title {
   height: 50px;
@@ -1648,4 +1669,11 @@ a.webapp-btn.red {
 .choose-panel .choose-panel-foot {
   height: 22px;
   background-color: #f5f5f5;
+}
+.no-overstandar {
+  height: 30px;
+  font-size: 16px;
+  color: #dbdbdb;
+  text-align: center;
+  line-height: 30px;
 }

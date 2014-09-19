@@ -1,6 +1,8 @@
 angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebapp.home.service'])
  
 .controller('CompanyDetailController', function($scope, $rootScope, $location, $window, $routeParams, localStorageService, MenuServer, HomeService) {
+	$scope.companyId = $routeParams.id;
+	$scope.currentItem = $routeParams.currentCate;
 
 	$scope.nowDate = $rootScope.currentDate(0);
     if(!localStorageService.get('currentDateTime')){
@@ -10,8 +12,6 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
     $scope.currentTime = localStorageService.get('currentDateTime');
 
     $scope.currentCategory = localStorageService.get('currentCategory');
-	$scope.companyId = $routeParams.id;
-	$scope.currentItem = $routeParams.currentCate;
     //类别显示
     $scope.isActive = false;
     $scope.toggleCate = function(){
@@ -30,8 +30,9 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
                 //存储排口
                 localStorageService.set('currentPorts', {portName: result.ports[0].portName, portId: result.ports[0].portId});
                 $scope.currentPorts = localStorageService.get('currentPorts').portName;
-                //$scope.realDataByTable(result.ports[0].portId, result.ports[0].portName);
-                //$scope.getHistoryDataFunc(result.ports[0].portId, $scope.nowDate);
+                $scope.realDataByTable(result.ports[0].portId, result.ports[0].portName);
+                $scope.getHistoryDataFunc(result.ports[0].portId, $scope.nowDate);
+                $scope.getOverStandarData(result.ports[0].portId, $scope.nowDate);
             }
         });
     };
@@ -168,18 +169,24 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
                 $('.tab-content').eq(index).show();
                 runCurrentLine(index);
                 if(index == 0){
-                    $scope.currentPortsAll = localStorageService.get('currentPorts');
-                    $scope.realDataByTable($scope.currentPortsAll.portId, $scope.currentPortsAll.portName);
+                    if(localStorageService.get('currentPorts')){
+                        $scope.currentPortsAll = localStorageService.get('currentPorts');
+                        $scope.realDataByTable($scope.currentPortsAll.portId, $scope.currentPortsAll.portName);
+                    }
                     //window.location.href = '#/companyDetail/' + $scope.companyId + '/' + index; 
                 }
                 else if(index == 1){
-                    $scope.currentPortsAll = localStorageService.get('currentPorts');
-                    $scope.getHistoryDataFunc($scope.currentPortsAll.portId, $scope.currentTime);
+                    if(localStorageService.get('currentPorts')){
+                        $scope.currentPortsAll = localStorageService.get('currentPorts');
+                        $scope.getHistoryDataFunc($scope.currentPortsAll.portId, $scope.currentTime);
+                    }
                     //window.location.href = '#/companyDetail/' + $scope.companyId + '/' + index; 
                 }
                 else if(index == 2){
-                    $scope.currentPortsAll = localStorageService.get('currentPorts');
-                    $scope.getOverStandarData($scope.currentPortsAll.portId, $scope.currentTime);
+                    if(localStorageService.get('currentPorts')){
+                        $scope.currentPortsAll = localStorageService.get('currentPorts');
+                        $scope.getOverStandarData($scope.currentPortsAll.portId, $scope.currentTime);
+                    }
                     //window.location.href = '#/companyDetail/' + $scope.companyId + '/' + index; 
                 }
             };

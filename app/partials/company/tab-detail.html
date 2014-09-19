@@ -23,8 +23,8 @@
         <div class="loadingCls" ng-show="realLoading"><img src="images/loading.gif" width="32" height="32"></div>
     </div>
     <div class="tab-content">
-        <a href="#/choose/{{companyId}}/1"><div class="sub-time-area">{{currentTime}}</div></a>
-        <table class="fpiwebapp-detail-table bg">
+        <div class="sub-time-area"><a href="#/choose/{{companyId}}/1">{{currentTime}}...</a><div class="chart-area-icon"><i class="icon-table" ng-click="showHistoryTable();" ng-show="isActiveHistory"></i><i class="icon-bar-chart" ng-click="showHistoryChart();" ng-hide="isActiveHistory"></i></div></div>
+        <table class="fpiwebapp-detail-table bg" ng-hide="isActiveHistory">
             <tr class="num">
                 <th><p class="border-image-bottom-1px">时间</p></th>
                 <th><p class="border-image-bottom-1px">因子</p></th>
@@ -41,9 +41,10 @@
             </tr>
         </table>
         <div class="loadingCls" ng-show="historyLoading"><img src="images/loading.gif" width="32" height="32"></div>
+        <div class="charts-panel" ng-show="isActiveHistory"><div id="history-chart" style="width: 320px; margin: 0 auto; background-color: #fff;"></div></div>
     </div>
     <div class="tab-content">
-        <a href="#/choose/{{companyId}}/2"><div class="sub-time-area">{{nowDate}}</div></a>
+        <div class="sub-time-area"><a href="#/choose/{{companyId}}/2">{{currentTime}}...</a></div>
         <table class="fpiwebapp-detail-table">
             <tr class="num">
                 <th><p class="border-image-bottom-1px">因子</p></th>

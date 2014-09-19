@@ -28,7 +28,6 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
 	console.log($scope.currentCategory);
 
     //数据传输有效率
-    $scope.transPercentData = [];
     $scope.transPercentDataTxt = ['传输率', '有效率', '传输有效率'];
     HomeService.getEfficiency({
         monitorTypeCode: $scope.currentCategory,
@@ -37,10 +36,12 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
         userName: $scope.currentUser
     }, function(result){
         if(result){
+            $scope.transPercentData = [];
             var trans = result.transEfficients;
-            $scope.transPercentData.push(trans[0].transPercent);
-            $scope.transPercentData.push(trans[0].efficientPercent);
-            $scope.transPercentData.push(trans[0].transEfficientPercent);
+            $scope.transPercentData.push({'code': trans[0].transPercent});
+            $scope.transPercentData.push({'code': trans[0].efficientPercent});
+            $scope.transPercentData.push({'code': trans[0].transEfficientPercent});
+            console.log($scope.transPercentData);
         }
     });
     $scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {
@@ -60,16 +61,22 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
     });
 
     //超标排行
+    $scope.noStandardData = false;
     $scope.overStandardData = [];
     HomeService.getOverStandardData({
         monitorTypeCode: $scope.currentCategory,
-        //regionCode: $scope.currentRegionCode,
-        regionCode: '33010401',
+        regionCode: $scope.currentRegionCode,
+        //regionCode: '33010401',
         time: $scope.nowDate,
         userName: $scope.currentUser
     }, function(result){
         if(result){
-            $scope.overStandardData = result.overStandardData;
+            if(result.overStandardData.length > 0){
+                $scope.overStandardData = result.overStandardData;
+            }
+            else{
+                $scope.noStandardData = true;
+            }
         }
     });
 
@@ -82,13 +89,14 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
     //});
 	//$scope.regionName = localStorageService.get('currentRegion');
 	
-    $scope.showCompanyDetail = function(){
-        var id = 5;
-        $location.path('/companyDetail/:id');
+    $scope.showCompanyDetail = function(id, currentCate){
+        //$location.path('/companyDetail/:id/:currentCate');
+        $window.location.href = '#/companyDetail/' + id + '/' + currentCate;
     }
 
 	function drawProcess() {
-        $('canvas.process').each(function() {
+        var colors = ['#ffa54b', '#f57d6e', '#53e18c'];
+        $('canvas.process').each(function(index) {
             var canpi = 40;
             //var text = commonutil.stringTrim($(this).text());
             var text = $(this).text();
@@ -107,7 +115,7 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
             context.moveTo(canpi, canpi);
             context.arc(canpi, canpi, canpi, 0, Math.PI * 2 * process / 100, false);
             context.closePath();
-            context.fillStyle = '#ffa54b';
+            context.fillStyle = colors[index];
             context.fill();
             // 画内部空白
             context.beginPath();
@@ -117,8 +125,8 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
             context.fillStyle = 'rgba(255,255,255,1)';
             context.fill();
 
-            context.font = "normal 20px Calibri";
-            context.fillStyle = '#ffa54b';
+            context.font = "normal 18px arial";
+            context.fillStyle = colors[index];
             context.textAlign = 'center';
             context.textBaseline = 'middle';
             context.moveTo(canpi, canpi);

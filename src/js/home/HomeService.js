@@ -13,6 +13,7 @@ angular.module('fpiwebapp.home.service', ['ngResource']).
             getRealDataByTable: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getRealDataByTable.do'},
             get24RealDataByChart: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/get24RealDataByChart.do'},
             get48RealDataByChart: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/get48RealDataByChart.do'},
-            getHistoryData: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getHistoryData.do'}
+            getHistoryData: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getHistoryData.do'},
+            getHistoryChart: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getHistoryChart.do'}
 		});
 	}]);
