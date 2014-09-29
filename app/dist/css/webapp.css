@@ -1710,3 +1710,118 @@ a.webapp-btn.red {
   background-color: #4fc1e9;
   color: #fff;
 }
+.sub-webapp-h {
+  height: 156px;
+  background-color: #14b1e4;
+  position: relative;
+}
+.sub-webapp-h .sub-webapp-h-title {
+  color: #fff;
+  font-size: 18px;
+  padding-top: 5px;
+  text-align: center;
+}
+.sub-webapp-h a.go-home {
+  position: absolute;
+  left: 5px;
+  top: 6px;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  display: inline-block;
+}
+.sub-webapp-h a.go-home i {
+  color: #fff;
+  font-size: 25px;
+}
+.sub-webapp-h a.complate {
+  display: inline-block;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  font-size: 17px;
+  color: #fff;
+}
+.sub-webapp-h .sub-webapp-h-img {
+  text-align: center;
+}
+.sub-webapp-h p {
+  text-align: center;
+  color: #fff;
+}
+.sub-webapp-c {
+  padding: 0 10px 10px;
+}
+.sub-webapp-c .company-attention-add {
+  padding: 10px 0;
+  text-align: center;
+  color: #e4e4e4;
+  background-color: #fff;
+  border: 1px dashed #d9d9d9;
+  margin-top: 10px;
+}
+.sub-webapp-c .company-attention {
+  margin-top: 10px;
+  background-color: #fff;
+  border: 1px solid #eeeeee;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+.sub-webapp-c .company-attention .company-attention-title {
+  height: 36px;
+}
+.sub-webapp-c .company-attention .company-attention-title h1 {
+  float: left;
+  line-height: 36px;
+  font-size: 16px;
+  padding-left: 10px;
+}
+.sub-webapp-c .company-attention .company-attention-title a {
+  margin-right: 5px;
+  float: right;
+  display: inline-block;
+  height: 30px;
+  width: 36px;
+  padding-top: 6px;
+  text-align: center;
+}
+.sub-webapp-c .company-attention .company-attention-title a i {
+  color: #14b1e4;
+  font-size: 25px;
+}
+.sub-webapp-c .company-attention .company-attention-body {
+  padding: 5px 10px;
+}
+.sub-webapp-c .company-attention .company-attention-body table {
+  width: 100%;
+}
+.sub-webapp-c .company-attention .company-attention-body table tr td p {
+  font-size: 14px;
+  height: 36px;
+  line-height: 36px;
+}
+.sub-webapp-c .company-attention .company-attention-body table tr td p i {
+  color: #14b1e4;
+  margin: 9px 5px 0 0;
+  font-size: 16px;
+  float: left;
+}
+.sub-webapp-c .company-attention .company-attention-body table tr td p span {
+  font-size: 15px;
+}
+.sub-webapp-c .company-attention .company-attention-body table tr td p span.stop {
+  color: #858585;
+}
+.sub-webapp-c .company-attention .company-attention-body table tr td p span.run {
+  color: #4cc630;
+}
+.sub-webapp-c .company-attention .company-attention-body table tr td p span.warn {
+  color: #ff9342;
+}
+.sub-webapp-c .company-attention .company-attention-body table tr td p span.exceed {
+  color: #ff4242;
+}

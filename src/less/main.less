@@ -1068,3 +1068,122 @@ a.webapp-btn{
 		}
 	}
 }
+
+//我的关注
+.sub-webapp-h{
+    height: 156px;
+    background-color: #14b1e4;
+    position: relative;
+    .sub-webapp-h-title{
+        color: #fff;
+        font-size: 18px;
+        padding-top: 5px;
+        text-align: center;
+    }
+    & a.go-home{
+        position: absolute;
+        left: 5px;
+        top: 6px;
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        display: inline-block;
+        & i{
+            color: #fff;
+            font-size: 25px;
+        }
+    }
+    & a.complate{
+        display: inline-block;
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        font-size: 17px;
+        color: #fff;
+    }
+    .sub-webapp-h-img{
+        text-align: center;
+    }
+    & p{
+        text-align: center;
+        color: #fff;
+    }
+}
+.sub-webapp-c{
+    padding: 0 10px 10px;
+    .company-attention-add{
+        padding: 10px 0;
+        text-align: center;
+        color: #e4e4e4;
+        background-color: #fff;
+        border: 1px dashed #d9d9d9;
+        margin-top: 10px;
+    }
+    .company-attention{
+        margin-top: 10px;
+        background-color: #fff;
+        border: 1px solid #eeeeee;
+        .border-radius(3px);
+        .company-attention-title{
+            height: 36px;
+            & h1{
+                float: left;
+                line-height: 36px;
+                font-size: 16px;
+                padding-left: 10px;
+            }
+            & a{
+                margin-right: 5px;
+                float: right;
+                display: inline-block;
+                height: 30px;
+                width: 36px;
+                padding-top: 6px;
+                text-align: center;
+                & i{
+                    color: #14b1e4;
+                    font-size: 25px;
+                }
+            }
+        }
+        .company-attention-body{
+            padding: 5px 10px;
+            & table{
+                width: 100%;
+                & tr{
+                    & td{
+                        & p{
+                            font-size: 14px;
+                            height: 36px;
+                            line-height: 36px;
+                            & i{
+                                color: #14b1e4;
+                                margin: 9px 5px 0 0;
+                                font-size: 16px;
+                                float: left;
+                            }
+                            & span{
+                                font-size: 15px;
+                                &.stop{
+                                    color: #858585;
+                                }
+                                &.run{
+                                    color: #4cc630;
+                                }
+                                &.warn{
+                                    color: #ff9342;
+                                }
+                                &.exceed{
+                                    color: #ff4242;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

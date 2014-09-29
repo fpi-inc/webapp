@@ -31,7 +31,7 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
     $scope.transPercentDataTxt = ['传输率', '有效率', '传输有效率'];
     HomeService.getEfficiency({
         monitorTypeCode: $scope.currentCategory,
-        regionCode: $scope.currentRegionCode,
+        regionCode: $scope.currentRegionCode || '',
         dateTime: $scope.preDate,
         userName: $scope.currentUser
     }, function(result){
@@ -52,7 +52,7 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
     $scope.stateData = [];
     HomeService.getState({
         monitorTypeCode: $scope.currentCategory,
-        regionCode: $scope.currentRegionCode,
+        regionCode: $scope.currentRegionCode || '',
         userName: $scope.currentUser
     }, function(result){
         if(result){
@@ -65,7 +65,7 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
     $scope.overStandardData = [];
     HomeService.getOverStandardData({
         monitorTypeCode: $scope.currentCategory,
-        regionCode: $scope.currentRegionCode,
+        regionCode: $scope.currentRegionCode || '',
         //regionCode: '33010401',
         time: $scope.nowDate,
         userName: $scope.currentUser

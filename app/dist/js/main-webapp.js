@@ -19,6 +19,7 @@ angular.module('fpiwebapp', [
   'fpiwebapp.companyDetailTab.ctrl',
   'fpiwebapp.common',
   'fpiwebapp.home.service',
+  'fpiwebapp.personal.service',
   'fpiwebapp.directives',
   'fpiwebapp.service',
   'fpiwebapp.calendar',
@@ -563,7 +564,7 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
     $scope.transPercentDataTxt = ['传输率', '有效率', '传输有效率'];
     HomeService.getEfficiency({
         monitorTypeCode: $scope.currentCategory,
-        regionCode: $scope.currentRegionCode,
+        regionCode: $scope.currentRegionCode || '',
         dateTime: $scope.preDate,
         userName: $scope.currentUser
     }, function(result){
@@ -584,7 +585,7 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
     $scope.stateData = [];
     HomeService.getState({
         monitorTypeCode: $scope.currentCategory,
-        regionCode: $scope.currentRegionCode,
+        regionCode: $scope.currentRegionCode || '',
         userName: $scope.currentUser
     }, function(result){
         if(result){
@@ -597,7 +598,7 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
     $scope.overStandardData = [];
     HomeService.getOverStandardData({
         monitorTypeCode: $scope.currentCategory,
-        regionCode: $scope.currentRegionCode,
+        regionCode: $scope.currentRegionCode || '',
         //regionCode: '33010401',
         time: $scope.nowDate,
         userName: $scope.currentUser
@@ -722,9 +723,9 @@ angular.module('fpiwebapp.transport.ctrl', [ 'LocalStorageModule'])
  
 
 
-angular.module('fpiwebapp.personal.ctrl', [ 'LocalStorageModule'])
+angular.module('fpiwebapp.personal.ctrl', [ 'LocalStorageModule', 'fpiwebapp.personal.service'])
  
-.controller('PersonalController', function($scope, $location, $window, localStorageService, MenuServer) {
+.controller('PersonalController', function($scope, $location, $window, localStorageService, MenuServer, PersonalService) {
 	
 });
  

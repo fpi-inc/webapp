@@ -19,6 +19,7 @@ angular.module('fpiwebapp', [
   'fpiwebapp.companyDetailTab.ctrl',
   'fpiwebapp.common',
   'fpiwebapp.home.service',
+  'fpiwebapp.personal.service',
   'fpiwebapp.directives',
   'fpiwebapp.service',
   'fpiwebapp.calendar',
