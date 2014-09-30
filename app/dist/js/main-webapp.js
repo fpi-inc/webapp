@@ -14,6 +14,7 @@ angular.module('fpiwebapp', [
   'fpiwebapp.exceed.ctrl',
   'fpiwebapp.transport.ctrl',
   'fpiwebapp.personal.ctrl',
+  'fpiwebapp.personal.add.ctrl',
   'fpiwebapp.account.ctrl',
   'fpiwebapp.companyDetail.ctrl',
   'fpiwebapp.companyDetailTab.ctrl',
@@ -76,6 +77,14 @@ angular.module('fpiwebapp', [
     .when('/personal', {
       controller:'PersonalController',
       templateUrl:'/app/partials/personal/personal.html'
+    })
+    .when('/attentionCompany', {
+      controller:'AddCompanyController',
+      templateUrl:'/app/partials/personal/personalCompany.html'
+    })
+    .when('/searchAttention/:key', {
+      controller:'SearchController',
+      templateUrl:'/app/partials/personal/personalCompany.html'
     })
     .when('/companyDetail/:id/:currentCate', {
       controller:'CompanyDetailController',
@@ -725,8 +734,20 @@ angular.module('fpiwebapp.transport.ctrl', [ 'LocalStorageModule'])
 
 angular.module('fpiwebapp.personal.ctrl', [ 'LocalStorageModule', 'fpiwebapp.personal.service'])
  
-.controller('PersonalController', function($scope, $location, $window, localStorageService, MenuServer, PersonalService) {
-	
+.controller('PersonalController', function($rootScope, $scope, $location, $window, localStorageService, MenuServer, PersonalService) {
+    $scope.currentUser = $rootScope.checkUser();
+    $scope.attentionCompanyList = [];
+    $scope.historyLoading = true;
+	PersonalService.showAttention({
+        userName: $scope.currentUser
+    }, function(result){
+        if(result){
+            $scope.attentionCompanyList = result.attention;
+            if($scope.attentionCompanyList.length > 0){
+                $scope.historyLoading = false;
+            }
+        }
+    });
 });
  
 

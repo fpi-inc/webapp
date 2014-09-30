@@ -1,0 +1,48 @@
+<!-- div class="webapp-sub-2-title">搜索企业<a href="javascript:;" ng-click="back();" class="backnew img"><i class="icon-angle-left"></i></a></div -->
+<div class="webapp-sub-2-title">添加关注企业<a href="javascript:;" ng-click="back()" class="backnew img"><i class="icon-angle-left"></i></a></div>
+<div class="webapp-sub-2-title gray">
+    <form ng-submit="search()">
+        <div class="search-control-r gray">
+            <a href="javascript:;" ng-click="back()" ng-hide="toggle">取消</a>
+            <input type="submit" value="搜索" id="submit" ng-show="toggle" ng-click="search()">
+        </div>
+        <div class="search-input-control">
+            <div class="input-area-bg">
+                <i class="icon-search"></i>
+                <div class="search-input-txt"><input type="text" value="" ng-model="key" name="" ng-focus="focusFunc()" placeholder="{{name}}"></div>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- div class="hot-search">
+    <div class="hot-search-content">
+        <ul>
+            <li><a href="javascript:;" class="h">快捷搜索</a></li>
+            <li><a href="javascript:;" ng-click="quickFunc(1)" ng-class="{true: 'cur', false: ''}[isActiveA]">国控</a></li>
+            <li><a href="javascript:;" ng-click="quickFunc(2)" ng-class="{true: 'cur', false: ''}[isActiveB]">省控</a></li>
+            <li><a href="javascript:;" ng-click="quickFunc(3)" ng-class="{true: 'cur', false: ''}[isActiveC]">其它</a></li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+</div -->
+<div class="search-result-list" style="margin-top: 0;">
+    <ul ng-repeat="company in companyArray">
+        <li class="border-image-bottom-1px"><i class="icon-time"></i><a href="javascript:;" class="widths" ng-bind-html="htmlShow(company.companyName)"></a><span class="attentionIcon">[{{companyAttentionArray[$index]}}]</span></li>
+    </ul>
+    <div class="clear-history" ng-click="clearHistory()" ng-show="hasData"><i class="icon-trash"></i><a href="javascript:;">清除历史记录</a></div>
+    <div class="noSearchData" ng-show="isNoData"><div class="noSearchData-c"><img src="images/wu.gif" width="130" height="130"><span>没有搜到您要的数据</span><div></div>
+</div>
+<!-- div class="fpiwebapp-content">
+	<div class="fpiwebapp-header-sub">
+		<div class="search-input">
+			<input type="text" ng-model="name" class="search-query" placeholder="请输入企业名称">
+			<img src="images/search1.png" ng-click="searchCompany();" class="search-icon" width="20" height="20" border="0">
+		</div>
+	</div>
+	<div style="color: red;">{{name}}</div>
+    <div>
+        <time datetime="2013-09-03">
+            October 22, 2009
+        </time>
+    </div>
+</div -->

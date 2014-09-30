@@ -698,6 +698,12 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   width: 57px;
   float: right;
 }
+.search-control-r.gray a {
+  color: #666666;
+}
+.search-control-r.gray input {
+  color: #666666;
+}
 .search-control-r a {
   display: inline-block;
   width: 57px;
@@ -802,6 +808,22 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   float: left;
   color: #999;
   font-size: 18px;
+  display: inline-block;
+}
+.search-result-list ul li a.widths {
+  width: 240px;
+  overflow: hidden;
+  white-space: nowrap;
+  -webkit-text-overflow: ellipsis;
+  -khtml-text-overflow: ellipsis;
+  -icab-text-overflow: ellipsis;
+  -moz-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+.search-result-list ul li span.attentionIcon {
+  float: right;
+  display: inline-block;
 }
 .search-result-list .clear-history {
   height: 40px;
@@ -1391,6 +1413,9 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   line-height: 50px;
   position: relative;
 }
+.webapp-sub-2-title.gray {
+  background-color: #ededed;
+}
 .webapp-sub-2-title .backnew {
   width: 45px;
   height: 50px;
@@ -1754,6 +1779,7 @@ a.webapp-btn.red {
 }
 .sub-webapp-c {
   padding: 0 10px 10px;
+  background-color: #f5f5f5;
 }
 .sub-webapp-c .company-attention-add {
   padding: 10px 0;

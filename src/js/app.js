@@ -14,6 +14,7 @@ angular.module('fpiwebapp', [
   'fpiwebapp.exceed.ctrl',
   'fpiwebapp.transport.ctrl',
   'fpiwebapp.personal.ctrl',
+  'fpiwebapp.personal.add.ctrl',
   'fpiwebapp.account.ctrl',
   'fpiwebapp.companyDetail.ctrl',
   'fpiwebapp.companyDetailTab.ctrl',
@@ -76,6 +77,14 @@ angular.module('fpiwebapp', [
     .when('/personal', {
       controller:'PersonalController',
       templateUrl:'/app/partials/personal/personal.html'
+    })
+    .when('/attentionCompany', {
+      controller:'AddCompanyController',
+      templateUrl:'/app/partials/personal/personalCompany.html'
+    })
+    .when('/searchAttention/:key', {
+      controller:'SearchController',
+      templateUrl:'/app/partials/personal/personalCompany.html'
     })
     .when('/companyDetail/:id/:currentCate', {
       controller:'CompanyDetailController',
