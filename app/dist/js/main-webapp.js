@@ -711,23 +711,69 @@ angular.module('fpiwebapp.home.service', ['ngResource']).
             get24RealDataByChart: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/get24RealDataByChart.do'},
             get48RealDataByChart: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/get48RealDataByChart.do'},
             getHistoryData: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getHistoryData.do'},
-            getHistoryChart: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getHistoryChart.do'}
+            getHistoryChart: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getHistoryChart.do'},
+            getTransmissionEfficientBychildRegion: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getTransmissionEfficientBychildRegion.do'}
 		});
 	}]);
 
 
-angular.module('fpiwebapp.exceed.ctrl', [ 'LocalStorageModule'])
+angular.module('fpiwebapp.exceed.ctrl', [ 'LocalStorageModule', 'fpiwebapp.home.service'])
  
-.controller('ExceedController', function($scope, $location, $window, localStorageService, MenuServer) {
+.controller('ExceedController', function($rootScope, $scope, $location, $window, localStorageService, MenuServer, HomeService) {
+    $scope.currentCategory = localStorageService.get('currentCategory');
+    $scope.currentRegionCode = localStorageService.get('currentRegionCode');
+	$scope.nowDate = $rootScope.currentDate(0);
+    $scope.currentUser = $rootScope.checkUser();
+
+    //超标统计
+    $scope.noStandardData = false;
+    $scope.overStandardData = [];
+    HomeService.getOverStandardData({
+        monitorTypeCode: $scope.currentCategory,
+        regionCode: $scope.currentRegionCode || '',
+        //regionCode: '33010401',
+        time: $scope.nowDate,
+        userName: $scope.currentUser
+    }, function(result){
+        if(result){
+            if(result.overStandardData.length > 0){
+                $scope.overStandardData = result.overStandardData;
+            }
+            else{
+                $scope.noStandardData = true;
+            }
+        }
+    });
+    $scope.showCompanyDetail = function(id, currentCate){
+        //$location.path('/companyDetail/:id/:currentCate');
+        $window.location.href = '#/companyDetail/' + id + '/' + currentCate;
+    }
+
 
 });
  
 
 
-angular.module('fpiwebapp.transport.ctrl', [ 'LocalStorageModule'])
+angular.module('fpiwebapp.transport.ctrl', [ 'LocalStorageModule', 'fpiwebapp.home.service'])
  
-.controller('TransportController', function($scope, $location, $window, localStorageService, MenuServer) {
-	
+.controller('TransportController', function($rootScope, $scope, $location, $window, localStorageService, MenuServer, HomeService) {
+    $scope.currentUser = $rootScope.checkUser();
+	$scope.nowDate = $rootScope.currentDate(0);
+    $scope.currentCategory = localStorageService.get('currentCategory');
+    $scope.currentRegionCode = localStorageService.get('currentRegionCode');
+
+	$scope.transportItems = [];
+	HomeService.getTransmissionEfficientBychildRegion({
+		regionCode: $scope.currentRegionCode || '',
+		dateTime: $scope.nowDate,
+		monitorTypeCode: $scope.currentCategory,
+		userName: $scope.currentUser,
+		dateType: 1
+	}, function(result){
+		if(result){
+			$scope.transportItems = result.transmissionEfficient;
+		}
+	});
 });
  
 
@@ -767,7 +813,12 @@ angular.module('fpiwebapp.account.ctrl', [ 'LocalStorageModule'])
 
 
 angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebapp.home.service'])
- 
+.filter('timeFormat', function(){
+	var timeFormatFilter = function(input){
+		return input.substring(0, 13) + '时';
+	};
+	return timeFormatFilter;
+})
 .controller('CompanyDetailController', function($scope, $rootScope, $location, $window, $routeParams, localStorageService, MenuServer, HomeService) {
 	$scope.companyId = $routeParams.id;
 	$scope.currentItem = $routeParams.currentCate;
@@ -1109,18 +1160,18 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
 				//for(var i = 0; i < $scope.historyChartData.length; i++){
 				//	myChart.setDataArray([[1, 80],[2, 40],[3, 60],[4, 65],[5, 50],[6, 50],[7, 60],[8, 80],[9, 150],[10, 100]], 'blue');
 				//}
-				for(var i = 0; i < cartAllData.length; i++){
-					var item = cartAllData[i];
-					myChart.setDataArray(item, 'blue');
-				}
-				//myChart.setDataArray([[1, 80],[2, 40],[3, 60],[4, 65],[5, 50],[6, 50],[7, 60],[8, 80],[9, 150],[10, 100]], 'blue');
-				//myChart.setDataArray([[1, 100],[2, 55],[3, 80],[4, 115],[5, 80],[6, 70],[7, 30],[8, 130],[9, 160],[10, 170]], 'green');
-				//myChart.setDataArray([[1, 150],[2, 25],[3, 100],[4, 80],[5, 20],[6, 65],[7, 0],[8, 155],[9, 190],[10, 200]], 'gray');
+				//`for(var i = 0; i < cartAllData.length; i++){
+				//`	var item = cartAllData[i];
+				//`	myChart.setDataArray(item, 'blue');
+				//`}
+				myChart.setDataArray([[1, 80.5],[2, 40],[3, 60],[4, 65],[5, 50],[6, 50],[7, 60],[8, 80],[9, 150],[10, 100]], 'blue');
+				myChart.setDataArray([[1, 100],[2, 55],[3, 80],[4, 115],[5, 80],[6, 70],[7, 30],[8, 130],[9, 160],[10, 170]], 'green');
+				myChart.setDataArray([[1, 150],[2, 25],[3, 100],[4, 80],[5, 20],[6, 65],[7, 0],[8, 155],[9, 190],[10, 200]], 'gray');
 				myChart.setAxisPaddingBottom(40);
 				myChart.setTextPaddingBottom(10);
 				myChart.setAxisValuesNumberY(5);
 				myChart.setIntervalStartY(0);
-				myChart.setIntervalEndY(50);
+				myChart.setIntervalEndY(200);
 				myChart.setLabelX([2,'p1']);
 				myChart.setLabelX([4,'p2']);
 				myChart.setLabelX([6,'p3']);

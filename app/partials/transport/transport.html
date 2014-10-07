@@ -1,48 +1,25 @@
-<div class="webapp-sub-panel-title">
-	<img src="images/csyxl.png" height="155">
-	<h3>传输有效率</h3>
-	<a href="javascript:;" ng-click="back();" class="home"><img src="images/subhome.png" width="21" height="20"></a>
+<div class="sub-webapp-h">
+    <div class="sub-webapp-h-title">传输有效率</div>
+    <a href="javascript:;" class="go-home" ng-click="back()"><i class="icon-home"></i></a>
+    <div class="sub-webapp-h-img"><img src="images/csysl.png" height="116" width="114"></div>
 </div>
 <div class="sub-time-area">2014.09.01 0时-2014.09.01 23时...</div>
-<div class="fpi-webapp-home-panel">
-	<div style="height: 10px;"></div>
-    <div class="home-exceed">
-        <div class="h-e-content">
-            <div class="left"><span>超</span></div>
-            <div class="right">
-                <table class="info">
-                    <tr>
-                        <td class="title">排水进水口</td>
-                        <td class="align-r">长兴污染处理厂</td>
-                    </tr>
-                </table>
-                <table class="info">
-                    <tr>
-                        <td>超标因子:COD</td>
-                        <td class="align-c">超标倍数:0.24~2.13</td>
-                        <td class="align-r">时长:20h</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <div class="h-e-content">
-            <div class="left"><span>超</span></div>
-            <div class="right">
-                <table class="info">
-                    <tr>
-                        <td class="title">排水进水口</td>
-                        <td class="align-r">长兴污染处理厂</td>
-                    </tr>
-                </table>
-                <table class="info">
-                    <tr>
-                        <td>超标因子:COD</td>
-                        <td class="align-c">超标倍数:0.24~2.13</td>
-                        <td class="align-r">时长:20h</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
+<div class="tab-content">
+	<table class="fpiwebapp-detail-table bg" id="realTable">
+		<tr class="num">
+			<th><p class="border-image-bottom-1px">区域</p></th>
+			<th><p class="border-image-bottom-1px">传输率</p></th>
+			<th><p class="border-image-bottom-1px">有效率</p></th>
+			<th><p class="border-image-bottom-1px">传输有效率</p></th>
+		</tr>
+		<tr ng-repeat="item in transportItems" ng-click="showChartFunc($event);">
+			<td><p class="border-image-bottom-1px">{{item.name}}</span></p></td>
+		<td><p class="border-image-bottom-1px">{{item.transPercent}}%</p></td>
+		<td><p class="border-image-bottom-1px">{{item.efficientPercent}}%</p></td>
+		<td><p class="border-image-bottom-1px">{{item.transEfficientPercent}}%</p></td>
+		</tr>
+	</table>
+	<!-- div class="loadingCls" ng-show="realLoading"><img src="images/loading.gif" width="32" height="32"></div -->
 </div>
+
 

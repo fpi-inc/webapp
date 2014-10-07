@@ -141,18 +141,18 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
 				//for(var i = 0; i < $scope.historyChartData.length; i++){
 				//	myChart.setDataArray([[1, 80],[2, 40],[3, 60],[4, 65],[5, 50],[6, 50],[7, 60],[8, 80],[9, 150],[10, 100]], 'blue');
 				//}
-				for(var i = 0; i < cartAllData.length; i++){
-					var item = cartAllData[i];
-					myChart.setDataArray(item, 'blue');
-				}
-				//myChart.setDataArray([[1, 80],[2, 40],[3, 60],[4, 65],[5, 50],[6, 50],[7, 60],[8, 80],[9, 150],[10, 100]], 'blue');
-				//myChart.setDataArray([[1, 100],[2, 55],[3, 80],[4, 115],[5, 80],[6, 70],[7, 30],[8, 130],[9, 160],[10, 170]], 'green');
-				//myChart.setDataArray([[1, 150],[2, 25],[3, 100],[4, 80],[5, 20],[6, 65],[7, 0],[8, 155],[9, 190],[10, 200]], 'gray');
+				//`for(var i = 0; i < cartAllData.length; i++){
+				//`	var item = cartAllData[i];
+				//`	myChart.setDataArray(item, 'blue');
+				//`}
+				myChart.setDataArray([[1, 80.5],[2, 40],[3, 60],[4, 65],[5, 50],[6, 50],[7, 60],[8, 80],[9, 150],[10, 100]], 'blue');
+				myChart.setDataArray([[1, 100],[2, 55],[3, 80],[4, 115],[5, 80],[6, 70],[7, 30],[8, 130],[9, 160],[10, 170]], 'green');
+				myChart.setDataArray([[1, 150],[2, 25],[3, 100],[4, 80],[5, 20],[6, 65],[7, 0],[8, 155],[9, 190],[10, 200]], 'gray');
 				myChart.setAxisPaddingBottom(40);
 				myChart.setTextPaddingBottom(10);
 				myChart.setAxisValuesNumberY(5);
 				myChart.setIntervalStartY(0);
-				myChart.setIntervalEndY(50);
+				myChart.setIntervalEndY(200);
 				myChart.setLabelX([2,'p1']);
 				myChart.setLabelX([4,'p2']);
 				myChart.setLabelX([6,'p3']);

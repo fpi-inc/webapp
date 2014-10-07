@@ -1,5 +1,10 @@
 angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebapp.home.service'])
- 
+.filter('timeFormat', function(){
+	var timeFormatFilter = function(input){
+		return input.substring(0, 13) + '时';
+	};
+	return timeFormatFilter;
+})
 .controller('CompanyDetailController', function($scope, $rootScope, $location, $window, $routeParams, localStorageService, MenuServer, HomeService) {
 	$scope.companyId = $routeParams.id;
 	$scope.currentItem = $routeParams.currentCate;
