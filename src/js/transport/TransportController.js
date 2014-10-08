@@ -8,7 +8,7 @@ angular.module('fpiwebapp.transport.ctrl', [ 'LocalStorageModule', 'fpiwebapp.ho
 
 	$scope.transportItems = [];
 	HomeService.getTransmissionEfficientBychildRegion({
-		regionCode: $scope.currentRegionCode || '',
+		regionCode: '',
 		dateTime: $scope.nowDate,
 		monitorTypeCode: $scope.currentCategory,
 		userName: $scope.currentUser,

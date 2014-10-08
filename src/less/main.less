@@ -602,13 +602,53 @@ ul.fpiwebapp-ul-list{
                 font-size: 18px;
                 display: inline-block;
                 &.widths{
-                    width: 240px;
+                    width: 235px;
                     .text-ellipsis;
                 }
             }
             & span.attentionIcon{
                 float: right;
                 display: inline-block;
+                padding-top: 2px;
+                padding-right: 5px;
+                & a{
+                    background-color: #fdfdfd;
+                    display: inline-block;
+                    border: 1px solid #e0e0e0;
+                    .border-radius(3px);
+                    width: 40px;
+                    height: 34px;
+                    &.addAtten{
+                        background: url('../../images/addAttention.png') no-repeat center 2px;
+                        background-size: 20px 20px;
+                        position: relative;
+                        & p{
+                            position: absolute;
+                            width: 100%;
+                            bottom: 0;
+                            left: 0;
+                            text-align: center;
+                            line-height: 16px;
+                            font-size: 10px;
+                            color: #34bbe7;
+                        }
+                    }
+                    &.atten{
+                        background: url('../../images/attention.png') no-repeat center 2px;
+                        background-size: 20px 20px;
+                        position: relative;
+                        & p{
+                            position: absolute;
+                            width: 100%;
+                            bottom: 0;
+                            left: 0;
+                            text-align: center;
+                            line-height: 16px;
+                            font-size: 10px;
+                            color: #5cb85c;
+                        }
+                    }
+                }
             }
         }
     }
@@ -1166,7 +1206,10 @@ a.webapp-btn{
                 text-align: center;
                 & i{
                     color: #14b1e4;
-                    font-size: 25px;
+                    font-size: 26px;
+                    display: inline-block;
+                    width: 26px;
+                    height: 26px;
                 }
             }
         }

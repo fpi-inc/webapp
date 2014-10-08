@@ -811,7 +811,7 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   display: inline-block;
 }
 .search-result-list ul li a.widths {
-  width: 240px;
+  width: 235px;
   overflow: hidden;
   white-space: nowrap;
   -webkit-text-overflow: ellipsis;
@@ -824,6 +824,48 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
 .search-result-list ul li span.attentionIcon {
   float: right;
   display: inline-block;
+  padding-top: 2px;
+  padding-right: 5px;
+}
+.search-result-list ul li span.attentionIcon a {
+  background-color: #fdfdfd;
+  display: inline-block;
+  border: 1px solid #e0e0e0;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  width: 40px;
+  height: 34px;
+}
+.search-result-list ul li span.attentionIcon a.addAtten {
+  background: url('../../images/addAttention.png') no-repeat center 2px;
+  background-size: 20px 20px;
+  position: relative;
+}
+.search-result-list ul li span.attentionIcon a.addAtten p {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+  line-height: 16px;
+  font-size: 10px;
+  color: #34bbe7;
+}
+.search-result-list ul li span.attentionIcon a.atten {
+  background: url('../../images/attention.png') no-repeat center 2px;
+  background-size: 20px 20px;
+  position: relative;
+}
+.search-result-list ul li span.attentionIcon a.atten p {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+  line-height: 16px;
+  font-size: 10px;
+  color: #5cb85c;
 }
 .search-result-list .clear-history {
   height: 40px;
@@ -1817,7 +1859,10 @@ a.webapp-btn.red {
 }
 .sub-webapp-c .company-attention .company-attention-title a i {
   color: #14b1e4;
-  font-size: 25px;
+  font-size: 26px;
+  display: inline-block;
+  width: 26px;
+  height: 26px;
 }
 .sub-webapp-c .company-attention .company-attention-body {
   padding: 5px 10px;

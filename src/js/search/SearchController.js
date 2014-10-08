@@ -1,4 +1,4 @@
-angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.search.service'])
+angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.personal.service', 'fpiwebapp.search.service'])
 .filter('keyWords', function($sce){
     //var keyWordsFilter = function(input){
     //    var key = "长";
@@ -12,7 +12,7 @@ angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.search
     //};
     return keyWordsFilter;
 })
-.controller('SearchController', function($rootScope, $scope, $location, $routeParams, localStorageService, SearchService, $sce) {
+.controller('SearchController', function($rootScope, $scope, $location, $routeParams, localStorageService, PersonalService, SearchService, $sce) {
     $scope.currentUser = $rootScope.checkUser();
     $scope.currentCategory = localStorageService.get('currentCategory');
     $scope.toggle = false;
@@ -48,6 +48,7 @@ angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.search
 			userName: $scope.currentUser
 		}, function(result){
 			if(result){
+                $scope.companyAttentionArray = [];
 				$scope.companyArray = result.company;
                 if($scope.companyArray.length > 0){
                     $scope.hasData = true;
@@ -57,13 +58,47 @@ angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.search
                     $scope.hasData = false;
                     $scope.isNoData = true;
                 }
+                //attention
+                angular.forEach($scope.companyArray, function(value, key){
+                    PersonalService.hasAttention({
+                        userName: $scope.currentUser,
+                        companyId: value.companyId 
+                    }, function(result){
+                        if(result){
+                            var txt = {};
+                            if(result.result == 'true'){
+                                txt.html = '已关注';
+                                txt.css = 'atten';
+                            }
+                            else{
+                                txt.html = '未关注';
+                                txt.css = 'addAtten';
+                            }
+                            $scope.companyAttentionArray.push(txt);
+                        }
+                    });
+                });
 			}
 		});	
 
 	}
+    $scope.addAttentionFunc = function(compId, txt){
+        if(txt == '已关注'){
+            return;
+        }
+        PersonalService.saveAttention({
+            userName: $scope.currentUser,
+            companyId: compId 
+        }, function(result){
+            if(result){
+                //$window.location.href = "/personal";
+                $location.path('/personal');
+            }
+        });
+    };
 
     $scope.search = function() {
-        $location.path('/search/' + $scope.key);
+        $location.path('/searchAttention/' + $scope.key);
     }
 
     //快速搜索

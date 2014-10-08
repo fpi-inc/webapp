@@ -12,7 +12,7 @@ angular.module('fpiwebapp.personal.add.ctrl', ['LocalStorageModule', 'fpiwebapp.
     //};
     return keyWordsFilter;
 })
-.controller('AddCompanyController', function($rootScope, $scope, $location, $routeParams, localStorageService, PersonalService, SearchService, $sce) {
+.controller('AddCompanyController', function($rootScope, $window, $scope, $location, $routeParams, localStorageService, PersonalService, SearchService, $sce) {
     $scope.currentUser = $rootScope.checkUser();
     $scope.currentCategory = localStorageService.get('currentCategory');
     $scope.toggle = false;
@@ -64,12 +64,14 @@ angular.module('fpiwebapp.personal.add.ctrl', ['LocalStorageModule', 'fpiwebapp.
                         companyId: value.companyId 
                     }, function(result){
                         if(result){
-                            var txt = '';
+                            var txt = {};
                             if(result.result == 'true'){
-                                txt = '已关注';
+                                txt.html = '已关注';
+                                txt.css = 'atten';
                             }
                             else{
-                                txt = '未关注';
+                                txt.html = '未关注';
+                                txt.css = 'addAtten';
                             }
                             $scope.companyAttentionArray.push(txt);
                         }
@@ -78,6 +80,20 @@ angular.module('fpiwebapp.personal.add.ctrl', ['LocalStorageModule', 'fpiwebapp.
 			}
 		});	
 	}
+    $scope.addAttentionFunc = function(compId, txt){
+        if(txt == '已关注'){
+            return;
+        }
+        PersonalService.saveAttention({
+            userName: $scope.currentUser,
+            companyId: compId 
+        }, function(result){
+            if(result){
+                //$window.location.href = "/personal";
+                $location.path('/personal');
+            }
+        });
+    };
 
     $scope.search = function() {
         $location.path('/searchAttention/' + $scope.key);

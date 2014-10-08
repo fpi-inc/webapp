@@ -1,8 +1,8 @@
 
 <div class="sub-webapp-h">
     <div class="sub-webapp-h-title">我的关注</div>
-    <a href="javascript:;" class="go-home" ng-click="back()"><i class="icon-home"></i></a>
-    <a href="javascript:;" class="complate">完成</a>
+    <a href="#/cate/WW" class="go-home"><i class="icon-home"></i></a>
+    <a href="javascript:;" class="complate" ng-show="isComp" ng-click="complateFunc()">完成</a>
     <div class="sub-webapp-h-img"><img src="images/wdgz.png" width="110" height="99"></div>
     <p>一键关注企业，随时查看其状态</p>
 </div>
@@ -11,16 +11,16 @@
     <div class="company-attention" ng-repeat="company in attentionCompanyList">
         <div class="company-attention-title border-image-bottom-1px">
             <h1>{{company.companyName}}</h1>
-            <a href="javascript:;"><i class="icon-heart"></i></a>
+            <a href="javascript:;"><i ng-click="isAttentionFunc($event.target, company.companyId)" class="icon-heart"></i></a>
         </div>
         <div class="company-attention-body">
             <table>
-                <tr>
-                    <td><p class="border-image-bottom-1px"><i class="icon-circle-arrow-right"></i>长兴排水出水口</p></td>
-                    <td width="40" align="center"><p class="border-image-bottom-1px"><span class="stop">断线</span></p></td>
-                    <td width="40" align="center"><p class="border-image-bottom-1px"><span class="run">--</span></p></td>
+                <tr ng-repeat="items in company.portList">
+                    <td><p ng-class="{'border-image-bottom-1px': !$last}"><i class="icon-circle-arrow-right"></i>{{items.portName}}</p></td>
+                    <td width="40" align="center"><p ng-class="{'border-image-bottom-1px': !$last}"><span class="stop">断线</span></p></td>
+                    <td width="40" align="center"><p ng-class="{'border-image-bottom-1px': !$last}"><span class="run">--</span></p></td>
                 </tr>
-                <tr>
+                <!-- tr>
                     <td><p class="border-image-bottom-1px"><i class="icon-circle-arrow-right"></i>长兴排水出水口</p></td>
                     <td width="40" align="center"><p class="border-image-bottom-1px"><span class="run">在线</span></p></td>
                     <td width="40" align="center"><p class="border-image-bottom-1px"><span class="exceed">超标</span></p></td>
@@ -29,7 +29,7 @@
                     <td><p><i class="icon-circle-arrow-right"></i>长兴排水出水口</p></td>
                     <td width="40" align="center"><p><span class="run">在线</span></p></td>
                     <td width="40" align="center"><p><span class="warn">预警</span></p></td>
-                </tr>
+                </tr -->
             </table>
         </div>
     </div>

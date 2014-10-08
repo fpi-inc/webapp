@@ -138,21 +138,49 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
 			$scope.showHistoryChart = function(){
 				$scope.isActiveHistory = true;
 				var myChart = new JSChart('history-chart', 'line');
-				//for(var i = 0; i < $scope.historyChartData.length; i++){
-				//	myChart.setDataArray([[1, 80],[2, 40],[3, 60],[4, 65],[5, 50],[6, 50],[7, 60],[8, 80],[9, 150],[10, 100]], 'blue');
-				//}
-				//`for(var i = 0; i < cartAllData.length; i++){
-				//`	var item = cartAllData[i];
-				//`	myChart.setDataArray(item, 'blue');
-				//`}
-				myChart.setDataArray([[1, 80.5],[2, 40],[3, 60],[4, 65],[5, 50],[6, 50],[7, 60],[8, 80],[9, 150],[10, 100]], 'blue');
-				myChart.setDataArray([[1, 100],[2, 55],[3, 80],[4, 115],[5, 80],[6, 70],[7, 30],[8, 130],[9, 160],[10, 170]], 'green');
-				myChart.setDataArray([[1, 150],[2, 25],[3, 100],[4, 80],[5, 20],[6, 65],[7, 0],[8, 155],[9, 190],[10, 200]], 'gray');
+				var colorArray = ['red','green','blue','gray','yellow'];
+				var colorArray = [{
+                    name: 'red',
+                    value: '#fb1929'
+                },{
+                    name: 'yellow',
+                    value: '#ffc600'
+                },{
+                    name: 'blue',
+                    value: '#387eff'
+                },{
+                    name: 'green',
+                    value: '#30ff00'
+                },{
+                    name: 'qing',
+                    value: '#78ff00'
+                },{
+                    name: 'hunan',
+                    value: '#00e4ff'
+                },{
+                    name: 'zhise',
+                    value: '#ff00e4'
+                },{
+                    name: 'meihong',
+                    value: '#ff007e'
+                }];
+				for(var i = 0; i < cartAllData.length; i++){
+					var item = cartAllData[i];
+					myChart.setDataArray(item, colorArray[i].name);
+					myChart.setLineColor(colorArray[i].value, colorArray[i].name);
+				}
+				
+				//myChart.setDataArray(cartAllData[0], 'green');
+				//myChart.setDataArray(cartAllData[1], 'red');
+				//myChart.setDataArray(cartAllData[2], 'blue');
+				//myChart.setDataArray([[1, 80.5],[2, 40],[3, 60],[4, 65],[5, 50],[6, 50],[7, 60],[8, 80],[9, 150],[10, 100]], 'blue');
+				//myChart.setDataArray([[1, 100],[2, 55],[3, 80],[4, 115],[5, 80],[6, 70],[7, 30],[8, 130],[9, 160],[10, 170]], 'green');
+				//myChart.setDataArray([[1, 150],[2, 25],[3, 100],[4, 80],[5, 20],[6, 65],[7, 0],[8, 155],[9, 190],[10, 200]], 'gray');
 				myChart.setAxisPaddingBottom(40);
 				myChart.setTextPaddingBottom(10);
 				myChart.setAxisValuesNumberY(5);
 				myChart.setIntervalStartY(0);
-				myChart.setIntervalEndY(200);
+				myChart.setIntervalEndY(350);
 				myChart.setLabelX([2,'p1']);
 				myChart.setLabelX([4,'p2']);
 				myChart.setLabelX([6,'p3']);
@@ -162,8 +190,9 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
 				myChart.setShowXValues(false);
 				myChart.setTitleColor('#454545');
 				myChart.setAxisValuesColor('#454545');
-				myChart.setLineColor('#A4D314', 'green');
-				myChart.setLineColor('#BBBBBB', 'gray');
+				//myChart.setLineColor('#30ff00', 'green');
+				//myChart.setLineColor('#fb1929', 'red');
+				//myChart.setLineColor('#387eff', 'blue');
 				//myChart.setTooltip([1]);
 				//myChart.setTooltip([2]);
 				//myChart.setTooltip([3]);
@@ -178,7 +207,7 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
 				myChart.setFlagRadius(4);
 				//myChart.setBackgroundImage('chart_bg.jpg');
 				myChart.setSize(320, 321);
-				myChart.setTitle('fpi-inc');
+				myChart.setTitle('历史数据图表');
 				myChart.draw();
 			};
 

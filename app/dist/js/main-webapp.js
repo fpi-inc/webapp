@@ -216,7 +216,7 @@ angular.module('fpiwebapp.region.ctrl', ['LocalStorageModule'])
  
 
 
-angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.search.service'])
+angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.personal.service', 'fpiwebapp.search.service'])
 .filter('keyWords', function($sce){
     //var keyWordsFilter = function(input){
     //    var key = "长";
@@ -230,7 +230,7 @@ angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.search
     //};
     return keyWordsFilter;
 })
-.controller('SearchController', function($rootScope, $scope, $location, $routeParams, localStorageService, SearchService, $sce) {
+.controller('SearchController', function($rootScope, $scope, $location, $routeParams, localStorageService, PersonalService, SearchService, $sce) {
     $scope.currentUser = $rootScope.checkUser();
     $scope.currentCategory = localStorageService.get('currentCategory');
     $scope.toggle = false;
@@ -266,6 +266,7 @@ angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.search
 			userName: $scope.currentUser
 		}, function(result){
 			if(result){
+                $scope.companyAttentionArray = [];
 				$scope.companyArray = result.company;
                 if($scope.companyArray.length > 0){
                     $scope.hasData = true;
@@ -275,13 +276,47 @@ angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.search
                     $scope.hasData = false;
                     $scope.isNoData = true;
                 }
+                //attention
+                angular.forEach($scope.companyArray, function(value, key){
+                    PersonalService.hasAttention({
+                        userName: $scope.currentUser,
+                        companyId: value.companyId 
+                    }, function(result){
+                        if(result){
+                            var txt = {};
+                            if(result.result == 'true'){
+                                txt.html = '已关注';
+                                txt.css = 'atten';
+                            }
+                            else{
+                                txt.html = '未关注';
+                                txt.css = 'addAtten';
+                            }
+                            $scope.companyAttentionArray.push(txt);
+                        }
+                    });
+                });
 			}
 		});	
 
 	}
+    $scope.addAttentionFunc = function(compId, txt){
+        if(txt == '已关注'){
+            return;
+        }
+        PersonalService.saveAttention({
+            userName: $scope.currentUser,
+            companyId: compId 
+        }, function(result){
+            if(result){
+                //$window.location.href = "/personal";
+                $location.path('/personal');
+            }
+        });
+    };
 
     $scope.search = function() {
-        $location.path('/search/' + $scope.key);
+        $location.path('/searchAttention/' + $scope.key);
     }
 
     //快速搜索
@@ -730,7 +765,7 @@ angular.module('fpiwebapp.exceed.ctrl', [ 'LocalStorageModule', 'fpiwebapp.home.
     $scope.overStandardData = [];
     HomeService.getOverStandardData({
         monitorTypeCode: $scope.currentCategory,
-        regionCode: $scope.currentRegionCode || '',
+        regionCode: '',
         //regionCode: '33010401',
         time: $scope.nowDate,
         userName: $scope.currentUser
@@ -764,7 +799,7 @@ angular.module('fpiwebapp.transport.ctrl', [ 'LocalStorageModule', 'fpiwebapp.ho
 
 	$scope.transportItems = [];
 	HomeService.getTransmissionEfficientBychildRegion({
-		regionCode: $scope.currentRegionCode || '',
+		regionCode: '',
 		dateTime: $scope.nowDate,
 		monitorTypeCode: $scope.currentCategory,
 		userName: $scope.currentUser,
@@ -784,16 +819,72 @@ angular.module('fpiwebapp.personal.ctrl', [ 'LocalStorageModule', 'fpiwebapp.per
     $scope.currentUser = $rootScope.checkUser();
     $scope.attentionCompanyList = [];
     $scope.historyLoading = true;
-	PersonalService.showAttention({
-        userName: $scope.currentUser
-    }, function(result){
-        if(result){
-            $scope.attentionCompanyList = result.attention;
-            if($scope.attentionCompanyList.length > 0){
-                $scope.historyLoading = false;
+    $scope.showAttentionFunc = function(){
+        PersonalService.showAttention({
+            userName: $scope.currentUser
+        }, function(result){
+            if(result){
+                $scope.attentionCompanyList = result.attention;
+                if($scope.attentionCompanyList.length){
+                    $scope.historyLoading = false;
+                }
+            }
+        });
+    };
+    $scope.showAttentionFunc();
+    //是否关注
+    $scope.isComp = false;
+    $scope.delAttention = [];
+    $scope.isAttentionFunc = function(target, companyId){
+        $scope.currentHeart = angular.element(target);
+        if($scope.currentHeart.context.className == 'icon-heart'){
+            $scope.currentHeart.context.className = 'icon-heart-empty';           
+            $scope.delAttention.push(companyId);
+            if($scope.delAttention.length > 0){
+                $scope.isComp = true;
+            }
+            else{
+                $scope.isComp = false;
             }
         }
-    });
+        else{
+            $scope.currentHeart.context.className = 'icon-heart';           
+            $scope.remove($scope.delAttention, companyId);
+            if($scope.delAttention.length > 0){
+                $scope.isComp = true;
+            }
+            else{
+                $scope.isComp = false;
+            }
+        }
+    };
+    $scope.remove = function(obj, val){
+        var index = $scope.indexOf(obj, val);
+        if(index > -1){
+            obj.splice(index, 1);
+        }
+    };
+    $scope.indexOf = function(obj, val){
+        for(var i = 0; i < obj.length; i++){
+            if(obj[i] == val){
+                return i;
+            }
+            else{
+                return -1;
+            }
+        }
+    };
+    $scope.complateFunc = function(){
+        angular.forEach($scope.delAttention, function(value){
+            PersonalService.deleteAttention({
+                userName: $scope.currentUser,
+                companyId: value
+            }, function(result){
+                
+                $scope.showAttentionFunc();
+            });
+        });
+    };
 });
  
 
@@ -1157,21 +1248,49 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
 			$scope.showHistoryChart = function(){
 				$scope.isActiveHistory = true;
 				var myChart = new JSChart('history-chart', 'line');
-				//for(var i = 0; i < $scope.historyChartData.length; i++){
-				//	myChart.setDataArray([[1, 80],[2, 40],[3, 60],[4, 65],[5, 50],[6, 50],[7, 60],[8, 80],[9, 150],[10, 100]], 'blue');
-				//}
-				//`for(var i = 0; i < cartAllData.length; i++){
-				//`	var item = cartAllData[i];
-				//`	myChart.setDataArray(item, 'blue');
-				//`}
-				myChart.setDataArray([[1, 80.5],[2, 40],[3, 60],[4, 65],[5, 50],[6, 50],[7, 60],[8, 80],[9, 150],[10, 100]], 'blue');
-				myChart.setDataArray([[1, 100],[2, 55],[3, 80],[4, 115],[5, 80],[6, 70],[7, 30],[8, 130],[9, 160],[10, 170]], 'green');
-				myChart.setDataArray([[1, 150],[2, 25],[3, 100],[4, 80],[5, 20],[6, 65],[7, 0],[8, 155],[9, 190],[10, 200]], 'gray');
+				var colorArray = ['red','green','blue','gray','yellow'];
+				var colorArray = [{
+                    name: 'red',
+                    value: '#fb1929'
+                },{
+                    name: 'yellow',
+                    value: '#ffc600'
+                },{
+                    name: 'blue',
+                    value: '#387eff'
+                },{
+                    name: 'green',
+                    value: '#30ff00'
+                },{
+                    name: 'qing',
+                    value: '#78ff00'
+                },{
+                    name: 'hunan',
+                    value: '#00e4ff'
+                },{
+                    name: 'zhise',
+                    value: '#ff00e4'
+                },{
+                    name: 'meihong',
+                    value: '#ff007e'
+                }];
+				for(var i = 0; i < cartAllData.length; i++){
+					var item = cartAllData[i];
+					myChart.setDataArray(item, colorArray[i].name);
+					myChart.setLineColor(colorArray[i].value, colorArray[i].name);
+				}
+				
+				//myChart.setDataArray(cartAllData[0], 'green');
+				//myChart.setDataArray(cartAllData[1], 'red');
+				//myChart.setDataArray(cartAllData[2], 'blue');
+				//myChart.setDataArray([[1, 80.5],[2, 40],[3, 60],[4, 65],[5, 50],[6, 50],[7, 60],[8, 80],[9, 150],[10, 100]], 'blue');
+				//myChart.setDataArray([[1, 100],[2, 55],[3, 80],[4, 115],[5, 80],[6, 70],[7, 30],[8, 130],[9, 160],[10, 170]], 'green');
+				//myChart.setDataArray([[1, 150],[2, 25],[3, 100],[4, 80],[5, 20],[6, 65],[7, 0],[8, 155],[9, 190],[10, 200]], 'gray');
 				myChart.setAxisPaddingBottom(40);
 				myChart.setTextPaddingBottom(10);
 				myChart.setAxisValuesNumberY(5);
 				myChart.setIntervalStartY(0);
-				myChart.setIntervalEndY(200);
+				myChart.setIntervalEndY(350);
 				myChart.setLabelX([2,'p1']);
 				myChart.setLabelX([4,'p2']);
 				myChart.setLabelX([6,'p3']);
@@ -1181,8 +1300,9 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
 				myChart.setShowXValues(false);
 				myChart.setTitleColor('#454545');
 				myChart.setAxisValuesColor('#454545');
-				myChart.setLineColor('#A4D314', 'green');
-				myChart.setLineColor('#BBBBBB', 'gray');
+				//myChart.setLineColor('#30ff00', 'green');
+				//myChart.setLineColor('#fb1929', 'red');
+				//myChart.setLineColor('#387eff', 'blue');
 				//myChart.setTooltip([1]);
 				//myChart.setTooltip([2]);
 				//myChart.setTooltip([3]);
@@ -1197,7 +1317,7 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
 				myChart.setFlagRadius(4);
 				//myChart.setBackgroundImage('chart_bg.jpg');
 				myChart.setSize(320, 321);
-				myChart.setTitle('fpi-inc');
+				myChart.setTitle('历史数据图表');
 				myChart.draw();
 			};
 

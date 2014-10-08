@@ -11,7 +11,7 @@ angular.module('fpiwebapp.exceed.ctrl', [ 'LocalStorageModule', 'fpiwebapp.home.
     $scope.overStandardData = [];
     HomeService.getOverStandardData({
         monitorTypeCode: $scope.currentCategory,
-        regionCode: $scope.currentRegionCode || '',
+        regionCode: '',
         //regionCode: '33010401',
         time: $scope.nowDate,
         userName: $scope.currentUser
