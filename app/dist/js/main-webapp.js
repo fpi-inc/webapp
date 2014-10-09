@@ -394,9 +394,10 @@ angular.module('fpiwebapp.search.service', ['ngResource']).
 	}]);
 
 
-angular.module('fpiwebapp.choose.ctrl', ['LocalStorageModule'])
+angular.module('fpiwebapp.choose.ctrl', ['LocalStorageModule', 'fpiwebapp.home.service'])
  
-.controller('ChooseController', function($window, $rootScope, $scope, $location, $routeParams, localStorageService) {
+.controller('ChooseController', function($window, $rootScope, $scope, $location, $routeParams, localStorageService, HomeService) {
+    $scope.currentCategory = localStorageService.get('currentCategory');
     $scope.currentCate = $routeParams.currentCate;
     $scope.companyId = $routeParams.id;
     $scope.currentTime = localStorageService.get("currentDateTime");
@@ -424,6 +425,16 @@ angular.module('fpiwebapp.choose.ctrl', ['LocalStorageModule'])
         });
         return count;
     };
+    //因子
+    $scope.factorData = [];
+    HomeService.getFactorByPort({
+        portId: '2c9384fd47289cbe014728cae4940025',
+        monitorTypeCode: $scope.currentCategory
+    }, function(result){
+        if(result){
+            $scope.factorData = result.factor;
+        }
+    });
 });
  
 
@@ -747,7 +758,8 @@ angular.module('fpiwebapp.home.service', ['ngResource']).
             get48RealDataByChart: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/get48RealDataByChart.do'},
             getHistoryData: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getHistoryData.do'},
             getHistoryChart: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getHistoryChart.do'},
-            getTransmissionEfficientBychildRegion: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getTransmissionEfficientBychildRegion.do'}
+            getTransmissionEfficientBychildRegion: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getTransmissionEfficientBychildRegion.do'},
+            getFactorByPort: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getFactorByPort.do'}
 		});
 	}]);
 
@@ -1218,7 +1230,7 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
     HomeService.getHistoryChart({
         monitorTypeCode: 'WW',
         portId: '2c93871641b498170141b49cfb6b0004',
-        factors: '-1',
+        factors: 'B01',
         dateType: 1,
         time: '2014-09-09'
     }, function(result){
@@ -1511,6 +1523,9 @@ angular.module('fpiwebapp.calendar', ['fpiwebapp.service', 'LocalStorageModule']
 	    	getDate: function(index) {
 	    		return this.get(index).getDate();
 	    	},
+	    	getMonth: function(index) {
+	    		return (index + 1) + '月';
+	    	},
 	    	monthText: function() {
 	    		return this.currentDate.getFullYear() + '年' + (this.currentDate.getMonth() + 1) + '月';
 	    	},
@@ -1521,6 +1536,11 @@ angular.module('fpiwebapp.calendar', ['fpiwebapp.service', 'LocalStorageModule']
 	    		var date = this.get(index);
 	    		
 	    		return date.getMonth() == this.currentDate.getMonth();
+	    	},
+	    	isCurrentMonthNumber: function(index) {
+	    		//var date = this.get(index);
+	    		
+	    		return index == this.currentDate.getMonth();
 	    	},
 	    	isCurrentDate: function(index) {
 	    		var date = this.get(index);
@@ -1552,8 +1572,8 @@ angular.module('fpiwebapp.calendar', ['fpiwebapp.service', 'LocalStorageModule']
     	  element.on('swiperight', function() {
     		  alert('fuck');
     	  });
-    	  $('table a', element).each(function(i) {
-    		  $(this).click(function() {
+    	  $('.fpiwebapp-calendar a', element).each(function(i) {
+    		  $(this).on('click', function() {
     			  var currentDate = scope.calendarModel.get(i);
     			  
     			  var parentUpdateDateMethod = scope.$parent[scope['updateDateMethod']];
@@ -1564,6 +1584,20 @@ angular.module('fpiwebapp.calendar', ['fpiwebapp.service', 'LocalStorageModule']
     			  scope.$apply(scope.calendarModel);
     		  });
     	  });
+
+          $('.choose-p-t-r a').each(function(){
+              $(this).on('click', function(){
+                  $(this).addClass('cur').siblings().removeClass('cur');
+                  if($(this).index() == 0){
+                      $('#dayArea').show();
+                      $('#monthArea').hide();
+                  }
+                  else{
+                      $('#dayArea').hide();
+                      $('#monthArea').show();
+                  }
+              })
+          });
     	  
     	  scope.calendarModel = new CalendarModel(now);
       }

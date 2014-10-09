@@ -1,6 +1,7 @@
-angular.module('fpiwebapp.choose.ctrl', ['LocalStorageModule'])
+angular.module('fpiwebapp.choose.ctrl', ['LocalStorageModule', 'fpiwebapp.home.service'])
  
-.controller('ChooseController', function($window, $rootScope, $scope, $location, $routeParams, localStorageService) {
+.controller('ChooseController', function($window, $rootScope, $scope, $location, $routeParams, localStorageService, HomeService) {
+    $scope.currentCategory = localStorageService.get('currentCategory');
     $scope.currentCate = $routeParams.currentCate;
     $scope.companyId = $routeParams.id;
     $scope.currentTime = localStorageService.get("currentDateTime");
@@ -28,5 +29,15 @@ angular.module('fpiwebapp.choose.ctrl', ['LocalStorageModule'])
         });
         return count;
     };
+    //因子
+    $scope.factorData = [];
+    HomeService.getFactorByPort({
+        portId: '2c9384fd47289cbe014728cae4940025',
+        monitorTypeCode: $scope.currentCategory
+    }, function(result){
+        if(result){
+            $scope.factorData = result.factor;
+        }
+    });
 });
  

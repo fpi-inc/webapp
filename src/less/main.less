@@ -906,6 +906,49 @@ table.fpiwebapp-calendar{
             }
             &.gray{
                 color: #aaaaaa;
+                & a{
+                    color: #aaa !important;
+                }
+            }
+        }
+    }
+}
+table.fpiwebapp-calendar-month{
+    width: 100%;
+    & tr{
+        & th{
+            text-align: center;
+            height: 20px;
+            line-height: 20px;
+            color: #bdbdbd;
+            &.blue{
+                color: #14b1e4;
+            }
+        }
+        & td{
+            padding: 5px 0;
+            text-align: center;
+            line-height: 30px;
+            height: 30px;
+            font-size: 15px;
+            & a{
+                display: inline-block;
+                height: 30px;
+                width: 60px;
+                line-height: 30px;
+                font-size: 15px;
+                .border-radius(5px);
+                color: #666666;
+                &.cur{
+                    color: #fff;
+                    background-color: #4fc1e9;
+                }
+            }
+            &.gray{
+                color: #aaaaaa;
+                & a{
+                    color: #aaa !important;
+                }
             }
         }
     }

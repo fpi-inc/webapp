@@ -1569,6 +1569,49 @@ table.fpiwebapp-calendar tr td a.cur {
 table.fpiwebapp-calendar tr td.gray {
   color: #aaaaaa;
 }
+table.fpiwebapp-calendar tr td.gray a {
+  color: #aaa !important;
+}
+table.fpiwebapp-calendar-month {
+  width: 100%;
+}
+table.fpiwebapp-calendar-month tr th {
+  text-align: center;
+  height: 20px;
+  line-height: 20px;
+  color: #bdbdbd;
+}
+table.fpiwebapp-calendar-month tr th.blue {
+  color: #14b1e4;
+}
+table.fpiwebapp-calendar-month tr td {
+  padding: 5px 0;
+  text-align: center;
+  line-height: 30px;
+  height: 30px;
+  font-size: 15px;
+}
+table.fpiwebapp-calendar-month tr td a {
+  display: inline-block;
+  height: 30px;
+  width: 60px;
+  line-height: 30px;
+  font-size: 15px;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  color: #666666;
+}
+table.fpiwebapp-calendar-month tr td a.cur {
+  color: #fff;
+  background-color: #4fc1e9;
+}
+table.fpiwebapp-calendar-month tr td.gray {
+  color: #aaaaaa;
+}
+table.fpiwebapp-calendar-month tr td.gray a {
+  color: #aaa !important;
+}
 .user-items {
   margin: 10px 10px 0;
   background-color: #fff;

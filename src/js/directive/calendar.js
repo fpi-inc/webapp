@@ -19,6 +19,9 @@ angular.module('fpiwebapp.calendar', ['fpiwebapp.service', 'LocalStorageModule']
 	    	getDate: function(index) {
 	    		return this.get(index).getDate();
 	    	},
+	    	getMonth: function(index) {
+	    		return (index + 1) + '月';
+	    	},
 	    	monthText: function() {
 	    		return this.currentDate.getFullYear() + '年' + (this.currentDate.getMonth() + 1) + '月';
 	    	},
@@ -29,6 +32,11 @@ angular.module('fpiwebapp.calendar', ['fpiwebapp.service', 'LocalStorageModule']
 	    		var date = this.get(index);
 	    		
 	    		return date.getMonth() == this.currentDate.getMonth();
+	    	},
+	    	isCurrentMonthNumber: function(index) {
+	    		//var date = this.get(index);
+	    		
+	    		return index == this.currentDate.getMonth();
 	    	},
 	    	isCurrentDate: function(index) {
 	    		var date = this.get(index);
@@ -60,8 +68,8 @@ angular.module('fpiwebapp.calendar', ['fpiwebapp.service', 'LocalStorageModule']
     	  element.on('swiperight', function() {
     		  alert('fuck');
     	  });
-    	  $('table a', element).each(function(i) {
-    		  $(this).click(function() {
+    	  $('.fpiwebapp-calendar a', element).each(function(i) {
+    		  $(this).on('click', function() {
     			  var currentDate = scope.calendarModel.get(i);
     			  
     			  var parentUpdateDateMethod = scope.$parent[scope['updateDateMethod']];
@@ -72,6 +80,20 @@ angular.module('fpiwebapp.calendar', ['fpiwebapp.service', 'LocalStorageModule']
     			  scope.$apply(scope.calendarModel);
     		  });
     	  });
+
+          $('.choose-p-t-r a').each(function(){
+              $(this).on('click', function(){
+                  $(this).addClass('cur').siblings().removeClass('cur');
+                  if($(this).index() == 0){
+                      $('#dayArea').show();
+                      $('#monthArea').hide();
+                  }
+                  else{
+                      $('#dayArea').hide();
+                      $('#monthArea').show();
+                  }
+              })
+          });
     	  
     	  scope.calendarModel = new CalendarModel(now);
       }

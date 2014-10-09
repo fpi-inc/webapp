@@ -15,6 +15,7 @@ angular.module('fpiwebapp.home.service', ['ngResource']).
             get48RealDataByChart: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/get48RealDataByChart.do'},
             getHistoryData: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getHistoryData.do'},
             getHistoryChart: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getHistoryChart.do'},
-            getTransmissionEfficientBychildRegion: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getTransmissionEfficientBychildRegion.do'}
+            getTransmissionEfficientBychildRegion: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getTransmissionEfficientBychildRegion.do'},
+            getFactorByPort: {method: 'JSONP', url: platformServer + '/mobile/mobile/load/getFactorByPort.do'}
 		});
 	}]);
