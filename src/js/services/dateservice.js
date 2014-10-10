@@ -8,6 +8,14 @@ angular.module('fpiwebapp.service', [])
 			return this.getWeekOfMonth(this.getLastDateOfMonth(date));
 		},
 		/**
+		 * 获取给定日期在当前年的第一个月
+		 */
+		getMonthOfYear: function(date) {
+			var d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+            d.setMonth(0);
+			return d; 
+		},
+		/**
 		 * 获取给定日期在当前月的第几周
 		 */
 		getWeekOfMonth: function(date) {

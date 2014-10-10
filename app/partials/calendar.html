@@ -1,6 +1,7 @@
 <div class="choose-panel">
     <div class="choose-panel-title border-image-bottom-1px">
-        <div class="choose-p-t-l" ng-bind="calendarModel.monthText()"></div>
+        <div class="choose-p-t-l" ng-bind="calendarModel.monthText()" id="isShowDay"></div>
+        <div class="choose-p-t-l" ng-bind="calendarModel.showMonthText()" id="isShowMonth"></div>
         <div class="choose-p-t-r"><a href="javascript:;" class="day cur">日</a><a href="javascript:;" class="month">月</a></div>
     </div>
     <div class="choose-panel-body border-image-bottom-1px" id="dayArea">
@@ -74,22 +75,22 @@
     <div class="choose-panel-body border-image-bottom-1px" style="display: none;" id="monthArea">
         <table class="fpiwebapp-calendar-month">
             <tr>
-                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentMonthNumber(0)}" ng-bind="calendarModel.getMonth(0)"></a></td>
-                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentMonthNumber(1)}" ng-bind="calendarModel.getMonth(1)"></a></td>
-                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentMonthNumber(2)}" ng-bind="calendarModel.getMonth(2)"></a></td>
-                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentMonthNumber(3)}" ng-bind="calendarModel.getMonth(3)"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentMonthNumber(0)}" ng-bind="calendarModel.getMonth(0) + '月'"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentMonthNumber(1)}" ng-bind="calendarModel.getMonth(1) + '月'"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentMonthNumber(2)}" ng-bind="calendarModel.getMonth(2) + '月'"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentMonthNumber(3)}" ng-bind="calendarModel.getMonth(3) + '月'"></a></td>
             </tr>
             <tr>
-                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentMonthNumber(4)}" ng-bind="calendarModel.getMonth(4)"></a></td>
-                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentMonthNumber(5)}" ng-bind="calendarModel.getMonth(5)"></a></td>
-                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentMonthNumber(6)}" ng-bind="calendarModel.getMonth(6)"></a></td>
-                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentMonthNumber(7)}" ng-bind="calendarModel.getMonth(7)"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentMonthNumber(4)}" ng-bind="calendarModel.getMonth(4) + '月'"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentMonthNumber(5)}" ng-bind="calendarModel.getMonth(5) + '月'"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentMonthNumber(6)}" ng-bind="calendarModel.getMonth(6) + '月'"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentMonthNumber(7)}" ng-bind="calendarModel.getMonth(7) + '月'"></a></td>
             </tr>
             <tr>
-                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentMonthNumber(8)}" ng-bind="calendarModel.getMonth(8)"></a></td>
-                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentMonthNumber(9)}" ng-bind="calendarModel.getMonth(9)"></a></td>
-                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentMonthNumber(10)}" ng-bind="calendarModel.getMonth(10)"></a></td>
-                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentMonthNumber(11)}" ng-bind="calendarModel.getMonth(11)"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentMonthNumber(8)}" ng-bind="calendarModel.getMonth(8) + '月'"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentMonthNumber(9)}" ng-bind="calendarModel.getMonth(9) + '月'"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentMonthNumber(10)}" ng-bind="calendarModel.getMonth(10) + '月'"></a></td>
+                <td><a href="javascript:;" ng-class="{'cur': calendarModel.isCurrentMonthNumber(11)}" ng-bind="calendarModel.getMonth(11) + '月'"></a></td>
             </tr>
         </table>
         <div class="control"><a href="javascript:;"><img src="images/up.png" width="8" height="7"></a></div>

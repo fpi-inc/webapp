@@ -11,7 +11,7 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
 
 	$scope.nowDate = $rootScope.currentDate(0);
     if(!localStorageService.get('currentDateTime')){
-        localStorageService.set('currentDateTime', $scope.nowDate);
+        localStorageService.set('currentDateTime', {'time': $scope.nowDate, 'type': 1});
         //localStorageService.set('currentDateTime', new Date());
     }
     $scope.currentTime = localStorageService.get('currentDateTime');
@@ -36,8 +36,8 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
                 localStorageService.set('currentPorts', {portName: result.ports[0].portName, portId: result.ports[0].portId});
                 $scope.currentPorts = localStorageService.get('currentPorts').portName;
                 $scope.realDataByTable(result.ports[0].portId, result.ports[0].portName);
-                $scope.getHistoryDataFunc(result.ports[0].portId, $scope.nowDate);
-                $scope.getOverStandarData(result.ports[0].portId, $scope.nowDate);
+                $scope.getHistoryDataFunc(result.ports[0].portId, $scope.currentTime);
+                $scope.getOverStandarData(result.ports[0].portId, $scope.currentTime);
             }
         });
     };
@@ -78,9 +78,9 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
         HomeService.getHistoryData({
             portId: portId,
             monitorTypeCode: $scope.currentCategory,
-            factors: '-1',
-            dateType: 1,
-            time: time
+            factors: 'F_011',
+            dateType: time.type,
+            time: time.time
         }, function(result){
             if(result){
                 $scope.historyDataArray = result.data;
@@ -96,8 +96,8 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
             monitorTypeCode: $scope.currentCategory,
             portId: portId,
             factorIds: '-1',
-            dateType: 1,
-            time: time 
+            dateType: time.type,
+            time: time.time
         },function(result){
             if(result){
                 $scope.overStandarData = result.overStandardData;

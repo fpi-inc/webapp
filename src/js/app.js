@@ -54,7 +54,7 @@ angular.module('fpiwebapp', [
       controller: 'SelectRegionController',
       templateUrl: '/app/partials/region/region.html'
     })
-    .when('/choose/:id/:currentCate', {
+    .when('/choose/:id/:currentCate/:date', {
       controller:'ChooseController',
       templateUrl:'/app/partials/choose/choose.html'
     })

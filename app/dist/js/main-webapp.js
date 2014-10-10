@@ -54,7 +54,7 @@ angular.module('fpiwebapp', [
       controller: 'SelectRegionController',
       templateUrl: '/app/partials/region/region.html'
     })
-    .when('/choose/:id/:currentCate', {
+    .when('/choose/:id/:currentCate/:date', {
       controller:'ChooseController',
       templateUrl:'/app/partials/choose/choose.html'
     })
@@ -398,41 +398,56 @@ angular.module('fpiwebapp.choose.ctrl', ['LocalStorageModule', 'fpiwebapp.home.s
  
 .controller('ChooseController', function($window, $rootScope, $scope, $location, $routeParams, localStorageService, HomeService) {
     $scope.currentCategory = localStorageService.get('currentCategory');
+    $scope.currentPorts = localStorageService.get('currentPorts');
     $scope.currentCate = $routeParams.currentCate;
     $scope.companyId = $routeParams.id;
-    $scope.currentTime = localStorageService.get("currentDateTime");
-	$scope.setCurrentDate = function(date) {
-        var time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-		$scope.currentTime = time;
-        localStorageService.set("currentDateTime", $scope.currentTime);
+    //$scope.currentTime = localStorageService.get("currentDateTime");
+    $scope.routeTime = $routeParams.date;
+	$scope.setCurrentDate = function(date, num) {
+        var time = '';
+        if(num == 1){
+            time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+            $scope.currentTime = time;
+            localStorageService.set("currentDateTime", {'time': $scope.currentTime, 'type': 1});
+        }
+        else{
+            time = date.getFullYear() + '-' + (date.getMonth() + 1);
+            $scope.currentTime = time;
+            localStorageService.set("currentDateTime", {'time': $scope.currentTime, 'type': 2});
+        }
 	}
     $scope.defineFunc = function(){
         $window.location.href = '#/companyDetail/' + $scope.companyId + '/' + $scope.currentCate; 
     }
 
-	$scope.factorData = localStorageService.get('currentFactor');	
     //操作
     $scope.archive = function() {
-        var oldFactor = $scope.factorData;
-        oldFactor.splice(this.$index, 1, {'text': this.factor.text, 'done': !this.factor.done});
+        var oldFactor = $scope.factorDataCache;
+        oldFactor.splice(this.$index, 1, {'textName': this.factor.textName, 'textCode': this.factor.textCode, 'done': !this.factor.done});
         localStorageService.set('currentFactor', oldFactor);
-        $rootScope.isFactorSave = false;
-    };
-    $scope.remaining = function() {
-        var count = 0;
-        angular.forEach($scope.factorData, function(todo) {
-            count += !todo.done ? 0 : 1;
-        });
-        return count;
+        //$rootScope.isFactorSave = false;
     };
     //因子
     $scope.factorData = [];
     HomeService.getFactorByPort({
-        portId: '2c9384fd47289cbe014728cae4940025',
+        portId: $scope.currentPorts.portId,
         monitorTypeCode: $scope.currentCategory
     }, function(result){
         if(result){
             $scope.factorData = result.factor;
+            $scope.factorDataCache = [];
+            angular.forEach($scope.factorData, function(data){
+                $scope.factorDataCache.push({'textName': data.factorName, 'textCode': data.factorCode, 'done': true});
+            });
+            localStorageService.set('currentFactor', $scope.factorDataCache);	
+            $scope.remaining = function() {
+                var count = 0;
+                angular.forEach($scope.factorDataCache, function(todo) {
+                    count += !todo.done ? 0 : 1;
+                });
+                return count;
+            };
+
         }
     });
 });
@@ -928,7 +943,7 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
 
 	$scope.nowDate = $rootScope.currentDate(0);
     if(!localStorageService.get('currentDateTime')){
-        localStorageService.set('currentDateTime', $scope.nowDate);
+        localStorageService.set('currentDateTime', {'time': $scope.nowDate, 'type': 1});
         //localStorageService.set('currentDateTime', new Date());
     }
     $scope.currentTime = localStorageService.get('currentDateTime');
@@ -953,8 +968,8 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
                 localStorageService.set('currentPorts', {portName: result.ports[0].portName, portId: result.ports[0].portId});
                 $scope.currentPorts = localStorageService.get('currentPorts').portName;
                 $scope.realDataByTable(result.ports[0].portId, result.ports[0].portName);
-                $scope.getHistoryDataFunc(result.ports[0].portId, $scope.nowDate);
-                $scope.getOverStandarData(result.ports[0].portId, $scope.nowDate);
+                $scope.getHistoryDataFunc(result.ports[0].portId, $scope.currentTime);
+                $scope.getOverStandarData(result.ports[0].portId, $scope.currentTime);
             }
         });
     };
@@ -995,9 +1010,9 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
         HomeService.getHistoryData({
             portId: portId,
             monitorTypeCode: $scope.currentCategory,
-            factors: '-1',
-            dateType: 1,
-            time: time
+            factors: 'F_011',
+            dateType: time.type,
+            time: time.time
         }, function(result){
             if(result){
                 $scope.historyDataArray = result.data;
@@ -1013,8 +1028,8 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
             monitorTypeCode: $scope.currentCategory,
             portId: portId,
             factorIds: '-1',
-            dateType: 1,
-            time: time 
+            dateType: time.type,
+            time: time.time
         },function(result){
             if(result){
                 $scope.overStandarData = result.overStandardData;
@@ -1226,11 +1241,13 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
         }
     });
 
+    //历史数据
 	$scope.historyChartData = [];
     HomeService.getHistoryChart({
         monitorTypeCode: 'WW',
         portId: '2c93871641b498170141b49cfb6b0004',
         factors: 'B01',
+        factors: '-1',
         dateType: 1,
         time: '2014-09-09'
     }, function(result){
@@ -1510,23 +1527,34 @@ angular.module('fpiwebapp.calendar', ['fpiwebapp.service', 'LocalStorageModule']
 	    	
 	    	this.weekNumber = dateutil.getWeekNumberOfMonth(date);
 	    	this.firstDate = dateutil.getFirstDateOfFirstWeek(date);
+            this.firstMonth = dateutil.getMonthOfYear(date);
 	    	
 	    	this.fY = this.firstDate.getFullYear();
 	    	this.fM = this.firstDate.getMonth();
 	    	this.fD = this.firstDate.getDate();
+
+	    	this.fY1 = this.firstMonth.getFullYear();
+	    	this.fM1 = this.firstMonth.getMonth();
+	    	this.fD1 = this.firstMonth.getDate();
 	    };
 	    
 	    CalendarModel.prototype = {
 	    	get: function(index) {
 	    		return new Date(this.fY, this.fM, this.fD + index);
 	    	},
+	    	getMonthId: function(index) {
+	    		return new Date(this.fY1, this.fM1 + index, this.fD1);
+	    	},
 	    	getDate: function(index) {
 	    		return this.get(index).getDate();
 	    	},
 	    	getMonth: function(index) {
-	    		return (index + 1) + '月';
+	    		return this.getMonthId(index).getMonth() + 1;
 	    	},
 	    	monthText: function() {
+	    		return this.currentDate.getFullYear() + '年' + (this.currentDate.getMonth() + 1) + '月' + this.currentDate.getDate() + '日';
+	    	},
+	    	showMonthText: function() {
 	    		return this.currentDate.getFullYear() + '年' + (this.currentDate.getMonth() + 1) + '月';
 	    	},
 	    	checkWeek: function(week) {
@@ -1563,8 +1591,27 @@ angular.module('fpiwebapp.calendar', ['fpiwebapp.service', 'LocalStorageModule']
       },
       templateUrl: '/app/partials/calendar.html',
       link: function(scope, element, attrs) {
+          autoTabShow(scope.$parent.routeTime);
+
+          function autoTabShow(time){
+              var isMonthDay = time.indexOf('-', 5);
+              if(isMonthDay != -1){
+                  $('.choose-p-t-r a').eq(0).addClass('cur').siblings().removeClass('cur');
+                  $('#dayArea').show();
+                  $('#monthArea').hide();
+                  $('#isShowDay').show();
+                  $('#isShowMonth').hide();
+              }
+              else{
+                  $('.choose-p-t-r a').eq(1).addClass('cur').siblings().removeClass('cur');
+                  $('#dayArea').hide();
+                  $('#monthArea').show();
+                  $('#isShowDay').hide();
+                  $('#isShowMonth').show();
+              }
+          }
     	  var nowDate = localStorageService.get('currentDateTime');
-          var now = new Date(Date.parse(nowDate.replace(/-/g,   "/")));  
+          var now = new Date(Date.parse(nowDate.time.replace(/-/g,   "/")));  
     	  //require(['jquery.mobile-1.4.4.js'], function() {
     	  //    
     	  //    alert($.mobile);
@@ -1577,10 +1624,21 @@ angular.module('fpiwebapp.calendar', ['fpiwebapp.service', 'LocalStorageModule']
     			  var currentDate = scope.calendarModel.get(i);
     			  
     			  var parentUpdateDateMethod = scope.$parent[scope['updateDateMethod']];
-    			  parentUpdateDateMethod && parentUpdateDateMethod(currentDate);
+    			  parentUpdateDateMethod && parentUpdateDateMethod(currentDate, 1);
     			  
     			  //scope.calendarModel.currentDate = currentDate;
     			  scope.calendarModel = new CalendarModel(currentDate);
+    			  scope.$apply(scope.calendarModel);
+    		  });
+    	  });
+    	  $('.fpiwebapp-calendar-month a', element).each(function(i) {
+    		  $(this).on('click', function() {
+    			  var currentMonth = scope.calendarModel.getMonthId(i);
+    			  
+    			  var parentUpdateMonthMethod = scope.$parent[scope['updateDateMethod']];
+    			  parentUpdateMonthMethod && parentUpdateMonthMethod(currentMonth, 2);
+    			  
+    			  scope.calendarModel = new CalendarModel(currentMonth);
     			  scope.$apply(scope.calendarModel);
     		  });
     	  });
@@ -1591,10 +1649,14 @@ angular.module('fpiwebapp.calendar', ['fpiwebapp.service', 'LocalStorageModule']
                   if($(this).index() == 0){
                       $('#dayArea').show();
                       $('#monthArea').hide();
+                      $('#isShowDay').show();
+                      $('#isShowMonth').hide();
                   }
                   else{
                       $('#dayArea').hide();
                       $('#monthArea').show();
+                      $('#isShowDay').hide();
+                      $('#isShowMonth').show();
                   }
               })
           });
@@ -1613,6 +1675,14 @@ angular.module('fpiwebapp.service', [])
 		 */
 		getWeekNumberOfMonth: function(date) {
 			return this.getWeekOfMonth(this.getLastDateOfMonth(date));
+		},
+		/**
+		 * 获取给定日期在当前年的第一个月
+		 */
+		getMonthOfYear: function(date) {
+			var d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+            d.setMonth(0);
+			return d; 
 		},
 		/**
 		 * 获取给定日期在当前月的第几周

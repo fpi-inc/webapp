@@ -104,11 +104,13 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
         }
     });
 
+    //历史数据
 	$scope.historyChartData = [];
     HomeService.getHistoryChart({
         monitorTypeCode: 'WW',
         portId: '2c93871641b498170141b49cfb6b0004',
         factors: 'B01',
+        factors: '-1',
         dateType: 1,
         time: '2014-09-09'
     }, function(result){
