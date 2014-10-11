@@ -594,6 +594,14 @@ ul.fpiwebapp-ul-list li .company-data .company-data-3 label {
   text-align: center;
   font-size: 14px;
 }
+.fpiwebapp-detail-table tr td.table-no-data {
+  height: 30px;
+  font-size: 16px;
+  color: #dbdbdb;
+  text-align: center;
+  line-height: 30px;
+  background-color: #fff;
+}
 .fpiwebapp-detail-table tr td span.red {
   color: red;
 }
@@ -1745,6 +1753,14 @@ a.webapp-btn.red {
 .choose-panel .choose-panel-body .control a img {
   position: relative;
   top: -3px;
+}
+.choose-panel .choose-panel-body ul.noyz li {
+  height: 30px;
+  font-size: 16px;
+  color: #dbdbdb;
+  text-align: center;
+  line-height: 30px;
+  background-color: #fff;
 }
 .choose-panel .choose-panel-body ul.yz li {
   float: left;

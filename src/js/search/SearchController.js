@@ -149,6 +149,10 @@ angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.person
     $scope.clearHistory = function(){
         $scope.companyArray = [];
     };
+    //清除排口缓存
+    $scope.clearPortsCache = function(){
+        localStorageService.remove('currentPorts');
+    }; 
 
 })
 .filter('keyWords', function(){

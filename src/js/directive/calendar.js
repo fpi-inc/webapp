@@ -90,7 +90,7 @@ angular.module('fpiwebapp.calendar', ['fpiwebapp.service', 'LocalStorageModule']
               }
           }
     	  var nowDate = localStorageService.get('currentDateTime');
-          var now = new Date(Date.parse(nowDate.time.replace(/-/g,   "/")));  
+          var now = new Date(Date.parse(nowDate.longTime.replace(/-/g,   "/")));  
     	  //require(['jquery.mobile-1.4.4.js'], function() {
     	  //    
     	  //    alert($.mobile);

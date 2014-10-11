@@ -9,7 +9,7 @@
 <div class="choose-panel" style="margin-top: 30px;">
     <div class="choose-panel-title">
         <div class="choose-p-t-l">因子选择</div>
-        <div class="choose-p-t-r"><a href="javascript:;" class="buttonCls">确定({{remaining()}})</a></div>
+        <div class="choose-p-t-r"><a href="javascript:;" class="buttonCls">已选因子数({{remaining()}})</a></div>
     </div>
     <div class="choose-panel-body border-image-bottom-1px">
         <ul class="yz" ng-repeat="factor in factorDataCache">
@@ -18,6 +18,9 @@
 			<li><a href="javascript:;"><i><img src="images/r.png" width="14" height="14"></i><span>NH3-N</span></a></li>
 			<li><a href="javascript:;"><i><img src="images/rd.png" width="14" height="14"></i><span>流量</span></a></li -->
 		</ul>
+        <ul class="noyz" ng-hide="noyzData">
+            <li>暂无因子</li>
+        </ul>
 		<div style="clear: both;"></div>
     </div>
 </div>
