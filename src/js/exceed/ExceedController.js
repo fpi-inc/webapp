@@ -3,16 +3,23 @@ angular.module('fpiwebapp.exceed.ctrl', [ 'LocalStorageModule', 'fpiwebapp.home.
 .controller('ExceedController', function($rootScope, $scope, $location, $window, localStorageService, MenuServer, HomeService) {
     $scope.currentCategory = localStorageService.get('currentCategory');
     $scope.currentRegionCode = localStorageService.get('currentRegionCode');
-	$scope.nowDate = $rootScope.currentDate(0);
     $scope.currentUser = $rootScope.checkUser();
+
+	$scope.nowDate = $rootScope.currentDate(0);
+    if(!localStorageService.get('currentDateTime')){
+        localStorageService.set('currentDateTime', {'time': $scope.nowDate, 'longTime': $scope.nowDate, 'type': 1});
+        //localStorageService.set('currentDateTime', new Date());
+    }
+    $scope.currentTime = localStorageService.get('currentDateTime');
 
     //超标统计
     $scope.noStandardData = false;
     $scope.overStandardData = [];
-    HomeService.getOverStandardData({
+    HomeService.getOverStandardDataByCompany({
         monitorTypeCode: $scope.currentCategory,
-        regionCode: '',
-        //regionCode: '33010401',
+        portId: '',
+        factorIds: '',
+        dateType: '',
         time: $scope.nowDate,
         userName: $scope.currentUser
     }, function(result){

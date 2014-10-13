@@ -62,12 +62,14 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
 
     //操作排口
     $scope.controlAllPorts = function(portId, portName){
+        $scope.cartAllData = [];
         $scope.realDataByTable(portId, portName);
         //$scope.realDataByTableChart(portId, portName);
         $scope.getHistoryDataFunc(portId, $scope.currentTime);
         $scope.getHistoryDataFuncChart(portId, $scope.currentTime);
         $scope.getOverStandarData(portId, $scope.currentTime);
         $scope.setPortsFactorData(portId, $scope.currentCategory);
+        $scope.isActiveHistory = false;
     };
 
     //获取排口下的因子
@@ -176,8 +178,10 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
     };
     //历史数据图表
     $scope.cartAllData = [];
+    $scope.keyWords = [];
 	$scope.historyChartData = [];
     $scope.yMaxValue = [];
+    $scope.xCoordinate = [];
     $scope.getHistoryDataFuncChart = function(portId, time){
         HomeService.getHistoryChart({
             monitorTypeCode: $scope.currentCategory,
@@ -192,21 +196,49 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
                 var chartDataArray = [];
                 $.each($scope.historyChartData, function(key, value){
                     if(value instanceof Array && key != 'maxVal'){
-                        chartDataArray.push(value);
+                        chartDataArray.push({'key': key, 'value': value});
+                        $scope.keyWords.push(key);
                     }
                 });
                 $.each(chartDataArray, function(index, value){
-                    var items = value;
+                    var items = value.value;
+                    var xLength = items.length;
+                    var xsteep = Math.floor(xLength / 4);
                     var chartDataArrayNew = [];
+                    if(index == 0){
+                        $scope.xCoordinate.push({'number':1, 'time': formatTime(items[0].time)});
+                    }
                     for(var i = 0; i < items.length; i++){
                         var item = items[i];
                         var codeArray = [];
                         codeArray.push(i+1, item.value);
                         //codeArray.push(item.time, item.value);
                         chartDataArrayNew.push(codeArray);
+                        if(index == 0){
+                            if(i % 4 == 0){
+                                if(i == 0 || i == (items.length - 1)){
+                                    continue;
+                                }
+                                else{
+                                    $scope.xCoordinate.push({'number': i+1, 'time': formatTime(items[i].time)});
+                                }
+                            }
+                        }
+                    }
+                    if(index == 0){
+                        $scope.xCoordinate.push({'number': items.length, 'time': formatTime(items[items.length - 1].time)});
                     }
                     $scope.cartAllData.push(chartDataArrayNew);
                 });
+                function formatTime(time){
+                    if(time.indexOf(' ') > 0){
+                        return time.substring(11) + '时';
+                    }
+                    else{
+                        return time.substring(8) + '日';
+                    }
+                }
+
             }
         });
     };

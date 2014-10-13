@@ -1,6 +1,10 @@
 angular.module('fpiwebapp.personal.ctrl', [ 'LocalStorageModule', 'fpiwebapp.personal.service'])
  
 .controller('PersonalController', function($rootScope, $scope, $location, $window, localStorageService, MenuServer, PersonalService) {
+    //清除排口缓存
+    $scope.clearPortsCache = function(){
+        localStorageService.remove('currentPorts');
+    }; 
     $scope.currentUser = $rootScope.checkUser();
     $scope.attentionCompanyList = [];
     $scope.historyLoading = true;

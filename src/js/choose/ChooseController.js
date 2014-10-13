@@ -11,6 +11,10 @@ angular.module('fpiwebapp.choose.ctrl', ['LocalStorageModule', 'fpiwebapp.home.s
     }
     $scope.currentCate = $routeParams.currentCate;
     $scope.companyId = $routeParams.id;
+    $scope.controlFactor = false;
+    if($scope.currentCate == 'null'){
+        $scope.controlFactor = true;
+    }
     //$scope.currentTime = localStorageService.get("currentDateTime");
     $scope.routeTime = $routeParams.date;
 	$scope.setCurrentDate = function(date, num) {
@@ -26,7 +30,12 @@ angular.module('fpiwebapp.choose.ctrl', ['LocalStorageModule', 'fpiwebapp.home.s
         }
 	}
     $scope.defineFunc = function(){
-        $window.location.href = '#/companyDetail/' + $scope.companyId + '/' + $scope.currentCate; 
+        if($scope.currentCate == 'null'){
+            $window.location.href = '#/transport'; 
+        }
+        else{
+            $window.location.href = '#/companyDetail/' + $scope.companyId + '/' + $scope.currentCate; 
+        }
     }
 
     //操作

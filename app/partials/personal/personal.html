@@ -10,7 +10,7 @@
     <div class="loadingCls" ng-show="historyLoading" style="padding-top: 10px; text-align: center;"><img src="images/loading.gif" width="32" height="32"></div>
     <div class="company-attention" ng-repeat="company in attentionCompanyList">
         <div class="company-attention-title border-image-bottom-1px">
-            <h1>{{company.companyName}}</h1>
+            <h1><a href="#/companyDetail/{{company.companyId}}/0" ng-click="clearPortsCache()">{{company.companyName}}</a></h1>
             <a href="javascript:;"><i ng-click="isAttentionFunc($event.target, company.companyId)" class="icon-heart"></i></a>
         </div>
         <div class="company-attention-body">

@@ -43,7 +43,7 @@
             <tr><td colspan="5" class="table-no-data" ng-hide="clearData">暂无历史数据</td></tr>
         </table>
         <div class="loadingCls" ng-show="historyLoading"><img src="images/loading.gif" width="32" height="32"></div>
-        <div class="charts-panel" ng-show="isActiveHistory"><div id="history-chart" style="width: 320px; margin: 0 auto; background-color: #fff;"></div></div>
+        <div class="charts-panel" ng-show="isActiveHistory"><div id="chart-text"></div><div id="history-chart" style="width: 320px; margin: 0 auto; background-color: #fff;"></div></div>
     </div>
     <div class="tab-content">
         <div class="sub-time-area"><a href="#/choose/{{companyId}}/2/{{currentTime.time}}"><i class="icon-time"></i> {{currentTime.time}}</a></div>

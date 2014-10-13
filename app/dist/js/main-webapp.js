@@ -411,6 +411,10 @@ angular.module('fpiwebapp.choose.ctrl', ['LocalStorageModule', 'fpiwebapp.home.s
     }
     $scope.currentCate = $routeParams.currentCate;
     $scope.companyId = $routeParams.id;
+    $scope.controlFactor = false;
+    if($scope.currentCate == 'null'){
+        $scope.controlFactor = true;
+    }
     //$scope.currentTime = localStorageService.get("currentDateTime");
     $scope.routeTime = $routeParams.date;
 	$scope.setCurrentDate = function(date, num) {
@@ -426,7 +430,12 @@ angular.module('fpiwebapp.choose.ctrl', ['LocalStorageModule', 'fpiwebapp.home.s
         }
 	}
     $scope.defineFunc = function(){
-        $window.location.href = '#/companyDetail/' + $scope.companyId + '/' + $scope.currentCate; 
+        if($scope.currentCate == 'null'){
+            $window.location.href = '#/transport'; 
+        }
+        else{
+            $window.location.href = '#/companyDetail/' + $scope.companyId + '/' + $scope.currentCate; 
+        }
     }
 
     //操作
@@ -801,16 +810,23 @@ angular.module('fpiwebapp.exceed.ctrl', [ 'LocalStorageModule', 'fpiwebapp.home.
 .controller('ExceedController', function($rootScope, $scope, $location, $window, localStorageService, MenuServer, HomeService) {
     $scope.currentCategory = localStorageService.get('currentCategory');
     $scope.currentRegionCode = localStorageService.get('currentRegionCode');
-	$scope.nowDate = $rootScope.currentDate(0);
     $scope.currentUser = $rootScope.checkUser();
+
+	$scope.nowDate = $rootScope.currentDate(0);
+    if(!localStorageService.get('currentDateTime')){
+        localStorageService.set('currentDateTime', {'time': $scope.nowDate, 'longTime': $scope.nowDate, 'type': 1});
+        //localStorageService.set('currentDateTime', new Date());
+    }
+    $scope.currentTime = localStorageService.get('currentDateTime');
 
     //超标统计
     $scope.noStandardData = false;
     $scope.overStandardData = [];
-    HomeService.getOverStandardData({
+    HomeService.getOverStandardDataByCompany({
         monitorTypeCode: $scope.currentCategory,
-        regionCode: '',
-        //regionCode: '33010401',
+        portId: '',
+        factorIds: '',
+        dateType: '',
         time: $scope.nowDate,
         userName: $scope.currentUser
     }, function(result){
@@ -841,13 +857,20 @@ angular.module('fpiwebapp.transport.ctrl', [ 'LocalStorageModule', 'fpiwebapp.ho
     $scope.currentCategory = localStorageService.get('currentCategory');
     $scope.currentRegionCode = localStorageService.get('currentRegionCode');
 
+	$scope.nowDate = $rootScope.currentDate(0);
+    if(!localStorageService.get('currentDateTime')){
+        localStorageService.set('currentDateTime', {'time': $scope.nowDate, 'longTime': $scope.nowDate, 'type': 1});
+        //localStorageService.set('currentDateTime', new Date());
+    }
+    $scope.currentTime = localStorageService.get('currentDateTime');
+
 	$scope.transportItems = [];
 	HomeService.getTransmissionEfficientBychildRegion({
 		regionCode: '',
-		dateTime: $scope.nowDate,
+		dateTime: $scope.currentTime.time,
 		monitorTypeCode: $scope.currentCategory,
 		userName: $scope.currentUser,
-		dateType: 1
+		dateType: $scope.currentTime.type
 	}, function(result){
 		if(result){
 			$scope.transportItems = result.transmissionEfficient;
@@ -860,6 +883,10 @@ angular.module('fpiwebapp.transport.ctrl', [ 'LocalStorageModule', 'fpiwebapp.ho
 angular.module('fpiwebapp.personal.ctrl', [ 'LocalStorageModule', 'fpiwebapp.personal.service'])
  
 .controller('PersonalController', function($rootScope, $scope, $location, $window, localStorageService, MenuServer, PersonalService) {
+    //清除排口缓存
+    $scope.clearPortsCache = function(){
+        localStorageService.remove('currentPorts');
+    }; 
     $scope.currentUser = $rootScope.checkUser();
     $scope.attentionCompanyList = [];
     $scope.historyLoading = true;
@@ -1011,12 +1038,14 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
 
     //操作排口
     $scope.controlAllPorts = function(portId, portName){
+        $scope.cartAllData = [];
         $scope.realDataByTable(portId, portName);
         //$scope.realDataByTableChart(portId, portName);
         $scope.getHistoryDataFunc(portId, $scope.currentTime);
         $scope.getHistoryDataFuncChart(portId, $scope.currentTime);
         $scope.getOverStandarData(portId, $scope.currentTime);
         $scope.setPortsFactorData(portId, $scope.currentCategory);
+        $scope.isActiveHistory = false;
     };
 
     //获取排口下的因子
@@ -1125,8 +1154,10 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
     };
     //历史数据图表
     $scope.cartAllData = [];
+    $scope.keyWords = [];
 	$scope.historyChartData = [];
     $scope.yMaxValue = [];
+    $scope.xCoordinate = [];
     $scope.getHistoryDataFuncChart = function(portId, time){
         HomeService.getHistoryChart({
             monitorTypeCode: $scope.currentCategory,
@@ -1141,21 +1172,49 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
                 var chartDataArray = [];
                 $.each($scope.historyChartData, function(key, value){
                     if(value instanceof Array && key != 'maxVal'){
-                        chartDataArray.push(value);
+                        chartDataArray.push({'key': key, 'value': value});
+                        $scope.keyWords.push(key);
                     }
                 });
                 $.each(chartDataArray, function(index, value){
-                    var items = value;
+                    var items = value.value;
+                    var xLength = items.length;
+                    var xsteep = Math.floor(xLength / 4);
                     var chartDataArrayNew = [];
+                    if(index == 0){
+                        $scope.xCoordinate.push({'number':1, 'time': formatTime(items[0].time)});
+                    }
                     for(var i = 0; i < items.length; i++){
                         var item = items[i];
                         var codeArray = [];
                         codeArray.push(i+1, item.value);
                         //codeArray.push(item.time, item.value);
                         chartDataArrayNew.push(codeArray);
+                        if(index == 0){
+                            if(i % 4 == 0){
+                                if(i == 0 || i == (items.length - 1)){
+                                    continue;
+                                }
+                                else{
+                                    $scope.xCoordinate.push({'number': i+1, 'time': formatTime(items[i].time)});
+                                }
+                            }
+                        }
+                    }
+                    if(index == 0){
+                        $scope.xCoordinate.push({'number': items.length, 'time': formatTime(items[items.length - 1].time)});
                     }
                     $scope.cartAllData.push(chartDataArrayNew);
                 });
+                function formatTime(time){
+                    if(time.indexOf(' ') > 0){
+                        return time.substring(11) + '时';
+                    }
+                    else{
+                        return time.substring(8) + '日';
+                    }
+                }
+
             }
         });
     };
@@ -1287,6 +1346,7 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
     $scope.curPorts = localStorageService.get('currentPorts');
     //实时数据图表操作
     $scope.showChartFunc = function($event){
+        $scope.curPorts = localStorageService.get('currentPorts');
         //实时数据图表
         HomeService.get24RealDataByChart({
             portId: $scope.curPorts.portId,
@@ -1388,77 +1448,91 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
 
     $scope.showHistoryChart = function(){
         $scope.isActiveHistory = true;
-        var myChart = new JSChart('history-chart', 'line');
-        var colorArray = [{
-            name: 'red',
-                value: '#fb1929'
-        },{
-            name: 'yellow',
-                value: '#ffc600'
-        },{
-            name: 'blue',
-                value: '#387eff'
-        },{
-            name: 'green',
-                value: '#30ff00'
-        },{
-            name: 'qing',
-                value: '#78ff00'
-        },{
-            name: 'hunan',
-                value: '#00e4ff'
-        },{
-            name: 'zhise',
-                value: '#ff00e4'
-        },{
-            name: 'meihong',
-            value: '#ff007e'
-        }];
-        for(var i = 0; i < $scope.cartAllData.length; i++){
-            var item = $scope.cartAllData[i];
-            myChart.setDataArray(item, colorArray[i].name);
-            myChart.setLineColor(colorArray[i].value, colorArray[i].name);
-        }
+        var colorArray = [];
+        if($scope.cartAllData.length){
+            $('#history-chart').show();
+            $('#chart-text').hide();
+            var myChart = new JSChart('history-chart', 'line');
+            colorArray = [{
+                name: 'red',
+                    value: '#fb1929',
+                    text: 'COD'
+            },{
+                name: 'yellow',
+                    value: '#ffc600',
+                    text: ''
+            },{
+                name: 'blue',
+                    value: '#387eff',
+                    text: ''
+            },{
+                name: 'green',
+                    value: '#30ff00',
+                    text: ''
+            },{
+                name: 'violet',
+                    value: '#fa00fd',
+                    text: ''
+            },{
+                name: 'hunan',
+                value: '#00e4ff',
+                text: ''
+            },{
+                name: 'zhise',
+                value: '#ff00e4',
+                text: ''
+            },{
+                name: 'meihong',
+                value: '#ff007e',
+                text: ''
+            }];
+            for(var i = 0; i < $scope.cartAllData.length; i++){
+                var item = $scope.cartAllData[i];
+                myChart.setDataArray(item, colorArray[i].name);
+                myChart.setLineColor(colorArray[i].value, colorArray[i].name);
+                myChart.setLegendShow(true);
+                myChart.setLegendPosition('top center');
+                myChart.setLegendForLine(colorArray[i].name, $scope.keyWords[i]);
+            }
 
-        //myChart.setDataArray($scope.cartAllData[0], 'green');
-        //myChart.setDataArray($scope.cartAllData[1], 'red');
-        //myChart.setDataArray($scope.cartAllData[2], 'blue');
-        //myChart.setDataArray([[1, 80.5],[2, 40],[3, 60],[4, 65],[5, 50],[6, 50],[7, 60],[8, 80],[9, 150],[10, 100]], 'blue');
-        //myChart.setDataArray([[1, 100],[2, 55],[3, 80],[4, 115],[5, 80],[6, 70],[7, 30],[8, 130],[9, 160],[10, 170]], 'green');
-        //myChart.setDataArray([[1, 150],[2, 25],[3, 100],[4, 80],[5, 20],[6, 65],[7, 0],[8, 155],[9, 190],[10, 200]], 'gray');
-        myChart.setAxisPaddingBottom(40);
-        myChart.setTextPaddingBottom(10);
-        myChart.setAxisValuesNumberY(5);
-        myChart.setIntervalStartY(0);
-        myChart.setIntervalEndY($scope.yMaxValue[0].maxVal);
-        //myChart.setLabelX([2,'p1']);
-        //myChart.setLabelX([4,'p2']);
-        //myChart.setLabelX([6,'p3']);
-        //myChart.setLabelX([8,'p4']);
-        //myChart.setLabelX([10,'p5']);
-        myChart.setAxisValuesNumberX(5);
-        myChart.setShowXValues(false);
-        myChart.setTitleColor('#454545');
-        myChart.setAxisValuesColor('#454545');
-        //myChart.setLineColor('#30ff00', 'green');
-        //myChart.setLineColor('#fb1929', 'red');
-        //myChart.setLineColor('#387eff', 'blue');
-        //myChart.setTooltip([1]);
-        //myChart.setTooltip([2]);
-        //myChart.setTooltip([3]);
-        //myChart.setTooltip([4]);
-        //myChart.setTooltip([5]);
-        //myChart.setTooltip([6]);
-        //myChart.setTooltip([7]);
-        //myChart.setTooltip([8]);
-        //myChart.setTooltip([9]);
-        //myChart.setTooltip([10]);
-        myChart.setFlagColor('#9D16FC');
-        myChart.setFlagRadius(4);
-        //myChart.setBackgroundImage('chart_bg.jpg');
-        myChart.setSize(320, 321);
-        myChart.setTitle('历史数据图表');
-        myChart.draw();
+            //myChart.setDataArray($scope.cartAllData[0], 'green');
+            //myChart.setDataArray($scope.cartAllData[1], 'red');
+            //myChart.setDataArray($scope.cartAllData[2], 'blue');
+            //myChart.setDataArray([[1, 80.5],[2, 40],[3, 60],[4, 65],[5, 50],[6, 50],[7, 60],[8, 80],[9, 150],[10, 100]], 'blue');
+            //myChart.setDataArray([[1, 100],[2, 55],[3, 80],[4, 115],[5, 80],[6, 70],[7, 30],[8, 130],[9, 160],[10, 170]], 'green');
+            //myChart.setDataArray([[1, 150],[2, 25],[3, 100],[4, 80],[5, 20],[6, 65],[7, 0],[8, 155],[9, 190],[10, 200]], 'gray');
+            myChart.setAxisPaddingBottom(40);
+            myChart.setTextPaddingBottom(10);
+            //myChart.setAxisValuesNumberY(5);
+            myChart.setIntervalStartY(0);
+            myChart.setIntervalEndY($scope.yMaxValue[0].maxVal);
+            myChart.setAxisNameX('');
+            myChart.setAxisNameY('');
+            
+            for(var j = 0; j < $scope.xCoordinate.length; j++){
+                var jitem = $scope.xCoordinate[j];
+                myChart.setLabelX([jitem.number, jitem.time]);
+            }
+            //myChart.setLabelX([1,'10时']);
+            //myChart.setLabelX([23,'10时']);
+            //myChart.setLabelX([6,'p3']);
+            //myChart.setLabelX([8,'p4']);
+            //myChart.setLabelX([10,'p5']);
+            myChart.setAxisValuesNumberX(5);
+            myChart.setShowXValues(false);
+            myChart.setTitleColor('#454545');
+            myChart.setAxisValuesColor('#454545');
+            myChart.setFlagColor('#9D16FC');
+            myChart.setFlagRadius(4);
+            //myChart.setBackgroundImage('chart_bg.jpg');
+            myChart.setSize(320, 321);
+            myChart.setTitle('历史数据图表');
+            myChart.draw();
+        }
+        else{
+            $('#history-chart').hide();
+            $('#chart-text').html('<div class="no-chart-text">暂无图表数据</div>');
+        }
     };
 
     $scope.isActiveHistory = false;
