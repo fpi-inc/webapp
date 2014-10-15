@@ -5,7 +5,8 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
 	};
 	return timeFormatFilter;
 })
-.controller('CompanyDetailController', function($scope, $rootScope, $location, $window, $routeParams, localStorageService, MenuServer, HomeService) {
+.controller('CompanyDetailController', function($route, $scope, $rootScope, $location, $window, $routeParams, localStorageService, MenuServer, HomeService) {
+
 	$scope.companyId = $routeParams.id;
 	$scope.currentItem = $routeParams.currentCate;
 
@@ -16,7 +17,42 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
     }
     $scope.currentTime = localStorageService.get('currentDateTime');
 
-    $scope.currentCategory = localStorageService.get('currentCategory');
+    $scope.currentCategory = localStorageService.get('currentCategory') || 'WW';
+
+    $scope.isCompanyUser = false;
+    //企业用户
+    $scope.currentCompanyOrAdmin = localStorageService.get('currentCompanyOrAdmin');
+    if($scope.currentCompanyOrAdmin == 'company'){
+        $scope.isCompanyUser = true;
+        if($scope.currentCategory == 'WW'){
+            $scope.isCompanyActive = true;
+            $scope.isSubCompanyActive = false;
+        }
+        else{
+            $scope.isCompanyActive = false;
+            $scope.isSubCompanyActive = true;
+        }
+    }
+    $("#isCompanyUserId > a").each(function(){
+        $(this).on('click', function(){
+            if($(this).index() == 0){
+                $scope.isCompanyActive = true;
+                $scope.isSubCompanyActive = false;
+                localStorageService.set('currentCategory', 'WW');
+                $route.reload();
+            }
+            else{
+                $scope.isSubCompanyActive = true;
+                $scope.isCompanyActive = false;
+                localStorageService.set('currentCategory', 'WG');
+                $route.reload();
+            }
+        });
+    });
+    $scope.refresh = function(){
+        $route.reload();
+    };
+
     //类别显示
     $scope.isActive = false;
     $scope.toggleCate = function(){

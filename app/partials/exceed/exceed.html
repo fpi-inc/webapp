@@ -1,7 +1,7 @@
 
 <div class="sub-webapp-h" style="height: auto;">
     <div class="sub-webapp-h-title">超标统计</div>
-    <a href="javascript:;" class="go-home" ng-click="back()"><i class="icon-home"></i></a>
+    <a href="#/cate/{{currentCategory}}" class="go-home"><i class="icon-home"></i></a>
     <div class="sub-webapp-h-img"><img src="images/cbtj.png" height="155"></div>
 </div>
 <div class="sub-time-area"><a href="#/choose/null/exceed/{{currentTime.time}}"><i class="icon-time"></i> {{currentTime.time}}</a></div>
@@ -27,6 +27,7 @@
                 </table>
             </div>
         </div>
+        <br>
         <!-- div class="h-e-content">
             <div class="left"><span>超</span></div>
             <div class="right">

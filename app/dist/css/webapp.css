@@ -1909,7 +1909,7 @@ a.webapp-btn.red {
 }
 .sub-webapp-c .company-attention .company-attention-title h1 a {
   width: auto;
-  line-height: normal;
+  line-height: 25px;
 }
 .sub-webapp-c .company-attention .company-attention-title a {
   margin-right: 5px;

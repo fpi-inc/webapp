@@ -68,6 +68,7 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
         regionCode: $scope.currentRegionCode || '',
         //regionCode: '33010401',
         time: $scope.nowDate,
+        dateType: 1,
         userName: $scope.currentUser
     }, function(result){
         if(result){
@@ -134,8 +135,6 @@ angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.hom
         })
 
     };
-
-
 
 })
 .directive('onFinishRenderFilters', function ($timeout) {

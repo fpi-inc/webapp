@@ -22,8 +22,14 @@ angular.module('login', [ 'ngCookies', 'LocalStorageModule', 'fpiwebapp.login.se
                     localStorageService.set('currentUser', $scope.userName);
                     localStorageService.set('currentRegions', loginData.name);
                     localStorageService.set('currentRegionCode', loginData.id);
+                    localStorageService.set('currentCompanyOrAdmin', loginData.role);
                     //localStorageService.set('currentCategory', $scope.category);
-                    $window.location.href = '/app/#/cate/' + $scope.category;
+                    if(loginData.role == 'mat'){
+                        $window.location.href = '/app/#/cate/' + $scope.category;
+                    }
+                    else{
+                        $window.location.href = '/app/#/companyDetail/' + loginData.id + '/0';
+                    }
                 }
                 else{
                     error.showTips();

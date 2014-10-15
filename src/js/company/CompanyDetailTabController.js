@@ -5,16 +5,19 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
 
     $scope.curPorts = localStorageService.get('currentPorts');
     //实时数据图表操作
-    $scope.showChartFunc = function($event){
+    $scope.showChartFunc = function($event, factoryCode){
         $scope.curPorts = localStorageService.get('currentPorts');
         //实时数据图表
         HomeService.get24RealDataByChart({
             portId: $scope.curPorts.portId,
             monitorTypeCode: $scope.currentCategory,
-            factor: '2c93871641b5db390141b5def6f80001'
+            factor: factoryCode
         }, function(result){
             if(result){
-                
+                //var codeText = factoryCode.substring(2);
+                $scope.real24Data = result;
+                $scope.maxData = $scope.real24Data.maxVal[0].maxVal;
+                $scope.all24Data = $scope.real24Data[factoryCode];
             }
         });
 
@@ -35,6 +38,9 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
 			myChart.setDataArray(myData);
 			myChart.setSize(320, 220);
 			myChart.setTitle('fpi');
+            myChart.setAxisNameX('');
+            myChart.setAxisNameY('');
+			myChart.setTitle('24小时实时数据');
 			myChart.draw();
 		}
 		function drawChart48(){
@@ -42,7 +48,9 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
 			var myChart = new JSChart('chartcontainer48', 'line');
 			myChart.setDataArray(myData);
 			myChart.setSize(320, 220);
-			myChart.setTitle('fpi');
+            myChart.setAxisNameX('');
+            myChart.setAxisNameY('');
+			myChart.setTitle('48小时实时数据');
 			myChart.draw();
 		}
 		drawChart24();
@@ -86,24 +94,24 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
     };
 
     //超标数据
-    var test = [
-{"factorUnit":null,"fatorName":"COD","alarmValueScope":"30.26~30.26","standardValue":30.0,"overTimesScope":"0.01~0.01","hour":1,"companyName":"长兴兴长污水处理有限公司","portId":"2c93871641b498170141b49cfb6b0004","portName":"长兴兴长污水处理有限公司总排口"},
-{"factorUnit":null,"fatorName":"NH4","alarmValueScope":"30.26~30.26","standardValue":30.0,"overTimesScope":"0.01~0.01","hour":1,"companyName":"长兴兴长污水处理有限公司","portId":"2c93871641b498170141b49cfb6b0004","portName":"长兴兴长污水处理有限公司总排口"},
-{"factorUnit":null,"fatorName":"O3","alarmValueScope":"30.26~30.26","standardValue":30.0,"overTimesScope":"0.01~0.01","hour":1,"companyName":"长兴兴长污水处理有限公司","portId":"2c93871641b498170141b49cfb6b0004","portName":"长兴兴长污水处理有限公司总排口"}
-];
+    //var test = [
+//{"fa//ctorUnit":null,"fatorName":"COD","alarmValueScope":"30.26~30.26","standardValue":30.0,"overTimesScope":"0.01~0.01","hour":1,"companyName":"长兴兴长污水处理有限公司","portId":"2c93871641b498170141b49cfb6b0004","portName":"长兴兴长污水处理有限公司总排口"},
+//{"fa//ctorUnit":null,"fatorName":"NH4","alarmValueScope":"30.26~30.26","standardValue":30.0,"overTimesScope":"0.01~0.01","hour":1,"companyName":"长兴兴长污水处理有限公司","portId":"2c93871641b498170141b49cfb6b0004","portName":"长兴兴长污水处理有限公司总排口"},
+//{"fa//ctorUnit":null,"fatorName":"O3","alarmValueScope":"30.26~30.26","standardValue":30.0,"overTimesScope":"0.01~0.01","hour":1,"companyName":"长兴兴长污水处理有限公司","portId":"2c93871641b498170141b49cfb6b0004","portName":"长兴兴长污水处理有限公司总排口"}
+//];
 
-    HomeService.getDetailOverStandardDataByCompany({
-        monitorTypeCode: 'WW',
-        portId: '2c93871641b498170141b49cfb6b0004',
-        factorId: '2c93871641b5db390141b5def6f80001',
-        standardValue: '30.0',
-        companyName: '长兴兴长污水处理有限公司',
-        dateType: 1,
-        time: '2014-09-09'
-    }, function(result){
-        if(result){
-        }
-    });
+    //HomeService.getDetailOverStandardDataByCompany({
+    //    monitorTypeCode: 'WW',
+    //    portId: '2c93871641b498170141b49cfb6b0004',
+    //    factorId: '2c93871641b5db390141b5def6f80001',
+    //    standardValue: '30.0',
+    //    companyName: '长兴兴长污水处理有限公司',
+    //    dateType: 1,
+    //    time: '2014-09-09'
+    //}, function(result){
+    //    if(result){
+    //    }
+    //});
 
 
     $scope.showHistoryChart = function(){

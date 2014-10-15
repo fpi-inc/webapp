@@ -67,11 +67,11 @@
 <div class="fpi-webapp-home-panel">
     <h1>监测点实时状态</h1>
     <ul class="zt">
-        <li><div class="status" style="background-color: #6bd4a7;"><span>{{stateData[0].ZC}}</span><p>正常</p></div></li>
-        <li><div class="status" style="background-color: #ff6363;"><span>{{stateData[0].BJ}}</span><p>超标</p></div></li>
-        <li><div class="status" style="background-color: #cf88df;"><span>{{stateData[0].YC}}</span><p>异常</p></div></li>
-        <li><div class="status" style="background-color: #bebebe;"><span>{{stateData[0].unconnect}}</span><p>断线</p></div></li>
-        <li><div class="status" style="background-color: #ffb848;"><span>{{stateData[0].YJ}}</span><p>预警</p></div></li>
+        <li><a href="#/stateDetail/ZC"><div class="status" style="background-color: #6bd4a7;"><span>{{stateData[0].ZC}}</span><p>正常</p></div></a></li>
+        <li><a href="#/stateDetail/BJ"><div class="status" style="background-color: #ff6363;"><span>{{stateData[0].BJ}}</span><p>超标</p></div></a></li>
+        <li><a href="#/stateDetail/YC"><div class="status" style="background-color: #cf88df;"><span>{{stateData[0].YC}}</span><p>异常</p></div></a></li>
+        <li><a href="#/stateDetail/unconnect"><div class="status" style="background-color: #bebebe;"><span>{{stateData[0].unconnect}}</span><p>断线</p></div></a></li>
+        <li><a href="#/stateDetail/YJ"><div class="status" style="background-color: #ffb848;"><span>{{stateData[0].YJ}}</span><p>预警</p></div></a></li>
     </ul>
     <p class="txt"><span>{{stateData[0].companyNum}}</span>家企业,<span>{{stateData[0].portNum}}</span>个监测点，联网率<span>{{stateData[0].connect}}%</span></p>
     <div class="menu-bottom"></div>

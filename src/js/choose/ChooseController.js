@@ -33,6 +33,9 @@ angular.module('fpiwebapp.choose.ctrl', ['LocalStorageModule', 'fpiwebapp.home.s
         if($scope.currentCate == 'null'){
             $window.location.href = '#/transport'; 
         }
+        else if($scope.companyId == 'null'){
+            $window.location.href = '#/exceed'; 
+        }
         else{
             $window.location.href = '#/companyDetail/' + $scope.companyId + '/' + $scope.currentCate; 
         }

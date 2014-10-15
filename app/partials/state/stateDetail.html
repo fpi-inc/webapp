@@ -1,0 +1,70 @@
+<!-- div class="webapp-sub-2-title">搜索企业<a href="javascript:;" ng-click="back();" class="backnew img"><i class="icon-angle-left"></i></a></div -->
+<div class="webapp-sub-2-title">监测点实时状态<a href="javascript:;" ng-click="back()" class="backnew img"><i class="icon-angle-left"></i></a></div>
+<!-- div class="webapp-sub-2-title gray">
+    <form ng-submit="search()">
+        <div class="search-control-r gray">
+            <a href="javascript:;" ng-click="back()" ng-hide="toggle">取消</a>
+            <input type="submit" value="搜索" id="submit" ng-show="toggle" ng-click="search()">
+        </div>
+        <div class="search-input-control">
+            <div class="input-area-bg">
+                <i class="icon-search"></i>
+                <div class="search-input-txt"><input type="text" value="" ng-model="key" name="" ng-focus="focusFunc()" placeholder="{{name}}"></div>
+            </div>
+        </div>
+    </form>
+</div -->
+<!-- div class="hot-search">
+    <div class="hot-search-content">
+        <ul>
+            <li><a href="javascript:;" class="h">快捷搜索</a></li>
+            <li><a href="javascript:;" ng-click="quickFunc(1)" ng-class="{true: 'cur', false: ''}[isActiveA]">国控</a></li>
+            <li><a href="javascript:;" ng-click="quickFunc(2)" ng-class="{true: 'cur', false: ''}[isActiveB]">省控</a></li>
+            <li><a href="javascript:;" ng-click="quickFunc(3)" ng-class="{true: 'cur', false: ''}[isActiveC]">其它</a></li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+</div -->
+<!-- div class="search-result-list" style="margin-top: 0;">
+    <ul ng-repeat="company in companyArray">
+        <li class="border-image-bottom-1px"><i class="icon-time"></i><a href="javascript:;" class="widths" ng-bind-html="htmlShow(company.companyName)"></a><span class="attentionIcon"><a href="javascript:;" ng-click="addAttentionFunc(company.companyId, companyAttentionArray[$index].html)" class="{{companyAttentionArray[$index].css}}"><p>{{companyAttentionArray[$index].html}}</p></a></span></li>
+    </ul>
+    <div class="clear-history" ng-click="clearHistory()" ng-show="hasData"><i class="icon-trash"></i><a href="javascript:;">清除历史记录</a></div>
+    <div class="noSearchData" ng-show="isNoData"><div class="noSearchData-c"><img src="images/wu.gif" width="130" height="130"><span>没有搜到您要的数据</span><div></div>
+</div -->
+
+<div class="sub-webapp-c">
+    <div class="loadingCls" ng-show="historyLoading" style="padding-top: 10px; text-align: center;"><img src="images/loading.gif" width="32" height="32"></div>
+    <div class="company-attention" ng-repeat="state in stateDetailData">
+        <div class="company-attention-title border-image-bottom-1px">
+            <h1><a href="#/companyDetail/{{state.companyId}}/0" ng-click="clearPortsCache()">{{state.companyName}}</a></h1>
+        </div>
+        <div class="company-attention-body">
+            <table>
+                <tr>
+                    <td><p class="border-image-bottom-1px">监测点</p></td>
+                    <td width="40" align="center"><p class="border-image-bottom-1px"><span>联网</span></p></td>
+                    <td width="40" align="center"><p class="border-image-bottom-1px"><span>排放</span></p></td>
+                </tr>
+                <tr ng-repeat="items in state.port">
+                    <td><p ng-class="{'border-image-bottom-1px': !$last}"><i class="icon-circle-arrow-right"></i>{{items.portName}}</p></td>
+                    <td width="40" align="center"><p ng-class="{'border-image-bottom-1px': !$last}"><span class="stop">断线</span></p></td>
+                    <td width="40" align="center"><p ng-class="{'border-image-bottom-1px': !$last}"><span class="run">--</span></p></td>
+                </tr>
+                <tr ng-if="state.port.length == 0">
+                    <td colspan="3" class="no-overstandar">暂无数据</td>
+                </tr>
+                <!-- tr>
+                    <td><p class="border-image-bottom-1px"><i class="icon-circle-arrow-right"></i>长兴排水出水口</p></td>
+                    <td width="40" align="center"><p class="border-image-bottom-1px"><span class="run">在线</span></p></td>
+                    <td width="40" align="center"><p class="border-image-bottom-1px"><span class="exceed">超标</span></p></td>
+                </tr>
+                <tr>
+                    <td><p><i class="icon-circle-arrow-right"></i>长兴排水出水口</p></td>
+                    <td width="40" align="center"><p><span class="run">在线</span></p></td>
+                    <td width="40" align="center"><p><span class="warn">预警</span></p></td>
+                </tr -->
+            </table>
+        </div>
+    </div>
+</div>

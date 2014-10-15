@@ -11,6 +11,7 @@ angular.module('fpiwebapp', [
   //'fpiwebapp.login.ctrl',
   'fpiwebapp.home.ctrl',
   'fpiwebapp.homeCate.ctrl',
+  'fpiwebapp.stateDetail.ctrl',
   'fpiwebapp.exceed.ctrl',
   'fpiwebapp.transport.ctrl',
   'fpiwebapp.personal.ctrl',
@@ -45,6 +46,10 @@ angular.module('fpiwebapp', [
     .when('/cate/:cateCode', {
       controller:'HomeCateController',
       templateUrl:'/app/partials/home/home.html'
+    })
+    .when('/stateDetail/:state', {
+      controller:'StateDetailController',
+      templateUrl:'/app/partials/state/stateDetail.html'
     })
     .when('/account', {
       controller: 'AccountController',

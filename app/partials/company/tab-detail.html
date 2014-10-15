@@ -13,7 +13,7 @@
                 <th><p class="border-image-bottom-1px">单位</p></th>
                 <th><p class="border-image-bottom-1px">标准</p></th>
             </tr>
-            <tr ng-repeat="realData in realDataByTableArray" ng-click="showChartFunc($event);">
+            <tr ng-repeat="realData in realDataByTableArray" ng-click="showChartFunc($event, realData.factorCode);">
                 <td><p class="border-image-bottom-1px"><span ng-class="{true: 'yz', false: 'noyz'}[realData.factorFlag]">{{realData.factorName}}</span></p></td>
                 <td><p class="border-image-bottom-1px">{{realData.factorVal}}</p></td>
                 <td><p class="border-image-bottom-1px">{{realData.unit}}</p></td>
