@@ -14,11 +14,19 @@
             <a href="javascript:;"><i ng-click="isAttentionFunc($event.target, company.companyId)" class="icon-heart"></i></a>
         </div>
         <div class="company-attention-body">
-            <table>
-                <tr ng-repeat="items in company.portList">
+            <table ng-repeat="items in company.portList">
+                <tr>
                     <td><p ng-class="{'border-image-bottom-1px': !$last}"><i class="icon-circle-arrow-right"></i>{{items.portName}}</p></td>
-                    <td width="40" align="center"><p ng-class="{'border-image-bottom-1px': !$last}"><span class="stop">断线</span></p></td>
-                    <td width="40" align="center"><p ng-class="{'border-image-bottom-1px': !$last}"><span class="run">--</span></p></td>
+                    <td width="40" align="center" ng-if="items.online == 0"><p ng-class="{'border-image-bottom-1px': !$last}"><span class="stop">断线</span></p></td>
+                    <td width="40" align="center" ng-if="items.online == 0"><p ng-class="{'border-image-bottom-1px': !$last}"><span class="stop">--</span></p></td>
+                    <td width="40" align="center" ng-if="items.online == 1"><p ng-class="{'border-image-bottom-1px': !$last}"><span class="run">在线</span></p></td>
+                    <td width="40" align="center" ng-if="items.online == 1 && items.state == 'BJ'"><p ng-class="{'border-image-bottom-1px': !$last}"><span class="exceed">超标</span></p></td>
+                    <td width="40" align="center" ng-if="items.online == 1 && items.state == 'YJ'"><p ng-class="{'border-image-bottom-1px': !$last}"><span class="warn">预警</span></p></td>
+                    <td width="40" align="center" ng-if="items.online == 1 && items.state == 'YC'"><p ng-class="{'border-image-bottom-1px': !$last}"><span class="yichang">异常</span></p></td>
+                    <td width="40" align="center" ng-if="items.online == 1 && items.state == 'ZC'"><p ng-class="{'border-image-bottom-1px': !$last}"><span class="normal">正常</span></p></td>
+                </tr>
+                <tr ng-if="items.online == 1 && items.state == 'BJ'">
+                    <td colspan="3" class="cbyz"><p ng-class="{'border-image-bottom-1px': !$last}">{{items.BJfactor}}</p><td>
                 </tr>
                 <!-- tr>
                     <td><p class="border-image-bottom-1px"><i class="icon-circle-arrow-right"></i>长兴排水出水口</p></td>

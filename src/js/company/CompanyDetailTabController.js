@@ -7,7 +7,7 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
     //实时数据图表操作
     $scope.showChartFunc = function($event, factoryCode){
         $scope.curPorts = localStorageService.get('currentPorts');
-        //实时数据图表
+        //实时数据图表24小时
         HomeService.get24RealDataByChart({
             portId: $scope.curPorts.portId,
             monitorTypeCode: $scope.currentCategory,
@@ -15,9 +15,43 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
         }, function(result){
             if(result){
                 //var codeText = factoryCode.substring(2);
+                $scope.real24ChartData = [];
                 $scope.real24Data = result;
                 $scope.maxData = $scope.real24Data.maxVal[0].maxVal;
                 $scope.all24Data = $scope.real24Data[factoryCode];
+                
+                angular.forEach($scope.all24Data, function(value, key){
+                    var itemArray = [];
+                    itemArray.push(key);
+                    itemArray.push(value.value);
+                    $scope.real24ChartData.push(itemArray);
+                });
+
+                drawChart24($scope.maxData, $scope.real24ChartData);
+            }
+        });
+        //实时数据图表48小时
+
+        HomeService.get48RealDataByChart({
+            portId: $scope.curPorts.portId,
+            monitorTypeCode: $scope.currentCategory,
+            factor: factoryCode
+        }, function(result){
+            if(result){
+                //var codeText = factoryCode.substring(2);
+                $scope.real48ChartData = [];
+                $scope.real48Data = result;
+                $scope.max48Data = $scope.real48Data.maxVal[0].maxVal;
+                $scope.all48Data = $scope.real48Data[factoryCode];
+                
+                angular.forEach($scope.all48Data, function(value, key){
+                    var itemArray = [];
+                    itemArray.push(key);
+                    itemArray.push(value.value);
+                    $scope.real48ChartData.push(itemArray);
+                });
+
+                drawChart48($scope.max48Data, $scope.real48ChartData);
             }
         });
 
@@ -32,28 +66,31 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
 					+ '</td></tr>');
         }
 
-		function drawChart24(){
-			var myData = new Array([10, 20], [15, 10], [20, 30], [25, 10], [30, 5]);
+		function drawChart24(maxValue, chartData){
+			var myData = chartData;
 			var myChart = new JSChart('chartcontainer24', 'line');
 			myChart.setDataArray(myData);
 			myChart.setSize(320, 220);
-			myChart.setTitle('fpi');
+            myChart.setIntervalStartY(0);
+            myChart.setIntervalEndY(maxValue);
             myChart.setAxisNameX('');
             myChart.setAxisNameY('');
 			myChart.setTitle('24小时实时数据');
 			myChart.draw();
 		}
-		function drawChart48(){
-			var myData = new Array([10, 20], [15, 10], [20, 30], [25, 10], [30, 5]);
+		function drawChart48(maxValue, chartData){
+			var myData = chartData;
 			var myChart = new JSChart('chartcontainer48', 'line');
 			myChart.setDataArray(myData);
 			myChart.setSize(320, 220);
+            myChart.setIntervalStartY(0);
+            myChart.setIntervalEndY(maxValue);
             myChart.setAxisNameX('');
             myChart.setAxisNameY('');
 			myChart.setTitle('48小时实时数据');
 			myChart.draw();
 		}
-		drawChart24();
+		//drawChart24();
         //addRow
         //$scope.addRow(target);
 		$('.chartT2448 > a').each(function(index){
@@ -63,14 +100,14 @@ angular.module('fpiwebapp.companyDetailTab.ctrl', [ 'LocalStorageModule', 'fpiwe
 					$(this).addClass('cur');
 					$('#chartcontainer24').show();
 					$('#chartcontainer48').hide();
-					drawChart24();
+                    drawChart24($scope.maxData, $scope.real24ChartData);
 				}
 				else{
 					$('.chartT2448 > a').removeClass('cur');
 					$(this).addClass('cur');
 					$('#chartcontainer24').hide();
 					$('#chartcontainer48').show();
-					drawChart48();
+                    drawChart48($scope.max48Data, $scope.real48ChartData);
 				}
 			});
 		});

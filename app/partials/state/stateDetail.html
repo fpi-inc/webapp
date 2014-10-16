@@ -48,8 +48,13 @@
                 </tr>
                 <tr ng-repeat="items in state.port">
                     <td><p ng-class="{'border-image-bottom-1px': !$last}"><i class="icon-circle-arrow-right"></i>{{items.portName}}</p></td>
-                    <td width="40" align="center"><p ng-class="{'border-image-bottom-1px': !$last}"><span class="stop">断线</span></p></td>
-                    <td width="40" align="center"><p ng-class="{'border-image-bottom-1px': !$last}"><span class="run">--</span></p></td>
+                    <td width="40" align="center" ng-if="items.onlineState == 0"><p ng-class="{'border-image-bottom-1px': !$last}"><span class="stop">断线</span></p></td>
+                    <td width="40" align="center" ng-if="items.onlineState == 0"><p ng-class="{'border-image-bottom-1px': !$last}"><span class="stop">--</span></p></td>
+                    <td width="40" align="center" ng-if="items.onlineState == 1"><p ng-class="{'border-image-bottom-1px': !$last}"><span class="run">在线</span></p></td>
+                    <td width="40" align="center" ng-if="items.onlineState == 1 && items.state == 'BJ'"><p ng-class="{'border-image-bottom-1px': !$last}"><span class="exceed">超标</span></p></td>
+                    <td width="40" align="center" ng-if="items.onlineState == 1 && items.state == 'YJ'"><p ng-class="{'border-image-bottom-1px': !$last}"><span class="warn">预警</span></p></td>
+                    <td width="40" align="center" ng-if="items.onlineState == 1 && items.state == 'YC'"><p ng-class="{'border-image-bottom-1px': !$last}"><span class="yichang">异常</span></p></td>
+                    <td width="40" align="center" ng-if="items.onlineState == 1 && items.state == 'ZC'"><p ng-class="{'border-image-bottom-1px': !$last}"><span class="normal">正常</span></p></td>
                 </tr>
                 <tr ng-if="state.port.length == 0">
                     <td colspan="3" class="no-overstandar">暂无数据</td>
