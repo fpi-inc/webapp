@@ -1,7 +1,7 @@
 <div class="fpi-webapp-header">
     <div class="fpi-webapp-header-category">
         <a href="/app/#/cate/WW"><span class="water" ng-class="{true: 'cur', false: ''}[isActive]">废水</span></a>
-        <a href="/app/#/cate/WG"><span class="air" ng-class="{true: 'cur', false: ''}[isSubActive]">废气</span></a>
+        <a href="/app/#/cate/WG"><span id="maskElement" class="air" ng-class="{true: 'cur', false: ''}[isSubActive]">废气</span></a>
     </div>
     <div class="fpi-webapp-header-area">
         <a href="#/selectRegion">
@@ -67,7 +67,7 @@
 <div class="fpi-webapp-home-panel">
     <h1>监测点实时状态</h1>
     <ul class="zt">
-        <li><a href="#/stateDetail/ZC"><div class="status" style="background-color: #6bd4a7;"><span>{{stateData[0].ZC}}</span><p>正常</p></div></a></li>
+        <li><a href="#/stateDetail/ZC"><div class="status" style="background-color: #6bd4a7;"><span id="maskE">{{stateData[0].ZC}}</span><p>正常</p></div></a></li>
         <li><a href="#/stateDetail/BJ"><div class="status" style="background-color: #ff6363;"><span>{{stateData[0].BJ}}</span><p>超标</p></div></a></li>
         <li><a href="#/stateDetail/YC"><div class="status" style="background-color: #cf88df;"><span>{{stateData[0].YC}}</span><p>异常</p></div></a></li>
         <li><a href="#/stateDetail/unconnect"><div class="status" style="background-color: #bebebe;"><span>{{stateData[0].unconnect}}</span><p>断线</p></div></a></li>

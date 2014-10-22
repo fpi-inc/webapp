@@ -12,7 +12,6 @@ angular.module('fpiwebapp.common', [])
   };
   return LoadingServer;
 })
-
 .factory('MenuServer', function($rootScope) {
 	var MenuServer = function(){
 		this.cover = null;
@@ -112,4 +111,7 @@ angular.module('fpiwebapp.common', [])
 	};
 	return MenuServer;
 });
+
+
+
 

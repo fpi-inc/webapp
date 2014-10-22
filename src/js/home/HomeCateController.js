@@ -1,6 +1,23 @@
 angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.home.service'])
  
 .controller('HomeCateController', function($route, $scope, $rootScope, $routeParams, $location, $window, localStorageService, MenuServer, RegionService, HomeService) {
+
+    //$scope.hideMask = false;
+    ////首次登录导览
+    //var mLeft = $('#ckxx').css('margin-left');
+    //$('#webapp-mask').css('height', $rootScope.contentHeight + 'px');
+    //$('#webapp-mask-img2').css('left', (mLeft - 6) + 'px');
+    ////if(localStorageService.get('firstLoginApp') == 'true'){
+    ////    $scope.hideMask = false;
+    ////}
+    ////else{
+    ////    $scope.hideMask = true;
+    ////}
+    //$scope.hideMaskFunc = function(){
+    //    $scope.hideMask = true;
+    //};
+    //console.log($('#ckxx').css('margin-left'));
+
 	//var cateCode = $routeParams.cateCode;
 	//console.log(cateCode);
 	$scope.nowDate = $rootScope.currentDate(0);

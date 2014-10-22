@@ -60,23 +60,16 @@ angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.person
                 }
                 //attention
                 angular.forEach($scope.companyArray, function(value, key){
-                    PersonalService.hasAttention({
-                        userName: $scope.currentUser,
-                        companyId: value.companyId 
-                    }, function(result){
-                        if(result){
-                            var txt = {};
-                            if(result.result == 'true'){
-                                txt.html = '已关注';
-                                txt.css = 'atten';
-                            }
-                            else{
-                                txt.html = '未关注';
-                                txt.css = 'addAtten';
-                            }
-                            $scope.companyAttentionArray.push(txt);
-                        }
-                    });
+                    var txt = {};
+                    if(value.hasAttention){
+                        txt.html = '已关注';
+                        txt.css = 'atten';
+                    }
+                    else{
+                        txt.html = '未关注';
+                        txt.css = 'addAtten';
+                    }
+                    $scope.companyAttentionArray.push(txt);
                 });
 			}
 		});	

@@ -1,6 +1,10 @@
 angular.module('fpiwebapp.stateDetail.ctrl', [ 'LocalStorageModule', 'fpiwebapp.home.service'])
  
 .controller('StateDetailController', function($routeParams, $rootScope, $scope, $location, $window, localStorageService, HomeService) {
+    //清除排口缓存
+    $scope.clearPortsCache = function(){
+        localStorageService.remove('currentPorts');
+    }; 
     $scope.currentCategory = localStorageService.get('currentCategory');
     $scope.currentRegionCode = localStorageService.get('currentRegionCode');
     $scope.currentUser = $rootScope.checkUser();

@@ -105,6 +105,7 @@ module.exports = function(grunt){
                     'src/js/state/StateDetailController.js',
                     'src/js/exceed/ExceedController.js',
                     'src/js/transport/TransportController.js',
+                    'src/js/transport/TransportAreaController.js',
                     'src/js/personal/PersonalController.js',
                     'src/js/personal/AccountController.js',
                     'src/js/personal/PersonalService.js',

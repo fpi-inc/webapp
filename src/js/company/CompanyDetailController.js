@@ -71,26 +71,28 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
         }, function(result){
             if(result){
                 $scope.portNameArray = result.ports;
-                //存储排口
-                if(!localStorageService.get('currentPorts')){
-                    localStorageService.set('currentPorts', {portName: result.ports[0].portName, portId: result.ports[0].portId});
-                    $scope.portTitle = result.ports[0].portName;
-                    $scope.realDataByTable(result.ports[0].portId, result.ports[0].portName);
-                    //$scope.realDataByTableChart(result.ports[0].portId, result.ports[0].portName);
-                    $scope.getHistoryDataFunc(result.ports[0].portId, $scope.currentTime);
-                    $scope.getHistoryDataFuncChart(result.ports[0].portId, $scope.currentTime);
-                    $scope.getOverStandarData(result.ports[0].portId, $scope.currentTime);
-                    $scope.setPortsFactorData(result.ports[0].portId, $scope.currentCategory);
-                }
-                else{
-                    $scope.currentPorts = localStorageService.get('currentPorts');
-                    $scope.portTitle = $scope.currentPorts.portName;
-                    $scope.realDataByTable($scope.currentPorts.portId, $scope.currentPorts.portName);
-                    //$scope.realDataByTableChart($scope.currentPorts.portId, $scope.currentPorts.portName);
-                    $scope.getHistoryDataFunc($scope.currentPorts.portId, $scope.currentTime);
-                    $scope.getHistoryDataFuncChart($scope.currentPorts.portId, $scope.currentTime);
-                    $scope.getOverStandarData($scope.currentPorts.portId, $scope.currentTime);
-                    //$scope.setPortsFactorData($scope.currentPorts.portId, $scope.currentCategory);
+                if($scope.portNameArray.length > 0){
+                    //存储排口
+                    if(!localStorageService.get('currentPorts')){
+                        localStorageService.set('currentPorts', {portName: result.ports[0].portName, portId: result.ports[0].portId});
+                        $scope.portTitle = result.ports[0].portName;
+                        $scope.realDataByTable(result.ports[0].portId, result.ports[0].portName);
+                        //$scope.realDataByTableChart(result.ports[0].portId, result.ports[0].portName);
+                        $scope.getHistoryDataFunc(result.ports[0].portId, $scope.currentTime);
+                        $scope.getHistoryDataFuncChart(result.ports[0].portId, $scope.currentTime);
+                        $scope.getOverStandarData(result.ports[0].portId, $scope.currentTime);
+                        $scope.setPortsFactorData(result.ports[0].portId, $scope.currentCategory);
+                    }
+                    else{
+                        $scope.currentPorts = localStorageService.get('currentPorts');
+                        $scope.portTitle = $scope.currentPorts.portName;
+                        $scope.realDataByTable($scope.currentPorts.portId, $scope.currentPorts.portName);
+                        //$scope.realDataByTableChart($scope.currentPorts.portId, $scope.currentPorts.portName);
+                        $scope.getHistoryDataFunc($scope.currentPorts.portId, $scope.currentTime);
+                        $scope.getHistoryDataFuncChart($scope.currentPorts.portId, $scope.currentTime);
+                        $scope.getOverStandarData($scope.currentPorts.portId, $scope.currentTime);
+                        //$scope.setPortsFactorData($scope.currentPorts.portId, $scope.currentCategory);
+                    }
                 }
             }
         });

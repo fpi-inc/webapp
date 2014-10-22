@@ -1986,3 +1986,65 @@ a.webapp-btn.red {
   line-height: 30px;
   background-color: #fff;
 }
+#webapp-mask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  background-color: #000;
+  opacity: 0.6;
+  filter: alpha(opacity=60);
+  z-index: 9999;
+}
+#webapp-mask-img1 {
+  position: absolute;
+  left: 40%;
+  top: 20px;
+  width: 128px;
+  height: 56px;
+  z-index: 99999;
+  background: url('../../images/yy1.png') no-repeat left top;
+  background-size: 128px 56px;
+}
+#webapp-mask-img2 {
+  position: absolute;
+  left: 1px;
+  top: 132px;
+  width: 64px;
+  height: 124px;
+  z-index: 999999;
+  background: url('../../images/yy2.png') no-repeat left top;
+  background-size: 64px 124px;
+}
+.maskCls {
+  background-color: #000;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.maskText1Cls {
+  position: absolute;
+  top: 20px;
+  left: 140px;
+}
+.maskText2Cls {
+  position: absolute;
+  top: 132px;
+  left: 1px;
+}
+.substringText {
+  width: 130px;
+  display: inline-block;
+  height: 40px;
+  overflow: hidden;
+  white-space: nowrap;
+  -webkit-text-overflow: ellipsis;
+  -khtml-text-overflow: ellipsis;
+  -icab-text-overflow: ellipsis;
+  -moz-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}

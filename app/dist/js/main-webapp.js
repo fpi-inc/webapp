@@ -22,6 +22,7 @@ angular.module('fpiwebapp', [
   'fpiwebapp.stateDetail.ctrl',
   'fpiwebapp.exceed.ctrl',
   'fpiwebapp.transport.ctrl',
+  'fpiwebapp.transport.area.ctrl',
   'fpiwebapp.personal.ctrl',
   'fpiwebapp.personal.add.ctrl',
   'fpiwebapp.account.ctrl',
@@ -87,6 +88,10 @@ angular.module('fpiwebapp', [
       controller:'TransportController',
       templateUrl:'/app/partials/transport/transport.html'
     })
+    .when('/transport/:area', {
+      controller:'TransportAreaController',
+      templateUrl:'/app/partials/transport/transportarea.html'
+    })
     .when('/personal', {
       controller:'PersonalController',
       templateUrl:'/app/partials/personal/personal.html'
@@ -125,6 +130,8 @@ angular.module('fpiwebapp', [
     //$rootScope.isChoice = false;
     //$rootScope.menu = new MenuServer();
     //$rootScope.menu.init();
+    
+
     //系统菜单
     $rootScope.choiceMenu = function(){
         //if($rootScope.isChoice){
@@ -135,7 +142,7 @@ angular.module('fpiwebapp', [
     }
 
     //height
-    $rootScope.contentHeight = $(window).innerHeight();
+    $rootScope.contentHeight = $(window).outerHeight(true);
     //console.log($scope.contentHeight);
 
     //检查登录帐号
@@ -291,23 +298,16 @@ angular.module('fpiwebapp.search.ctrl', ['LocalStorageModule', 'fpiwebapp.person
                 }
                 //attention
                 angular.forEach($scope.companyArray, function(value, key){
-                    PersonalService.hasAttention({
-                        userName: $scope.currentUser,
-                        companyId: value.companyId 
-                    }, function(result){
-                        if(result){
-                            var txt = {};
-                            if(result.result == 'true'){
-                                txt.html = '已关注';
-                                txt.css = 'atten';
-                            }
-                            else{
-                                txt.html = '未关注';
-                                txt.css = 'addAtten';
-                            }
-                            $scope.companyAttentionArray.push(txt);
-                        }
-                    });
+                    var txt = {};
+                    if(value.hasAttention){
+                        txt.html = '已关注';
+                        txt.css = 'atten';
+                    }
+                    else{
+                        txt.html = '未关注';
+                        txt.css = 'addAtten';
+                    }
+                    $scope.companyAttentionArray.push(txt);
                 });
 			}
 		});	
@@ -646,6 +646,23 @@ angular.module('fpiwebapp.home.ctrl', [ 'LocalStorageModule', 'fpiwebapp.home.se
 angular.module('fpiwebapp.homeCate.ctrl', [ 'LocalStorageModule', 'fpiwebapp.home.service'])
  
 .controller('HomeCateController', function($route, $scope, $rootScope, $routeParams, $location, $window, localStorageService, MenuServer, RegionService, HomeService) {
+
+    //$scope.hideMask = false;
+    ////首次登录导览
+    //var mLeft = $('#ckxx').css('margin-left');
+    //$('#webapp-mask').css('height', $rootScope.contentHeight + 'px');
+    //$('#webapp-mask-img2').css('left', (mLeft - 6) + 'px');
+    ////if(localStorageService.get('firstLoginApp') == 'true'){
+    ////    $scope.hideMask = false;
+    ////}
+    ////else{
+    ////    $scope.hideMask = true;
+    ////}
+    //$scope.hideMaskFunc = function(){
+    //    $scope.hideMask = true;
+    //};
+    //console.log($('#ckxx').css('margin-left'));
+
 	//var cateCode = $routeParams.cateCode;
 	//console.log(cateCode);
 	$scope.nowDate = $rootScope.currentDate(0);
@@ -826,6 +843,10 @@ angular.module('fpiwebapp.home.service', ['ngResource']).
 angular.module('fpiwebapp.stateDetail.ctrl', [ 'LocalStorageModule', 'fpiwebapp.home.service'])
  
 .controller('StateDetailController', function($routeParams, $rootScope, $scope, $location, $window, localStorageService, HomeService) {
+    //清除排口缓存
+    $scope.clearPortsCache = function(){
+        localStorageService.remove('currentPorts');
+    }; 
     $scope.currentCategory = localStorageService.get('currentCategory');
     $scope.currentRegionCode = localStorageService.get('currentRegionCode');
     $scope.currentUser = $rootScope.checkUser();
@@ -947,12 +968,12 @@ angular.module('fpiwebapp.transport.ctrl', [ 'LocalStorageModule', 'fpiwebapp.ho
 .controller('TransportController', function($rootScope, $scope, $location, $window, localStorageService, MenuServer, HomeService) {
     $scope.currentUser = $rootScope.checkUser();
 	$scope.nowDate = $rootScope.currentDate(0);
+	$scope.preDate = $rootScope.currentDate(-1);
     $scope.currentCategory = localStorageService.get('currentCategory');
     $scope.currentRegionCode = localStorageService.get('currentRegionCode');
 
-	$scope.nowDate = $rootScope.currentDate(0);
     if(!localStorageService.get('currentDateTime')){
-        localStorageService.set('currentDateTime', {'time': $scope.nowDate, 'longTime': $scope.nowDate, 'type': 1});
+        localStorageService.set('currentDateTime', {'time': $scope.preDate, 'longTime': $scope.preDate, 'type': 1});
         //localStorageService.set('currentDateTime', new Date());
     }
     $scope.currentTime = localStorageService.get('currentDateTime');
@@ -969,6 +990,43 @@ angular.module('fpiwebapp.transport.ctrl', [ 'LocalStorageModule', 'fpiwebapp.ho
 			$scope.transportItems = result.transmissionEfficient;
 		}
 	});
+});
+ 
+
+
+angular.module('fpiwebapp.transport.area.ctrl', [ 'LocalStorageModule', 'fpiwebapp.home.service'])
+ 
+.controller('TransportAreaController', function($routeParams, $rootScope, $scope, $location, $window, localStorageService, MenuServer, HomeService) {
+    //清除排口缓存
+    $scope.clearPortsCache = function(){
+        localStorageService.remove('currentPorts');
+    }; 
+    $scope.currentUser = $rootScope.checkUser();
+	$scope.nowDate = $rootScope.currentDate(0);
+	$scope.preDate = $rootScope.currentDate(-1);
+    $scope.currentCategory = localStorageService.get('currentCategory');
+    $scope.currentRegionCode = localStorageService.get('currentRegionCode');
+    $scope.areaCode = $routeParams.area;
+
+    if(!localStorageService.get('currentDateTime')){
+        localStorageService.set('currentDateTime', {'time': $scope.preDate, 'longTime': $scope.preDate, 'type': 1});
+        //localStorageService.set('currentDateTime', new Date());
+    }
+    $scope.currentTime = localStorageService.get('currentDateTime');
+
+	$scope.transportItems = [];
+	HomeService.getTransmissionEfficientBychildRegion({
+		regionCode: $scope.areaCode,
+		dateTime: $scope.currentTime.time,
+		monitorTypeCode: $scope.currentCategory,
+		userName: $scope.currentUser,
+		dateType: $scope.currentTime.type
+	}, function(result){
+		if(result){
+			$scope.transportItems = result.transmissionEfficient;
+		}
+	});
+
 });
  
 
@@ -992,6 +1050,7 @@ angular.module('fpiwebapp.personal.ctrl', [ 'LocalStorageModule', 'fpiwebapp.per
         }, function(result){
             if(result){
                 $scope.attentionCompanyList = result.attention;
+                console.log($scope.attentionCompanyList.length);
                 if($scope.attentionCompanyList.length >= 0){
                     $scope.historyLoading = false;
                 }
@@ -1156,23 +1215,16 @@ angular.module('fpiwebapp.personal.add.ctrl', ['LocalStorageModule', 'fpiwebapp.
                 }
                 //attention
                 angular.forEach($scope.companyArray, function(value, key){
-                    PersonalService.hasAttention({
-                        userName: $scope.currentUser,
-                        companyId: value.companyId 
-                    }, function(result){
-                        if(result){
-                            var txt = {};
-                            if(result.result == 'true'){
-                                txt.html = '已关注';
-                                txt.css = 'atten';
-                            }
-                            else{
-                                txt.html = '未关注';
-                                txt.css = 'addAtten';
-                            }
-                            $scope.companyAttentionArray.push(txt);
-                        }
-                    });
+                    var txt = {};
+                    if(value.hasAttention){
+                        txt.html = '已关注';
+                        txt.css = 'atten';
+                    }
+                    else{
+                        txt.html = '未关注';
+                        txt.css = 'addAtten';
+                    }
+                    $scope.companyAttentionArray.push(txt);
                 });
 			}
 		});	
@@ -1332,26 +1384,28 @@ angular.module('fpiwebapp.companyDetail.ctrl', [ 'LocalStorageModule', 'fpiwebap
         }, function(result){
             if(result){
                 $scope.portNameArray = result.ports;
-                //存储排口
-                if(!localStorageService.get('currentPorts')){
-                    localStorageService.set('currentPorts', {portName: result.ports[0].portName, portId: result.ports[0].portId});
-                    $scope.portTitle = result.ports[0].portName;
-                    $scope.realDataByTable(result.ports[0].portId, result.ports[0].portName);
-                    //$scope.realDataByTableChart(result.ports[0].portId, result.ports[0].portName);
-                    $scope.getHistoryDataFunc(result.ports[0].portId, $scope.currentTime);
-                    $scope.getHistoryDataFuncChart(result.ports[0].portId, $scope.currentTime);
-                    $scope.getOverStandarData(result.ports[0].portId, $scope.currentTime);
-                    $scope.setPortsFactorData(result.ports[0].portId, $scope.currentCategory);
-                }
-                else{
-                    $scope.currentPorts = localStorageService.get('currentPorts');
-                    $scope.portTitle = $scope.currentPorts.portName;
-                    $scope.realDataByTable($scope.currentPorts.portId, $scope.currentPorts.portName);
-                    //$scope.realDataByTableChart($scope.currentPorts.portId, $scope.currentPorts.portName);
-                    $scope.getHistoryDataFunc($scope.currentPorts.portId, $scope.currentTime);
-                    $scope.getHistoryDataFuncChart($scope.currentPorts.portId, $scope.currentTime);
-                    $scope.getOverStandarData($scope.currentPorts.portId, $scope.currentTime);
-                    //$scope.setPortsFactorData($scope.currentPorts.portId, $scope.currentCategory);
+                if($scope.portNameArray.length > 0){
+                    //存储排口
+                    if(!localStorageService.get('currentPorts')){
+                        localStorageService.set('currentPorts', {portName: result.ports[0].portName, portId: result.ports[0].portId});
+                        $scope.portTitle = result.ports[0].portName;
+                        $scope.realDataByTable(result.ports[0].portId, result.ports[0].portName);
+                        //$scope.realDataByTableChart(result.ports[0].portId, result.ports[0].portName);
+                        $scope.getHistoryDataFunc(result.ports[0].portId, $scope.currentTime);
+                        $scope.getHistoryDataFuncChart(result.ports[0].portId, $scope.currentTime);
+                        $scope.getOverStandarData(result.ports[0].portId, $scope.currentTime);
+                        $scope.setPortsFactorData(result.ports[0].portId, $scope.currentCategory);
+                    }
+                    else{
+                        $scope.currentPorts = localStorageService.get('currentPorts');
+                        $scope.portTitle = $scope.currentPorts.portName;
+                        $scope.realDataByTable($scope.currentPorts.portId, $scope.currentPorts.portName);
+                        //$scope.realDataByTableChart($scope.currentPorts.portId, $scope.currentPorts.portName);
+                        $scope.getHistoryDataFunc($scope.currentPorts.portId, $scope.currentTime);
+                        $scope.getHistoryDataFuncChart($scope.currentPorts.portId, $scope.currentTime);
+                        $scope.getOverStandarData($scope.currentPorts.portId, $scope.currentTime);
+                        //$scope.setPortsFactorData($scope.currentPorts.portId, $scope.currentCategory);
+                    }
                 }
             }
         });
@@ -1925,7 +1979,6 @@ angular.module('fpiwebapp.common', [])
   };
   return LoadingServer;
 })
-
 .factory('MenuServer', function($rootScope) {
 	var MenuServer = function(){
 		this.cover = null;
@@ -2025,6 +2078,9 @@ angular.module('fpiwebapp.common', [])
 	};
 	return MenuServer;
 });
+
+
+
 
 
 

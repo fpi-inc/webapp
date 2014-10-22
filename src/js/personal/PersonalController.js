@@ -17,6 +17,7 @@ angular.module('fpiwebapp.personal.ctrl', [ 'LocalStorageModule', 'fpiwebapp.per
         }, function(result){
             if(result){
                 $scope.attentionCompanyList = result.attention;
+                console.log($scope.attentionCompanyList.length);
                 if($scope.attentionCompanyList.length >= 0){
                     $scope.historyLoading = false;
                 }

@@ -31,6 +31,7 @@ angular.module('login', [ 'ngCookies', 'LocalStorageModule', 'fpiwebapp.login.se
                     localStorageService.set('currentRegions', loginData.name);
                     localStorageService.set('currentRegionCode', loginData.id);
                     localStorageService.set('currentCompanyOrAdmin', loginData.role);
+                    localStorageService.set('firstLoginApp', loginData.firstLogin);
                     //localStorageService.set('currentCategory', $scope.category);
                     if(loginData.role == 'mat'){
                         $window.location.href = '/app/#/cate/' + $scope.category;

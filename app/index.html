@@ -30,7 +30,7 @@
     <!-- script src="lib/echarts-2.0.2/doc/example/www/js/esl.js"></script -->
     <script src="lib/JSCharts3_demo/sources/jscharts.js"></script>
   </head>
-  <body style="background-color: #f5f5f5;">
+  <body style="background-color: #f5f5f5;" onload="screenOrientationEvent()">
     <div ng-view></div>
     <!-- angular-1.2.22 -->
     <script src="lib/angular-1.2.22/angular.min.js"></script>
@@ -54,6 +54,7 @@
     <script src="../src/js/state/StateDetailController.js"></script>
     <script src="../src/js/exceed/ExceedController.js"></script>
     <script src="../src/js/transport/TransportController.js"></script>
+    <script src="../src/js/transport/TransportAreaController.js"></script>
     <script src="../src/js/personal/PersonalController.js"></script>
     <script src="../src/js/personal/AccountController.js"></script>
     <script src="../src/js/personal/PersonalService.js"></script>
@@ -123,6 +124,108 @@ function localSearch(){
 //    navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions);
 //};
 
+    </script>
+    <script type="text/javascript">
+      function MaskServer(){
+          this.mask = null;
+          this.maskText1 = null;
+          this.maskText2 = null;
+      };
+      MaskServer.prototype = {
+          init: function(){
+              this.createDom();
+          },
+          createDom: function(){
+              var self = this;
+              self.mask = document.createElement('div');
+              self.mask.setAttribute('class', 'maskCls');
+              self.mask.style.height = jQuery(document).height() + 'px';
+              $('body').append(self.mask);
+              self.maskText1 = jQuery('<img src="images/yy1.png" width="128" height="56" class="maskText1Cls">');
+              self.maskText1.appendTo($('body'));
+              self.maskText2 = jQuery('<img src="images/yy2.png" width="64" height="124" class="maskText2Cls">');
+              self.maskText2.appendTo($('body'));
+              jQuery(self.mask).click(function(){
+                  self.maskHide(self.mask, self.maskText1, self.maskText2);
+              });
+              jQuery(self.maskText1).click(function(){
+                  self.maskHide(self.mask, self.maskText1, self.maskText2);
+              });
+              jQuery(self.maskText2).click(function(){
+                  self.maskHide(self.mask, self.maskText1, self.maskText2);
+              });
+          },
+          revise: function(rpx){
+              this.maskText1[0].style.left = (rpx - 20) + 'px';        
+              //this.maskText2[0].style.left = (rpx - 20) + 'px';        
+          },
+          reviseB: function(rpx){
+              this.maskText2[0].style.left = (rpx - 6) + 'px';        
+          },
+          maskHide: function(mask, mT1, mT2){
+              mask.remove();
+              mT1.remove();
+              mT2.remove();
+              if(localStorage){
+                  localStorage.setItem('ls.firstLoginApp', 'false');
+              }
+          }
+      };
+    //遮罩
+      if(localStorage){
+          var key = localStorage.getItem('ls.firstLoginApp');
+          if(key == 'true'){
+              var maskobj = new MaskServer();
+              maskobj.init();
+          }
+          else{
+              
+          }
+      }
+      //屏幕方向标识，0横屏，其他值竖屏
+      var orientation=0;
+      //转屏事件，内部功能可以自定义
+      function screenOrientationEvent(){
+          if(orientation == 0){
+              if($('#maskElement').offset()){
+                  var maskLeft = $('#maskElement').offset().left;
+                  maskobj.revise(maskLeft);
+              }
+              if($('#maskE').offset()){
+                  var masLeft = $('#maskE').offset().left;
+                  maskobj.reviseB(masLeft);
+              }
+          }
+          else{
+              if($('#maskElement').offset()){
+                  var maskLeft = $('#maskElement').offset().left;
+                  maskobj.revise(maskLeft);
+              }
+              if($('#maskE').offset()){
+                  var masLeft = $('#maskE').offset().left;
+                  maskobj.reviseB(masLeft);
+              }
+          }
+      }
+      var innerWidthTmp = window.innerWidth;
+      //横竖屏事件监听方法
+      function screenOrientationListener(){
+          try{
+              var iw = window.innerWidth;     
+              //屏幕方向改变处理
+              if(iw != innerWidthTmp){
+                  if(iw>window.innerHeight)orientation = 90;
+                  else orientation = 0;
+                  //调用转屏事件
+                  screenOrientationEvent();
+                  innerWidthTmp = iw;
+              }
+          } catch(e){alert(e);};
+          //间隔固定事件检查是否转屏，默认500毫秒
+          setTimeout("screenOrientationListener()",500);
+      }
+      //启动横竖屏事件监听
+      screenOrientationListener();
     </script>
   </body>
 </html>

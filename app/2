@@ -14,7 +14,6 @@ angular.module('fpiwebapp', [
   'fpiwebapp.stateDetail.ctrl',
   'fpiwebapp.exceed.ctrl',
   'fpiwebapp.transport.ctrl',
-  'fpiwebapp.transport.area.ctrl',
   'fpiwebapp.personal.ctrl',
   'fpiwebapp.personal.add.ctrl',
   'fpiwebapp.account.ctrl',
@@ -80,10 +79,6 @@ angular.module('fpiwebapp', [
       controller:'TransportController',
       templateUrl:'/app/partials/transport/transport.html'
     })
-    .when('/transport/:area', {
-      controller:'TransportAreaController',
-      templateUrl:'/app/partials/transport/transportarea.html'
-    })
     .when('/personal', {
       controller:'PersonalController',
       templateUrl:'/app/partials/personal/personal.html'
@@ -109,7 +104,7 @@ angular.module('fpiwebapp', [
     });
 })
 
-.run(function($http, $rootScope, $window, $location, MenuServer, localStorageService){
+.run(function($http, $rootScope, $window, $location, MenuServer, MaskServer, localStorageService){
  
     //history 返回
     $rootScope.back = function(){
@@ -123,6 +118,9 @@ angular.module('fpiwebapp', [
     //$rootScope.menu = new MenuServer();
     //$rootScope.menu.init();
     
+    //遮罩
+    $rootScope.maskobj = new MaskServer();
+    //$rootScope.maskobj.init();
 
     //系统菜单
     $rootScope.choiceMenu = function(){
